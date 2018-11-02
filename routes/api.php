@@ -20,6 +20,7 @@ $api->version('v1', [
         $api->get('services/{service}', 'ServiceController@show');
         $api->patch('services/{service}', 'ServiceController@update');
         $api->post('service-areas', 'ServiceController@createServiceArea');
+        $api->get('service-areas', 'ServiceController@showServiceAreas');
         $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
     });
 });

@@ -40,6 +40,14 @@ class ServiceController extends Controller
     }
 
     /**
+     * 展示服务地区列表
+     */
+    public function showServiceAreas()
+    {
+        return $this->response->item(ServiceArea::get(), new ServiceTransformer());
+    }
+
+    /**
      * 展示服务地区详情
      */
     public function showServiceArea(ServiceArea $serviceArea)
