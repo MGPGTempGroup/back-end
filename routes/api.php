@@ -22,5 +22,6 @@ $api->version('v1', [
         $api->post('service-areas', 'ServiceController@createServiceArea');
         $api->get('service-areas', 'ServiceController@showServiceAreas');
         $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
+        $api->patch('service-areas/{serviceArea}', 'ServiceController@updateServiceArea');
     });
 });

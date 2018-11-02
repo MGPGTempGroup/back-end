@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Admin\ServiceUpdateRequest;
 use App\Http\Requests\Admin\CreateServiceAreaRequest;
+use App\Http\Requests\Admin\UpdateServiceAreaRequest;
 
 use App\Http\Response\Transformers\Admin\ServiceTransformer;
 use App\Http\Response\Transformers\Admin\ServiceAreaTransformer;
@@ -59,6 +60,17 @@ class ServiceController extends Controller
      * 创建服务地区
      */
     public function createServiceArea(CreateServiceAreaRequest $request, ServiceArea $serviceArea)
+    {
+        $serviceArea->fill($request->all());
+        $serviceArea->save();
+
+        return $this->response->item($serviceArea, new ServiceAreaTransformer());
+    }
+
+    /**
+     * 修改服务地区
+     */
+    public function updateServiceArea(UpdateServiceAreaRequest $request, ServiceArea $serviceArea)
     {
         $serviceArea->fill($request->all());
         $serviceArea->save();
