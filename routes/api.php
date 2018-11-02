@@ -18,5 +18,6 @@ $api->version('v1', [
 
         // 服务内容相关
         $api->get('services/{service}', 'ServiceController@show');
+        $api->patch('services/{service}', 'ServiceController@update');
     });
 });
