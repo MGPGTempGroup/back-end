@@ -6,7 +6,7 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-    'middleware' => 'serializer:array'
+    'middleware' => ['serializer:array', 'bindings']
 ],function ($api) {
     // background
     $api->group([
@@ -20,5 +20,6 @@ $api->version('v1', [
         $api->get('services/{service}', 'ServiceController@show');
         $api->patch('services/{service}', 'ServiceController@update');
         $api->post('service-areas', 'ServiceController@createServiceArea');
+        $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
     });
 });

@@ -40,6 +40,14 @@ class ServiceController extends Controller
     }
 
     /**
+     * 展示服务地区详情
+     */
+    public function showServiceArea(ServiceArea $serviceArea)
+    {
+        return $this->response->item($serviceArea, new ServiceAreaTransformer());
+    }
+
+    /**
      * 创建服务地区
      */
     public function createServiceArea(CreateServiceAreaRequest $request, ServiceArea $serviceArea)
