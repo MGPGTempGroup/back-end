@@ -13,6 +13,10 @@ $api->version('v1', [
         'prefix' => 'admin',
         'namespace' => 'Admin'
     ], function ($api) {
+        // 登录
         $api->post('login', 'AuthorizationsController@authenticate');
+
+        // 服务内容相关
+        $api->get('services/{service}', 'ServiceController@show');
     });
 });
