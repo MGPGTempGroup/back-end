@@ -15,7 +15,7 @@ class CreateServiceAreasTable extends Migration
     {
         Schema::create('service_areas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('region_name'); // 地区名称
+            $table->string('name'); // 地区名称
             $table->text('broadcast_pictures'); // 轮播图json数据
             $table->mediumText('introduction'); // 地区介绍
             $table->timestamps();

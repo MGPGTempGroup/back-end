@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\ServiceUpdateRequest;
 use App\Http\Controllers\Controller;
 
-use App\Response\Transformers\Admin\ServiceTransformer;
+use App\Http\Requests\Admin\ServiceUpdateRequest;
+use App\Http\Requests\Admin\CreateServiceAreaRequest;
+
+use App\Http\Response\Transformers\Admin\ServiceTransformer;
+use App\Http\Response\Transformers\Admin\ServiceAreaTransformer;
 
 use App\Service;
+use App\ServiceArea;
 
 class ServiceController extends Controller
 {
@@ -33,5 +37,16 @@ class ServiceController extends Controller
         $service->save();
 
         return $this->response->item($service, new ServiceTransformer());
+    }
+
+    /**
+     * 创建服务地区
+     */
+    public function createServiceArea(CreateServiceAreaRequest $request, ServiceArea $serviceArea)
+    {
+        $serviceArea->fill($request->all());
+        $serviceArea->save();
+
+        return $this->response->item($serviceArea, new ServiceAreaTransformer());
     }
 }

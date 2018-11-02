@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Response\Transformers\Admin;
+namespace App\Http\Response\Transformers\Admin;
 
 use League\Fractal\TransformerAbstract;
 use App\Service;
