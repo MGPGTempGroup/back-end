@@ -15,21 +15,21 @@ class CreateCompanyInfo extends Migration
     {
         Schema::create('company_info', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('company_name'); // 公司名称
-            $table->string('telephone'); // 固话
-            $table->string('facsimile'); // 传真
-            $table->string('address'); // 公司地址
-            $table->string('post_code'); // 邮编
-            $table->string('regionalism_code'); // 行政区划代码
-            $table->string('opening_hours'); // 总部开放时间
-            $table->string('service_time'); // 服务时间
+            $table->string('company_name')->nullable(); // 公司名称
+            $table->string('telephone')->nullable(); // 固话
+            $table->string('facsimile')->nullable(); // 传真
+            $table->string('address')->nullable(); // 公司地址
+            $table->string('post_code')->nullable(); // 邮编
+            $table->string('regionalism_code')->nullable(); // 行政区划代码
+            $table->string('opening_hours')->nullable(); // 总部开放时间
+            $table->string('service_time')->nullable(); // 服务时间
             // 相关社交主页
-            $table->string('google_plus_homepage');
-            $table->string('linkin_homepage');
-            $table->string('youtube_homepage');
-            $table->string('facebook_homepage');
-            $table->string('twitter_homepage');
-            $table->string('instagram_homepage');
+            $table->string('google_plus_homepage')->nullable();
+            $table->string('linkin_homepage')->nullable();
+            $table->string('youtube_homepage')->nullable();
+            $table->string('facebook_homepage')->nullable();
+            $table->string('twitter_homepage')->nullable();
+            $table->string('instagram_homepage')->nullable();
             $table->timestamps();
         });
     }
