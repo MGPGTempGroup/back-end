@@ -37,7 +37,7 @@ class CreateLeasesTable extends Migration
             $table->point('map_coordinates'); // 详细地图坐标
 
             $table->unsignedTinyInteger('bedrooms')->default(0); // 卧室数量
-            $table->unsignedtinyInteger('bathrooms')->default(0); // 淋浴数量
+            $table->unsignedTinyInteger('bathrooms')->default(0); // 淋浴数量
             $table->unsignedTinyInteger('car_ports')->default(0); // 车位数量
             $table->unsignedTinyInteger('lockup_garages')->default(0); // 车库数量
 
@@ -54,7 +54,7 @@ class CreateLeasesTable extends Migration
             $table->unsignedInteger('per_day_max_price')->nullable();
 
             $table->dateTime('upcoming_inspections_start_time')->nullable(); // 即将到来的检查开始时间
-            $table->dateTime('upcoming_inspections_end_time')->nullalbe(); // 即将到来的检查结束时间
+            $table->dateTime('upcoming_inspections_end_time')->nullable(); // 即将到来的检查结束时间
             $table->dateTime('available_date'); // 可用日期
 
             $table->unsignedInteger('sort_number')->default(0); // 排序号码

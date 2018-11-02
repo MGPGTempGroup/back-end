@@ -53,7 +53,7 @@ class CreateResidencesTable extends Migration
             $table->unsignedInteger('sort_number')->default(0); // 排序号码
 
             $table->unsignedTinyInteger('show')->default(1); // 当前状态：展示与隐藏
-            $table->unsignedTinyInterger('is_new_development')->default(0); // 是否是最新开发房产
+            $table->unsignedTinyInteger('is_new_development')->default(0); // 是否是最新开发房产
             $table->unsignedTinyInteger('state')->default(1); // 房屋状态
 
             // 统计相关
