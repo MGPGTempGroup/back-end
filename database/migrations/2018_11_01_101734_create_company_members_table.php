@@ -20,9 +20,9 @@ class CreateCompanyMembersTable extends Migration
             $table->string('phone');
             $table->string('google_plus_homepage')->nullable();
             $table->string('linkin_homepage')->nullable();
-            $table->string('introduction')->nullalbe();
-            $table->string('photo');
-            $table->string('thumbnail');
+            $table->string('introduction')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
     }
