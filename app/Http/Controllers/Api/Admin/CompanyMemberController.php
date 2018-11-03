@@ -10,6 +10,15 @@ use App\Http\Response\Transformers\Admin\CompanyMemberTransformer;
 
 class CompanyMemberController extends Controller
 {
+
+    /**
+     * 获取公司成员列表接口
+     */
+    public function index(CompanyMember $companyMember)
+    {
+        return $this->response->collection($companyMember->get(), new CompanyMemberTransformer());
+    }
+
     /**
      * 展示单个公司成员详情
      */

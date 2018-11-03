@@ -27,6 +27,7 @@ $api->version('v1', [
         // 公司信息相关
         $api->get('company-info', 'CompanyInfoController@show');
         $api->patch('company-info', 'CompanyInfoController@update');
+        $api->get('company-members', 'CompanyMemberController@index');
         $api->get('company-members/{companyMember}', 'CompanyMemberController@show');
         $api->post('company-members', 'CompanyMemberController@create');
     });
