@@ -7,6 +7,8 @@ use App\CompanyMember;
 
 class CompanyMemberTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['positions'];
+
     public function transform(CompanyMember $companyMember)
     {
         return [
@@ -23,4 +25,10 @@ class CompanyMemberTransformer extends TransformerAbstract
             'updated_at' => $companyMember->updated_at->toDateTimeString()
         ];
     }
+
+    public function includePositions(CompanyMember $companyMember)
+    {
+        return $this->collection($companyMember->positions, new CompanyMemberPositionTransformer());
+    }
+
 }
