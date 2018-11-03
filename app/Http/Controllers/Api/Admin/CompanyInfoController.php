@@ -11,6 +11,15 @@ use App\CompanyInfo;
 
 class CompanyInfoController extends Controller
 {
+
+    /**
+     * 展示公司信息数据
+     */
+    public function show(CompanyInfo $companyInfo)
+    {
+        return $this->response->item($companyInfo->getLatest(), new CompanyInfoTransformer());
+    }
+
     /**
      * 更新公司信息数据
      *
