@@ -35,13 +35,22 @@ class CompanyMemberPositionController extends Controller
     }
 
     /**
-     * 修改公司职位列表
+     * 修改公司职位
      */
     public function update(UpdateCompanyMemberPositionRequest $request, CompanyMemberPosition $companyMemberPosition)
     {
         $companyMemberPosition->fill($request->all());
         $companyMemberPosition->save();
         return $this->response->item($companyMemberPosition, new CompanyMemberPositionTransformer());
+    }
+
+    /**
+     * 删除公司职位
+     */
+    public function destroy(CompanyMemberPosition $companyMemberPosition)
+    {
+        $companyMemberPosition->delete();
+        return $this->response->noContent();
     }
 
     /**

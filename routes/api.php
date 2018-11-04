@@ -30,8 +30,10 @@ $api->version('v1', [
 
         $api->resource('company/members', 'CompanyMemberController');
 
-        $api->resource('company/positions', 'CompanyMemberPositionController', ['except' => 'update']);
+        $api->get('company/positions', 'CompanyMemberPositionController@index');
+        $api->post('company/positions', 'CompanyMemberPositionController@store');
         $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');
+        $api->delete('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@destroy');
 
         $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');
     });
