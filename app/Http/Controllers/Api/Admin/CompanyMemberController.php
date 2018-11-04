@@ -31,7 +31,7 @@ class CompanyMemberController extends Controller
     /**
      * 创建公司成员
      */
-    public function create(CreateCompanyMemberRequest $request, CompanyMember $companyMember)
+    public function store(CreateCompanyMemberRequest $request, CompanyMember $companyMember)
     {
         $companyMember->fill($request->all());
         $companyMember->save();

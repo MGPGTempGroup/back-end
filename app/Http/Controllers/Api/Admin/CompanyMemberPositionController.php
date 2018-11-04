@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use App\CompanyMemberPosition;
 use App\CompanyDepartment;
 
+use DB;
+
 class CompanyMemberPositionController extends Controller
 {
     /**
@@ -83,5 +85,21 @@ class CompanyMemberPositionController extends Controller
         $companyDepartment->fill($request->all());
         $companyDepartment->save();
         return $this->response->item($companyDepartment, new CompanyDepartmentTransformer());
+    }
+
+    /**
+     * 删除公司部门
+     */
+    public function destroyDepartment(CompanyDepartment $companyDepartment)
+    {
+        DB::transaction(function () use ($companyDepartment) {
+            // 查找出关联职位
+            $companyDepartment->positions->each(function ($position) {
+                $position->members()->sync([]);
+                $position->delete();
+            });
+            $companyDepartment->delete();
+        });
+        return $this->response->noContent();
     }
 }
