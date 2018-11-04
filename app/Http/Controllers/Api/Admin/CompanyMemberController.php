@@ -37,4 +37,13 @@ class CompanyMemberController extends Controller
         $companyMember->positions()->attach(explode(',', $request->positions));
         return $this->response->item($companyMember, new CompanyMemberTransformer());
     }
+
+    /**
+     * 删除公司成员
+     */
+    public function destroy(CompanyMember $companyMember)
+    {
+        $companyMember->delete();
+        return $this->response->noContent();
+    }
 }
