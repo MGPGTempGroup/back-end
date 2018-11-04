@@ -77,4 +77,14 @@ class ServiceController extends Controller
 
         return $this->response->item($serviceArea, new ServiceAreaTransformer());
     }
+
+    /**
+     * 删除服务地区
+     */
+    public function destroyServiceArea(ServiceArea $serviceArea)
+    {
+        $serviceArea->delete();
+
+        return $this->response->noContent();
+    }
 }

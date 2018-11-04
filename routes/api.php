@@ -23,6 +23,7 @@ $api->version('v1', [
         $api->get('service-areas', 'ServiceController@showServiceAreas');
         $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
         $api->patch('service-areas/{serviceArea}', 'ServiceController@updateServiceArea');
+        $api->delete('service-areas/{serviceArea}', 'ServiceController@destroyServiceArea');
 
         // 公司信息相关
         $api->get('company/info', 'CompanyInfoController@show');
