@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CreateCompanyMemberRequest;
 
 use App\CompanyMember;
+use App\Http\Requests\Admin\UpdateCompanyMemberRequest;
+use App\Http\Requests\Admin\CreateCompanyMemberRequest;
 use App\Http\Response\Transformers\Admin\CompanyMemberTransformer;
 
 class CompanyMemberController extends Controller
@@ -35,6 +36,19 @@ class CompanyMemberController extends Controller
         $companyMember->fill($request->all());
         $companyMember->save();
         $companyMember->positions()->attach(explode(',', $request->positions));
+        return $this->response->item($companyMember, new CompanyMemberTransformer());
+    }
+
+    /**
+     * 修改公司成员接口
+     */
+    public function update(UpdateCompanyMemberRequest $request, CompanyMember $companyMember)
+    {
+        $companyMember->fill($request->all());
+        $companyMember->save();
+        if ($request->positions) {
+            $companyMember->positions()->sync(explode(',', $request->positions));
+        }
         return $this->response->item($companyMember, new CompanyMemberTransformer());
     }
 
