@@ -27,8 +27,12 @@ $api->version('v1', [
         // 公司信息相关
         $api->get('company/info', 'CompanyInfoController@show');
         $api->patch('company/info', 'CompanyInfoController@update');
+
         $api->resource('company/members', 'CompanyMemberController');
-        $api->resource('company/positions', 'CompanyMemberPositionController');
+
+        $api->resource('company/positions', 'CompanyMemberPositionController', ['except' => 'update']);
+        $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');
+
         $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');
     });
 });

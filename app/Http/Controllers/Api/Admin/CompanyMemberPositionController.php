@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateCompanyMemberPositionRequest;
+use App\Http\Requests\Admin\UpdateCompanyMemberPositionRequest;
 use App\Http\Response\Transformers\Admin\CompanyDepartmentTransformer;
 use App\Http\Response\Transformers\Admin\CompanyMemberPositionTransformer;
 use Illuminate\Http\Request;
@@ -27,6 +28,16 @@ class CompanyMemberPositionController extends Controller
      * 创建公司职位
      */
     public function store(CreateCompanyMemberPositionRequest $request, CompanyMemberPosition $companyMemberPosition)
+    {
+        $companyMemberPosition->fill($request->all());
+        $companyMemberPosition->save();
+        return $this->response->item($companyMemberPosition, new CompanyMemberPositionTransformer());
+    }
+
+    /**
+     * 修改公司职位列表
+     */
+    public function update(UpdateCompanyMemberPositionRequest $request, CompanyMemberPosition $companyMemberPosition)
     {
         $companyMemberPosition->fill($request->all());
         $companyMemberPosition->save();
