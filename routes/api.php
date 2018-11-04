@@ -29,5 +29,6 @@ $api->version('v1', [
         $api->patch('company/info', 'CompanyInfoController@update');
         $api->resource('company/members', 'CompanyMemberController');
         $api->resource('company/positions', 'CompanyMemberPositionController');
+        $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');
     });
 });
