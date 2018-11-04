@@ -37,5 +37,6 @@ $api->version('v1', [
 
         $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');
         $api->post('company/departments', 'CompanyMemberPositionController@createDepartment');
+        $api->patch('company/departments/{companyDepartment}', 'CompanyMemberPositionController@updateDepartment');
     });
 });

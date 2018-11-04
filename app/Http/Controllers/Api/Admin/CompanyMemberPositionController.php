@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateCompanyDepartmentRequest;
 use App\Http\Requests\Admin\CreateCompanyMemberPositionRequest;
+use App\Http\Requests\Admin\UpdateCompanyDepartmentRequest;
 use App\Http\Requests\Admin\UpdateCompanyMemberPositionRequest;
 use App\Http\Response\Transformers\Admin\CompanyDepartmentTransformer;
 use App\Http\Response\Transformers\Admin\CompanyMemberPositionTransformer;
@@ -68,6 +69,16 @@ class CompanyMemberPositionController extends Controller
      * 创建公司部门
      */
     public function createDepartment(CreateCompanyDepartmentRequest $request, CompanyDepartment $companyDepartment)
+    {
+        $companyDepartment->fill($request->all());
+        $companyDepartment->save();
+        return $this->response->item($companyDepartment, new CompanyDepartmentTransformer());
+    }
+
+    /**
+     * 修改公司部门
+     */
+    public function updateDepartment(UpdateCompanyDepartmentRequest $request, CompanyDepartment $companyDepartment)
     {
         $companyDepartment->fill($request->all());
         $companyDepartment->save();
