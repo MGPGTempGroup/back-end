@@ -36,5 +36,6 @@ $api->version('v1', [
         $api->delete('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@destroy');
 
         $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');
+        $api->post('company/departments', 'CompanyMemberPositionController@createDepartment');
     });
 });
