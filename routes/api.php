@@ -45,6 +45,9 @@ $api->version('v1', [
             $api->post('company/departments', 'CompanyMemberPositionController@createDepartment');
             $api->patch('company/departments/{companyDepartment}', 'CompanyMemberPositionController@updateDepartment');
             $api->delete('company/departments/{companyDepartment}', 'CompanyMemberPositionController@destroyDepartment');
+
+            // 媒体文件上传
+            $api->post('images', 'MediaFileController@uploadImage');
         });
     });
 });
