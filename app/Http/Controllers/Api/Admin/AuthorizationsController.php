@@ -19,7 +19,7 @@ class AuthorizationsController extends Controller
             'password' => $request->password
         ];
 
-        if (!$token = Auth::guard('admin')->attempt($credentials)) {
+        if (!$token = Auth::guard('api')->attempt($credentials)) {
             return $this->response->errorUnauthorized('Email or password error');
         }
 
