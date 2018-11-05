@@ -46,6 +46,9 @@ $api->version('v1', [
             $api->patch('company/departments/{companyDepartment}', 'CompanyMemberPositionController@updateDepartment');
             $api->delete('company/departments/{companyDepartment}', 'CompanyMemberPositionController@destroyDepartment');
 
+            // 物业业主相关
+            $api->resource('property-owners', 'PropertyOwnerController');
+
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
         });
