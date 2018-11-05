@@ -43,12 +43,7 @@ return [
 
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
-        ],
-
-        'admin' => [
-            'driver' => 'jwt',
-            'provider' => 'admin_users'
+            'provider' => 'users', // 注：DefineAPIGuardProvider中间件将会动态改变此处Provider配置
         ]
     ],
 
