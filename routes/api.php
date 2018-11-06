@@ -49,6 +49,9 @@ $api->version('v1', [
             // 物业业主相关
             $api->resource('property-owners', 'PropertyOwnerController');
 
+            // 出售房屋
+            $api->resource('residences', 'ResidenceController');
+
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
         });
