@@ -30,4 +30,13 @@ class PropertyOwnerController extends Controller
         $propertyOwner->save();
         return $this->response->item($propertyOwner, new PropertyOwnerTransformer());
     }
+
+    /**
+     * 删除物业业主接口
+     */
+    public function destroy(PropertyOwner $propertyOwner)
+    {
+        $propertyOwner->delete(); // 软删除
+        return $this->response->noContent();
+    }
 }

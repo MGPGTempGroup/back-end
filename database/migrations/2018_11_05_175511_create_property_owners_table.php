@@ -26,6 +26,7 @@ class CreatePropertyOwnersTable extends Migration
             $table->unsignedTinyInteger('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
