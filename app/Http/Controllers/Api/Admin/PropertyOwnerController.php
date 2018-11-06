@@ -11,6 +11,24 @@ use App\PropertyOwner;
 
 class PropertyOwnerController extends Controller
 {
+
+    /**
+     * 展示物业业主列表
+     */
+    public function index(PropertyOwner $propertyOwner)
+    {
+        $owners = $propertyOwner->paginate(20);
+        return $this->response->paginator($owners, new PropertyOwnerTransformer());
+    }
+
+    /**
+     * 展示物主详情
+     */
+    public function show(PropertyOwner $propertyOwner)
+    {
+        return $this->response->item($propertyOwner, new PropertyOwnerTransformer());
+    }
+
     /**
      * 创建物业业主
      */
@@ -32,7 +50,7 @@ class PropertyOwnerController extends Controller
     }
 
     /**
-     * 删除物业业主接口
+     * 删除物业业主
      */
     public function destroy(PropertyOwner $propertyOwner)
     {
