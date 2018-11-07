@@ -23,6 +23,14 @@ class ResidenceController extends Controller
     }
 
     /**
+     * 展示出售房屋详情数据
+     */
+    public function show(Residence $residence)
+    {
+        return $this->response->item($residence, new ResidenceTransformer());
+    }
+
+    /**
      * 创建出售房屋数据
      */
     public function store(CreateResidenceRequest $request, Residence $residence)
