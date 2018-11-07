@@ -38,6 +38,8 @@ class ResidenceTransformer extends TransformerAbstract
             'max_price' => $residence->max_price,
             'upcoming_inspections_start_time' => $residence->upcoming_inspections_start_time,
             'upcoming_inspections_end_time' => $residence->upcoming_inspection_end_time,
+            'available_start_date' => $residence->available_start_date,
+            'available_end_date' => $residence->available_end_date,
             'constructed_in' => $residence->constructed_in,
             'built_in' => $residence->built_in,
             'sort_number' => $residence->sort_number,
