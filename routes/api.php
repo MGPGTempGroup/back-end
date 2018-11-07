@@ -52,6 +52,9 @@ $api->version('v1', [
             // 出售房屋
             $api->resource('residences', 'ResidenceController');
 
+            // 租赁房屋
+            $api->resource('leases', 'LeaseController');
+
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
             $api->get('images/{key}', 'MediaFileController@showImage');

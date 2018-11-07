@@ -17,24 +17,25 @@ class CreateLeasesTable extends Migration
             $table->increments('id');
 
             $table->string('name'); // 房屋名称
-            $table->unsignedTinyInteger('property_type'); // 房屋类型
+            $table->unsignedTinyInteger('property_type_id'); // 房屋类型
             $table->text('introduction')->nullable(); // 房屋简短介绍
-            $table->unsignedInteger('floor_space'); // 房屋面积
+            $table->unsignedInteger('floor_space')->nullable(); // 房屋面积
             $table->mediumText('details'); // 房屋详情
             $table->text('broadcast_pictures'); // 房屋环境图片
 
             $table->string('country_code'); // 国家代码
             $table->string('state_code'); // 州代码
             $table->string('city_code'); // 市代码
-            $table->string('part_name'); // 地区名称
-            $table->string('street_name'); // 街道名称
-            $table->string('street_code'); // 街道号码
-            $table->string('house_number'); // 门牌号
+            $table->string('area_name')->nullable(); // 地区名称
+            $table->string('suburb_name')->nullable(); // 郊区名称
+            $table->string('street_name')->nullable(); // 街道名称
+            $table->string('street_code')->nullable(); // 街道号码
+            $table->string('house_number')->nullable(); // 门牌号
             $table->string('post_code'); // 邮政编码
-            $table->string('detailed_address'); // 详细地址
+            $table->string('detailed_address')->nullable(); // 详细地址
             $table->string('address_description')->nullable(); // 地址额外描述
 
-            $table->point('map_coordinates'); // 详细地图坐标
+            $table->string('map_coordinates'); // 详细地图坐标
 
             $table->unsignedTinyInteger('bedrooms')->default(0); // 卧室数量
             $table->unsignedTinyInteger('bathrooms')->default(0); // 淋浴数量
@@ -55,7 +56,8 @@ class CreateLeasesTable extends Migration
 
             $table->dateTime('upcoming_inspections_start_time')->nullable(); // 即将到来的检查开始时间
             $table->dateTime('upcoming_inspections_end_time')->nullable(); // 即将到来的检查结束时间
-            $table->dateTime('available_date'); // 可用日期
+            $table->dateTime('available_start_date')->nullable(); // 可用日期
+            $table->dateTime('available_end_date')->nullable(); // 可用日期
 
             $table->unsignedInteger('sort_number')->default(0); // 排序号码
 
@@ -67,6 +69,8 @@ class CreateLeasesTable extends Migration
             $table->unsignedInteger('uv')->nullable();
 
             $table->unsignedInteger('owner_id'); // 物主id
+
+            $table->softDeletes(); // deleted_at
 
             $table->timestamps();
         });
