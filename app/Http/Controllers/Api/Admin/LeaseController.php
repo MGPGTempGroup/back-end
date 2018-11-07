@@ -11,6 +11,17 @@ use App\Lease;
 
 class LeaseController extends Controller
 {
+
+    /**
+     * 展示租赁房屋列表
+     */
+    public function index(Request $request, Lease $lease)
+    {
+        $pageSize = (int)$request->pagesize ?: 20;
+        $leases = $lease->paginate($pageSize);
+        return $this->response->paginator($leases, new LeaseTransformer());
+    }
+
     /**
      * 创建租赁房屋
      */
