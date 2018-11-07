@@ -14,6 +14,15 @@ class ResidenceController extends Controller
 {
 
     /**
+     * 获取出售房屋数据列表
+     */
+    public function index(Request $request, Residence $residence)
+    {
+        $pageSize = (int)$request->pagesize ?: 20;
+        return $this->response->paginator($residence->paginate($pageSize), new ResidenceTransformer());
+    }
+
+    /**
      * 创建出售房屋数据
      */
     public function store(CreateResidenceRequest $request, Residence $residence)
