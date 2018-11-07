@@ -64,6 +64,8 @@ class CreateResidencesTable extends Migration
 
             $table->unsignedInteger('owner_id'); // 物主id
 
+            $table->softDeletes(); // deleted_at
+
             $table->timestamps();
         });
     }

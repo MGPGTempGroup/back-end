@@ -50,4 +50,13 @@ class ResidenceController extends Controller
         return $this->response->item($residence, new ResidenceTransformer());
     }
 
+    /**
+     * 软删除出售房屋数据
+     */
+    public function destroy(Residence $residence)
+    {
+        $residence->delete();
+        return $this->response->noContent();
+    }
+
 }
