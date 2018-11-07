@@ -49,4 +49,13 @@ class LeaseController extends Controller
         $lease->save();
         return $this->response->item($lease, new LeaseTransformer());
     }
+
+    /**
+     * 软删除租赁房屋数据
+     */
+    public function destroy(Lease $lease)
+    {
+        $lease->delete();
+        return $this->response->noContent();
+    }
 }
