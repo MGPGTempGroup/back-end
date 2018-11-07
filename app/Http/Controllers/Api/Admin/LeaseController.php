@@ -23,6 +23,14 @@ class LeaseController extends Controller
     }
 
     /**
+     * 展示租赁房屋数据详情
+     */
+    public function show(Lease $lease)
+    {
+        return $this->response->item($lease, new LeaseTransformer());
+    }
+
+    /**
      * 创建租赁房屋
      */
     public function store(CreateLeaseRequest $request, Lease $lease)
