@@ -21,16 +21,19 @@ class MediaFileController extends Controller
         if (! $file->isValid()) $this->response->errorInternal('Upload failed.');
 
         $path = $file->store('/images', 'public');
+        $key = md5(microtime() . mt_rand(0, 300) . $file->extension());
 
         $mediaFile->fill([
             'path' => $path,
-            'key' => md5(microtime() . mt_rand(0, 300) . $file->extension()),
+            'key' => $key,
             'mime_type' => $file->getMimeType(),
             'suffix' => $file->extension()
         ]);
         $mediaFile->save();
 
-        return $this->response->created();
+        return $this->response->array([
+            'key' => $key
+        ])->setStatusCode(201);
     }
 
 }
