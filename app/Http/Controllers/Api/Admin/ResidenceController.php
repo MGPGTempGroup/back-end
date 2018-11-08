@@ -37,6 +37,7 @@ class ResidenceController extends Controller
     {
         $residence->fill($request->all());
         $residence->save();
+        $residence->propertyType()->attach($request->property_type_id);
         return $this->response->item($residence, new ResidenceTransformer());
     }
 
@@ -47,6 +48,9 @@ class ResidenceController extends Controller
     {
         $residence->fill($request->all());
         $residence->save();
+        if ($request->property_type_id) {
+            $residence->propertyType()->sync($request->property_type_id);
+        }
         return $this->response->item($residence, new ResidenceTransformer());
     }
 

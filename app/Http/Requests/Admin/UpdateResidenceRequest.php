@@ -2,17 +2,32 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\PropertyType;
+
 class UpdateResidenceRequest extends BaseRequest
 {
     public function rules()
     {
         return [
             'name' => 'string',
-            'property_type_id' => 'exists:property_types,id',
+            'property_type_id' => [
+                'array',
+                function ($k, $v, $fail) {
+                    $idList = array_map(function ($item) {
+                        return (int) $item;
+                    }, $v);
+                    if (PropertyType::whereIn('id', $idList)->count() !== count($idList)) {
+                        return $fail('Property type ID does not exist.');
+                    }
+                    $this->merge([
+                        'property_type_id' => $idList
+                    ]);
+                }
+            ],
             'introduction' => 'string',
             'floor_space' => 'numeric',
             'details' => 'string',
-            'broadcast_pictures' => 'json',
+            'broadcast_pictures' => 'array',
             'country_code' => 'string',
             'state_code' => 'string',
             'city_code' => 'string',
