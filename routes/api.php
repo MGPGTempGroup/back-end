@@ -29,6 +29,8 @@ $api->version('v1', [
             $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
             $api->patch('service-areas/{serviceArea}', 'ServiceController@updateServiceArea');
             $api->delete('service-areas/{serviceArea}', 'ServiceController@destroyServiceArea');
+            $api->get('services/{service}/messages', 'ServiceMessageController@show');
+            $api->get('service-messages', 'ServiceMessageController@index');
 
             // 公司信息相关
             $api->get('company/info', 'CompanyInfoController@show');

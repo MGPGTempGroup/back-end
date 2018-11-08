@@ -14,7 +14,7 @@ class CustomerIdentityTableSeeder extends Seeder
         $identities = ['Landlord', 'Tenant', 'Purchaser', 'Vendor', 'Other'];
         foreach ($identities as $identity) {
             factory(App\CustomerIdentity::class)->create([
-                'identity' => $identity
+                'name' => $identity
             ]);
         }
     }

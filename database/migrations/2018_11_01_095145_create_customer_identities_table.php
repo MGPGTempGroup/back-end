@@ -15,7 +15,7 @@ class CreateCustomerIdentitiesTable extends Migration
     {
         Schema::create('customer_identities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('identity'); // 身份
+            $table->string('name'); // 身份
             $table->timestamps();
         });
     }
