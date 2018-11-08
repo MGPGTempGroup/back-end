@@ -17,7 +17,6 @@ class CreateLeasesTable extends Migration
             $table->increments('id');
 
             $table->string('name'); // 房屋名称
-            $table->unsignedTinyInteger('property_type_id'); // 房屋类型
             $table->text('introduction')->nullable(); // 房屋简短介绍
             $table->unsignedInteger('floor_space')->nullable(); // 房屋面积
             $table->mediumText('details'); // 房屋详情

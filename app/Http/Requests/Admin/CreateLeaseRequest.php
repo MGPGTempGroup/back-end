@@ -2,17 +2,33 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\PropertyType;
+
 class CreateLeaseRequest extends BaseRequest
 {
     public function rules()
     {
         return [
             'name' => 'bail|required|string',
-            'property_type_id' => 'bail|required|exists:property_types,id',
+            'property_type_id' => [
+                'required',
+                'array',
+                function ($k, $v, $fail) {
+                    $idList = array_map(function ($item) {
+                        return (int) $item;
+                    }, $v);
+                    if (PropertyType::whereIn('id', $idList)->count() !== count($idList)) {
+                        return $fail('Property type ID does not exist.');
+                    }
+                    $this->merge([
+                        'property_type_id' => $idList
+                    ]);
+                }
+            ],
             'introduction' => 'string',
             'floor_space' => 'numeric',
             'details' => 'bail|required|string',
-            'broadcast_pictures' => 'bail|required|json',
+            'broadcast_pictures' => ['bail', 'required', 'array'],
             'country_code' => 'bail|required|string',
             'state_code' => 'bail|required|string',
             'city_code' => 'bail|required|string',

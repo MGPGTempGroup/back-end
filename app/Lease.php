@@ -12,7 +12,6 @@ class Lease extends Model
 
     protected $fillable = [
         'name',
-        'property_type_id',
         'introduction',
         'floor_space',
         'details',
@@ -78,13 +77,23 @@ class Lease extends Model
         'sort_number' => 0,
     ];
 
+    public function setBroadcastPicturesAttribute($val)
+    {
+        return $this->attributes['broadcast_pictures'] = json_encode($val);
+    }
+
+    public function getBroadcastPicturesAttribute($val)
+    {
+        return json_decode($val);
+    }
+
     public function owner()
     {
         return $this->belongsTo(PropertyOwner::class, 'owner_id', 'id');
     }
 
-    public function property_type()
+    public function propertyType()
     {
-        return $this->belongsTo(PropertyType::class, 'property_type_id', 'id');
+        return $this->belongsToMany(PropertyType::class, 'lease_property_type', 'lease_id', 'property_type_id');
     }
 }

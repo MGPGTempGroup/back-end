@@ -12,8 +12,7 @@ class LeaseTransformer extends TransformerAbstract
         return [
             'id' => $lease->id,
             'name' => $lease->name,
-            'property_type_id' => $lease->property_type_id,
-            'property_type' => $lease->property_type,
+            'property_type' => $lease->propertyType,
             'introduction' => $lease->introduction,
             'floor_space' => $lease->floor_space,
             'details' => $lease->details,

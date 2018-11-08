@@ -37,6 +37,7 @@ class LeaseController extends Controller
     {
         $lease->fill($request->all());
         $lease->save();
+        $lease->propertyType()->attach($request->property_type_id);
         return $this->response->item($lease, new LeaseTransformer());
     }
 
@@ -47,6 +48,9 @@ class LeaseController extends Controller
     {
         $lease->fill($request->all());
         $lease->save();
+        if ($request->property_type_id) {
+            $lease->propertyType()->sync($request->property_type_id);
+        }
         return $this->response->item($lease, new LeaseTransformer());
     }
 
