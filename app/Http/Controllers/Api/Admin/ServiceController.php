@@ -20,23 +20,18 @@ class ServiceController extends Controller
     /**
      * 展示服务相关内容
      */
-    public function show(Request $request)
+    public function show(Request $request, Service $service)
     {
-        $service = Service::byName($request->service)->first();
-
         return $this->response->item($service, new ServiceTransformer());
     }
 
     /**
      * 修改服务内容
      */
-    public function update(ServiceUpdateRequest $request)
+    public function update(ServiceUpdateRequest $request, Service $service)
     {
-        $service = Service::byName($request->service)->first();
-
         $service->fill($request->all());
         $service->save();
-
         return $this->response->item($service, new ServiceTransformer());
     }
 
