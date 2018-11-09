@@ -35,9 +35,10 @@ class ServiceMessageController extends Controller
     /**
      * 软删除留言
      */
-    public function delete()
+    public function delete(ServiceMessage $serviceMessage)
     {
-
+        $serviceMessage->delete();
+        return $this->response->noContent();
     }
 
 }

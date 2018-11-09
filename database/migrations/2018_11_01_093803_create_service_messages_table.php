@@ -22,6 +22,7 @@ class CreateServiceMessagesTable extends Migration
             $table->unsignedSmallInteger('identity_id'); // 用户身份id
             $table->unsignedInteger('service_id'); // 所属服务id
             $table->unsignedInteger('remote_address'); // ip地址 - 整型格式
+            $table->softDeletes();
             $table->timestamps();
         });
     }
