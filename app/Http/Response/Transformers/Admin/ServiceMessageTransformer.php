@@ -10,6 +10,7 @@ class ServiceMessageTransformer extends TransformerAbstract
     public function transform(ServiceMessage $serviceMessage)
     {
         return [
+            'id' => $serviceMessage->id,
             'name' => $serviceMessage->name,
             'surname' => $serviceMessage->surname,
             'phone' => $serviceMessage->phone,

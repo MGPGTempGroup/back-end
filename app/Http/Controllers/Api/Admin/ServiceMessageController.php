@@ -13,22 +13,21 @@ class ServiceMessageController extends Controller
 {
 
     /**
-     * 展示服务页面留言列表
+     * 展示所有服务页面留言列表
      */
     public function index(Request $request, ServiceMessage $serviceMessage)
     {
-        $pageSize = (int) $request->pagesize ?? 20;
-        $messages = $serviceMessage->paginate($pageSize);
+        $messages = $this->buildEloquentBuilderThroughQs($serviceMessage)->paginate();
         return $this->response->paginator($messages, new ServiceMessageTransformer());
     }
 
     /**
-     * 通过id展示某一留言详情
+     * 展示某一服务下留言
      */
     public function show(Request $request, Service $service)
     {
-        $pageSize = (int) $request->pagesize ?? 20;
-        $messages = $service->messages()->with(['identity'])->paginate($pageSize);
+        $messagesRelation = $service->messages()->with(['identity']);
+        $messages = $this->buildEloquentBuilderThroughQs($messagesRelation)->paginate();
         return $this->response->paginator($messages, new ServiceMessageTransformer());
     }
 
