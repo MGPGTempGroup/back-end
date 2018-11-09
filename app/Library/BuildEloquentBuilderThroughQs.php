@@ -9,17 +9,19 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 trait BuildEloquentBuilderThroughQs
 {
 
-    // Request实例
+    // Current request instance
     public $request;
 
-    // 通过解析查询字符串后的条件列表
+    // Conditional list obtained by parsing query string
     public $conditions = [
         'orderby' => [],
+        'where' => [],
         'pagesize' => 15
     ];
 
     /**
      * BuildEloquentBuilderThroughQs constructor.
+     *
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -28,45 +30,85 @@ trait BuildEloquentBuilderThroughQs
     }
 
     /**
-     * 返回通过查询字符串构建查询条件之后的Eloquent Builder
+     * Returns the Eloquent Builder after constructing the query condition through the query string
      *
      * @param $model
      * @return $this
      */
     public function buildEloquentBuilderThroughQs($model)
     {
-        return $this->parseQueryString()->build($model);
+        return $this->parser()->build($model);
     }
 
     /**
-     * 解析查询字符串，找出指定的查询条件
+     * Parsing query strings
      *
      * @return $this
      */
-    protected function parseQueryString()
+    protected function parser()
     {
         $queryString = array_change_key_case($this->request->query());
 
-        foreach ($queryString as $condition => $val) {
-
-            if (!$val) continue;
-
-            // 解析排序条件参数
-            if (stripos($condition, 'orderby') === 0) {
-                $column = explode('orderby', $condition)[1];
-                $this->conditions['orderby'][$column] = $val;
-            }
-            // 解析分页大小参数
-            if (strcmp($condition, 'pagesize') === 0) {
-                $this->conditions['pagesize'] = (int) $val;
-            }
+        foreach ($queryString as $key => $val) {
+            if (! $val) continue;
+            $this->parseOrderClausesThroughQs($key, $val);
+            $this->parseWhereClausesThroughQs($key, $val);
+            $this->parsePageSizeThroughQs($key, $val);
         }
 
         return $this;
     }
 
     /**
-     * 通过解析查询字符串得到的条件列表构建QueryBuilder
+     * Parse order clauses through query string
+     *
+     * @param $key
+     * @param $val
+     */
+    protected function parseOrderClausesThroughQs($key, $val)
+    {
+        if (strpos($key, 'orderby_') === 0) {
+            $column = substr($key, 8);
+            array_push($this->conditions['orderby'], [$column => $val]);
+        }
+    }
+
+    /**
+     * Parse like clauses through query string
+     *
+     * @param $key
+     * @param $val
+     */
+    protected function parseWhereClausesThroughQs($key, $val)
+    {
+        if (($i = strpos($key, '_like')) !== false) {
+            $column = substr($key, 0, $i);
+            if (is_array($val)) {
+                $clauses = array_map(function ($item) use ($column) {
+                    return [$column, 'like', $item];
+                }, $val);
+                array_push($this->conditions['where'], ...$clauses);
+            } else {
+                array_push($this->conditions['where'], [$column, 'like', $val]);
+            }
+        }
+    }
+
+    /**
+     * Parse pageSize through query string
+     *
+     * @param $key
+     * @param $val
+     */
+    protected function parsePageSizeThroughQs($key, $val)
+    {
+        if (strcmp($key, 'pagesize') === 0) {
+            $this->conditions['pagesize'] = (int) $val;
+        }
+    }
+
+    /**
+     * Building queryBuilder through conditions
      *
      * @param $model
      * @return $this
@@ -90,6 +132,9 @@ trait BuildEloquentBuilderThroughQs
         foreach ($this->conditions['orderby'] as $column => $sortRule) {
             $eloquentBuilder = $eloquentBuilder->orderBy($column, $sortRule);
         }
+
+        // 添加where条件
+        $eloquentBuilder = $eloquentBuilder->where($this->conditions['where']);
 
         return $eloquentBuilder;
     }
