@@ -61,6 +61,7 @@ $api->version('v1', [
             $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
             $api->post('residences/{residence}/remarks', 'ResidenceRemarkController@store');
             $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update');
+            $api->delete('residence-remark/{residenceRemark}', 'ResidenceRemarkController@destroy');
 
             // 租赁房屋
             $api->resource('leases', 'LeaseController');

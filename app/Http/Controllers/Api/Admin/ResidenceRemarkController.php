@@ -47,4 +47,13 @@ class ResidenceRemarkController extends Controller
 
         return $this->response->item($residenceRemark, new ResidenceRemarkTransformer());
     }
+
+    /**
+     * 软删除出售房屋备注数据
+     */
+    public function destroy(ResidenceRemark $residenceRemark)
+    {
+        $residenceRemark->delete();
+        return $this->response->noContent();
+    }
 }
