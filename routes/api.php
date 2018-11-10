@@ -60,6 +60,7 @@ $api->version('v1', [
             $api->resource('residences', 'ResidenceController');
             $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
             $api->post('residences/{residence}/remarks', 'ResidenceRemarkController@store');
+            $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update');
 
             // 租赁房屋
             $api->resource('leases', 'LeaseController');
