@@ -10,7 +10,7 @@ use Auth;
 class AuthorizationsController extends Controller
 {
     /**
-     * Authenticate user login
+     * 登录接口
      */
     public function authenticate(AuthticateRequest $request)
     {
@@ -28,5 +28,14 @@ class AuthorizationsController extends Controller
             'token_type' => 'Bearer',
             'expire_at' => time() + Auth::guard('api')->factory()->getTTL() * 60
         ])->setStatusCode(201);
+    }
+
+    /**
+     * 退出接口
+     */
+    public function logout()
+    {
+        Auth::guard('api')->logout();
+        return $this->response->noContent();
     }
 }

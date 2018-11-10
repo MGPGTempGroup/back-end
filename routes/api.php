@@ -16,11 +16,15 @@ $api->version('v1', [
     ], function ($api) {
 
         // 登录
-        $api->post('login', 'AuthorizationsController@authenticate');
+        $api->post('authorizations', 'AuthorizationsController@authenticate');
 
         $api->group([
             'middleware' => ['api.auth']
         ], function ($api) {
+
+            // 账户登出接口
+            $api->delete('authorizations/current', 'AuthorizationsController@logout');
+
             // 服务内容相关
             $api->get('services/{service}', 'ServiceController@show');
             $api->patch('services/{service}', 'ServiceController@update');
