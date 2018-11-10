@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeaseRemark extends Model
 {
+
+    use SoftDeletes;
+
     protected $fillable = ['admin_user_id', 'content', 'lease_id'];
 
     public function lease()

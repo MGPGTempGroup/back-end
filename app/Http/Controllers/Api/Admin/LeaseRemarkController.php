@@ -13,7 +13,7 @@ class LeaseRemarkController extends Controller
 {
 
     /**
-     * 获取某一个租赁房屋数据留言列表
+     * 获取某一个租赁房屋数据备注列表
      */
     public function index(Lease $lease)
     {
@@ -23,7 +23,7 @@ class LeaseRemarkController extends Controller
     }
 
     /**
-     * 存储租赁房屋留言数据
+     * 存储租赁房屋备注数据
      */
     public function store(CreateLeaseRemarkRequest $request, LeaseRemark $leaseRemark, $lease)
     {
@@ -34,6 +34,15 @@ class LeaseRemarkController extends Controller
         $leaseRemark->save();
 
         return $this->response->item($leaseRemark, new LeaseRemarkTransformer());
+    }
+
+    /**
+     * 删除租赁房屋备注数据
+     */
+    public function destroy(LeaseRemark $leaseRemark)
+    {
+        $leaseRemark->delete();
+        return $this->response->noContent();
     }
 
 }
