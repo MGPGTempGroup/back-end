@@ -44,7 +44,7 @@ class LeaseRemarkController extends Controller
     {
         $leaseRemark->content = $request->input('content');
         $leaseRemark->save();
-        
+
         return $this->response->item($leaseRemark, new LeaseRemarkTransformer());
     }
 
