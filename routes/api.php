@@ -61,6 +61,8 @@ $api->version('v1', [
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
             $api->get('images/{key}', 'MediaFileController@showImage');
+            $api->post('videos/slice-upload', 'MediaFileController@sliceUploadVideo');
+            $api->post('videos/slice-upload-key', 'MediaFileController@createUploadVideoKey');
         });
     });
 });

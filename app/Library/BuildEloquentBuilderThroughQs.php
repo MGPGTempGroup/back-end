@@ -30,7 +30,7 @@ trait BuildEloquentBuilderThroughQs
     }
 
     /**
-     * Returns the Eloquent Builder after constructing the query condition through the query string
+     * Return the Eloquent Builder after constructing the query condition through the query string
      *
      * @param $model
      * @return $this
