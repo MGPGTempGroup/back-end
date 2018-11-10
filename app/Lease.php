@@ -96,4 +96,9 @@ class Lease extends Model
     {
         return $this->belongsToMany(PropertyType::class, 'lease_property_type', 'lease_id', 'property_type_id');
     }
+
+    public function remarks()
+    {
+        return $this->hasMany(LeaseRemark::class, 'lease_id', 'id');
+    }
 }

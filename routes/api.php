@@ -61,6 +61,7 @@ $api->version('v1', [
 
             // 租赁房屋
             $api->resource('leases', 'LeaseController');
+            $api->post('leases/{lease_id}/remarks', 'LeaseRemarkController@store');
 
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
