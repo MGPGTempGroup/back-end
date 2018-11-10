@@ -63,6 +63,7 @@ $api->version('v1', [
             $api->resource('leases', 'LeaseController');
             $api->get('leases/{lease}/remarks', 'LeaseRemarkController@index');
             $api->post('leases/{lease}/remarks', 'LeaseRemarkController@store');
+            $api->patch('lease-remarks/{leaseRemark}', 'LeaseRemarkController@update');
             $api->delete('lease-remarks/{leaseRemark}', 'LeaseRemarkController@destroy');
 
             // 媒体文件上传

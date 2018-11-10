@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateLeaseRemarkRequest;
+use App\Http\Requests\Admin\UpdateLeaseRemarkRequest;
 use App\Http\Response\Transformers\Admin\LeaseRemarkTransformer;
 use App\LeaseRemark;
 use App\Lease;
@@ -33,6 +34,17 @@ class LeaseRemarkController extends Controller
         $leaseRemark->lease_id = (int) $lease;
         $leaseRemark->save();
 
+        return $this->response->item($leaseRemark, new LeaseRemarkTransformer());
+    }
+
+    /**
+     * 修改租赁房屋备注数据
+     */
+    public function update(UpdateLeaseRemarkRequest $request, LeaseRemark $leaseRemark)
+    {
+        $leaseRemark->content = $request->input('content');
+        $leaseRemark->save();
+        
         return $this->response->item($leaseRemark, new LeaseRemarkTransformer());
     }
 
