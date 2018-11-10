@@ -69,7 +69,7 @@ trait BuildEloquentBuilderThroughQs
     {
         if (strpos($key, 'orderby_') === 0) {
             $column = substr($key, 8);
-            array_push($this->conditions['orderby'], [$column => $val]);
+            $this->conditions['orderby'][$column] = $val;
         }
     }
 
