@@ -7,9 +7,8 @@ use League\Fractal\TransformerAbstract;
 
 class LeaseRemarkTransformer extends TransformerAbstract
 {
-
     protected $defaultIncludes = [
-        'admin_user'
+        'creator'
     ];
 
     public function transform(LeaseRemark $leaseRemark)
@@ -24,9 +23,9 @@ class LeaseRemarkTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeAdminUser(LeaseRemark $leaseRemark)
+    public function includeCreator(LeaseRemark $leaseRemark)
     {
-        return $this->item($leaseRemark->adminUser, new AdminUserTransformer());
+        return $this->item($leaseRemark->creator, new AdminUserTransformer());
     }
 
 

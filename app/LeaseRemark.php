@@ -13,7 +13,7 @@ class LeaseRemark extends Model
         return $this->belongsTo(Lease::class, 'lease_id', 'id');
     }
 
-    public function adminUser()
+    public function creator()
     {
         return $this->belongsTo(AdminUser::class ,'admin_user_id', 'id');
     }
