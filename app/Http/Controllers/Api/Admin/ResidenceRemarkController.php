@@ -10,6 +10,18 @@ use App\Residence;
 
 class ResidenceRemarkController extends Controller
 {
+
+    /**
+     * 展示出售房屋备注数据列表
+     */
+    public function index(Residence $residence)
+    {
+        $residenceRemarkRelation = $residence->remarks();
+        $remarks = $this->buildEloquentBuilderThroughQs($residenceRemarkRelation)->paginate();
+
+        return $this->response->paginator($remarks, new ResidenceRemarkTransformer());
+    }
+
     /**
      * 创建出售房屋备注
      */

@@ -58,6 +58,7 @@ $api->version('v1', [
 
             // 出售房屋
             $api->resource('residences', 'ResidenceController');
+            $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
             $api->post('residences/{residence}/remarks', 'ResidenceRemarkController@store');
 
             // 租赁房屋

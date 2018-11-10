@@ -93,4 +93,9 @@ class residence extends Model
         return $this->belongsToMany(PropertyType::class, 'residence_property_type', 'residence_id', 'property_type_id');
     }
 
+    public function remarks()
+    {
+        return $this->hasMany(ResidenceRemark::class, 'residence_id', 'id');
+    }
+
 }
