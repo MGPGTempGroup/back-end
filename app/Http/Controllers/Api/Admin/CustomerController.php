@@ -11,6 +11,15 @@ class CustomerController extends Controller
 {
 
     /**
+     * 客户列表
+     */
+    public function index(Customer $customer)
+    {
+        $customers = $this->buildEloquentBuilderThroughQs($customer)->paginate();
+        return $this->response->paginator($customers, new CustomerTransformer());
+    }
+
+    /**
      * 创建客户
      */
     public function store(CreateCustomerRequest $request, Customer $customer)
