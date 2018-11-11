@@ -20,4 +20,12 @@ class CompanyMember extends Model
             'position_id')->withTimestamps();
     }
 
+    /**
+     * 成员所负责的客户关联关系
+     */
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class, 'customer_member', 'member_id', 'customer_id');
+    }
+
 }

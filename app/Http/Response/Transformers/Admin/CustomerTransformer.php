@@ -9,7 +9,7 @@ class CustomerTransformer extends TransformerAbstract
 {
 
     protected $defaultIncludes = [
-        'identity'
+        'identity', 'members'
     ];
 
     public function transform(Customer $customer)
@@ -31,6 +31,11 @@ class CustomerTransformer extends TransformerAbstract
     public function includeIdentity(Customer $customer)
     {
         return $this->item($customer->identity, new CustomerIdentityTransformer());
+    }
+
+    public function includeMembers(Customer $customer)
+    {
+        return $this->collection($customer->members, new CompanyMemberTransformer());
     }
 
 }
