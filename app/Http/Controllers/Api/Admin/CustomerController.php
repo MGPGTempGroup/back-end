@@ -40,4 +40,13 @@ class CustomerController extends Controller
         return $this->response->item($customer, new CustomerTransformer());
     }
 
+    /**
+     * 软删除客户数据
+     */
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+        return $this->response->noContent();
+    }
+
 }
