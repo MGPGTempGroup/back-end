@@ -37,6 +37,9 @@ $api->version('v1', [
             $api->get('service-messages', 'ServiceMessageController@index');
             $api->delete('service-messages/{serviceMessage}', 'ServiceMessageController@delete');
 
+            // 客户管理相关
+            $api->resource('customers', 'CustomerController');
+
             // 公司信息相关
             $api->get('company/info', 'CompanyInfoController@show');
             $api->patch('company/info', 'CompanyInfoController@update');

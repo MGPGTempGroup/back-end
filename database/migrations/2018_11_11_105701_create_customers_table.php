@@ -15,13 +15,13 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default(''); // 名称
-            $table->string('surname')->default(''); // 姓
-            $table->string('phone')->default('');
-            $table->string('wechat')->default('');
-            $table->string('email')->default('');
+            $table->string('name')->unique()->nullable(); // 名称
+            $table->string('surname'); // 姓
+            $table->string('phone')->unique()->nullable();
+            $table->string('wechat')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('address')->default('');
-            $table->unsignedTinyInteger('customer_identity_id'); // 身份
+            $table->unsignedTinyInteger('identity_id'); // 身份
             $table->softDeletes();
             $table->timestamps();
         });
