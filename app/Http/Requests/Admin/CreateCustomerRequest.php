@@ -10,9 +10,9 @@ class CreateCustomerRequest extends BaseRequest
             'name' => 'string',
             'surname' =>'bail|required|string',
             'identity_id' => 'bail|required|exists:customer_identities,id',
-            'phone' => 'bail|required_without_all:email,wechat|string',
-            'email' => 'bail|required_without_all:phone,wechat|string',
-            'wechat' => 'bail|required_without_all:phone,email|string',
+            'phone' => 'bail|string|required_without_all:email,wechat',
+            'email' => 'bail|string|email|required_without_all:phone,wechat',
+            'wechat' => 'bail|string|required_without_all:phone,email',
             'address' => 'string'
         ];
     }
