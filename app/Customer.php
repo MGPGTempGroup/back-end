@@ -24,7 +24,11 @@ class Customer extends Model
      */
     public function members()
     {
-        return $this->belongsToMany(CompanyMember::class, 'customer_member', 'customer_id', 'member_id');
+        return $this->belongsToMany(
+            CompanyMember::class,
+            'customer_member',
+            'customer_id',
+            'member_id')->withTimestamps();
     }
 
 }

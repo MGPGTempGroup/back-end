@@ -3,13 +3,17 @@
 namespace App\Http\Requests\Admin;
 
 use App\CompanyMember;
+use Illuminate\Validation\Rule;
 
 class UpdateCustomerRequest extends BaseRequest
 {
     public function rules()
     {
         return [
-            'name' => 'string',
+            'name' => [
+                'string',
+                Rule::unique('customers', 'name')->ignore($this->customer)
+            ],
             'surname' =>'string',
             'identity_id' => 'exists:customer_identities,id',
             'members_id' => [
@@ -24,9 +28,19 @@ class UpdateCustomerRequest extends BaseRequest
                     }
                 }
             ],
-            'phone' => 'string',
-            'email' => 'string|email',
-            'wechat' => 'string',
+            'phone' => [
+                'string',
+                Rule::unique('customers', 'phone')->ignore($this->customer)
+            ],
+            'email' => [
+                'string',
+                'email',
+                Rule::unique('customers', 'email')->ignore($this->customer)
+            ],
+            'wechat' => [
+                'string',
+                Rule::unique('customers', 'wechat')->ignore($this->customer)
+            ],
             'address' => 'string'
         ];
     }

@@ -28,7 +28,7 @@ class CustomerController extends Controller
         $customer->fill($request->all());
         $customer->save();
         if ($request->members_id) {
-            $customer->members()->sync($request->input('members_id'));
+            $customer->members()->attach($request->input('members_id'));
         }
         return $this->response->item($customer, new CustomerTransformer());
     }
