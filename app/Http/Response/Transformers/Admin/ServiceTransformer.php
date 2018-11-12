@@ -7,6 +7,11 @@ use App\Service;
 
 class ServiceTransformer extends TransformerAbstract
 {
+
+    protected $defaultIncludes = [
+        'members'
+    ];
+
     public function transform(Service $service)
     {
         return [
@@ -17,5 +22,10 @@ class ServiceTransformer extends TransformerAbstract
             'created_at' => $service->created_at->toDateTimeString(),
             'updated_at' => $service->updated_at->toDateTimeString()
         ];
+    }
+
+    public function includeMembers(Service $service)
+    {
+        return $this->collection($service->members, new CompanyMemberTransformer());
     }
 }

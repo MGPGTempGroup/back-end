@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\Admin\ServiceUpdateRequest;
+use App\Http\Requests\Admin\UpdateServiceRequest;
 use App\Http\Requests\Admin\CreateServiceAreaRequest;
 use App\Http\Requests\Admin\UpdateServiceAreaRequest;
 
@@ -28,10 +28,13 @@ class ServiceController extends Controller
     /**
      * 修改服务内容
      */
-    public function update(ServiceUpdateRequest $request, Service $service)
+    public function update(UpdateServiceRequest $request, Service $service)
     {
         $service->fill($request->all());
         $service->save();
+        if ($request->members) {
+            $service->members()->sync($request->members);
+        }
         return $this->response->item($service, new ServiceTransformer());
     }
 
