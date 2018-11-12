@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
@@ -25,14 +23,15 @@ $api->version('v1', [
             // 账户登出接口
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
 
-            // 服务内容相关
-            $api->get('services/{service}', 'ServiceController@show');
-            $api->patch('services/{service}', 'ServiceController@update');
+            // 服务相关
+            $api->resource('services', 'ServiceController')->only(['show, update']);
+
             $api->post('service-areas', 'ServiceController@createServiceArea');
             $api->get('service-areas', 'ServiceController@showServiceAreas');
             $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
             $api->patch('service-areas/{serviceArea}', 'ServiceController@updateServiceArea');
             $api->delete('service-areas/{serviceArea}', 'ServiceController@destroyServiceArea');
+
             $api->get('services/{service}/messages', 'ServiceMessageController@show');
             $api->get('service-messages', 'ServiceMessageController@index');
             $api->delete('service-messages/{serviceMessage}', 'ServiceMessageController@delete');
