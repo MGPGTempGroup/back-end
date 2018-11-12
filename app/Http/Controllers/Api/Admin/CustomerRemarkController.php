@@ -12,6 +12,17 @@ class CustomerRemarkController extends Controller
 {
 
     /**
+     * 获取客户备注列表
+     */
+    public function index(Customer $customer)
+    {
+        $customerRemarksRelation = $customer->remarks();
+        $remarks = $this->buildEloquentBuilderThroughQs($customerRemarksRelation)->paginate();
+
+        return $this->response->paginator($remarks, new CustomerRemarkTransformer());
+    }
+
+    /**
      * 创建客户备注
      */
     public function store(CreateCustomerRemarkRequest $request, Customer $customer, CustomerRemark $customerRemark)
