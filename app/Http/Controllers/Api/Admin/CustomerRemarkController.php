@@ -48,4 +48,13 @@ class CustomerRemarkController extends Controller
         return $this->response->item($customerRemark, new CustomerRemarkTransformer());
     }
 
+    /**
+     * 软删除客户备注
+     */
+    public function destroy(CustomerRemark $customerRemark)
+    {
+        $customerRemark->delete();
+        return $this->response->noContent();
+    }
+
 }

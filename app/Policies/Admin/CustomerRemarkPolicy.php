@@ -17,4 +17,12 @@ class CustomerRemarkPolicy
     {
         return $adminUser->id === $customerRemark->admin_user_id;
     }
+
+    /**
+     * 检查当前管理员用户是否有权软删除当前客户标记
+     */
+    public function delete(AdminUser $adminUser, CustomerRemark $customerRemark)
+    {
+        return $adminUser->id === $customerRemark->admin_user_id;
+    }
 }
