@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\CustomerRemark;
+use App\LeaseRemark;
 use App\Policies\Admin\CustomerRemarkPolicy;
+use App\Policies\Admin\LeaseRemarkPolicy;
+use App\Policies\Admin\ResidenceRemarkPolicy;
+use App\ResidenceRemark;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,8 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
-        CustomerRemark::class => CustomerRemarkPolicy::class
+        CustomerRemark::class => CustomerRemarkPolicy::class,
+        ResidenceRemark::class => ResidenceRemarkPolicy::class,
+        LeaseRemark::class => LeaseRemarkPolicy::class,
     ];
 
     /**

@@ -42,7 +42,7 @@ $api->version('v1', [
             $api->get('customers/{customer}/remarks', 'CustomerRemarkController@index');
             $api->post('customers/{customer}/remarks', 'CustomerRemarkController@store');
             $api->patch('customer-remarks/{customerRemark}', 'CustomerRemarkController@update')->middleware('can:update,customerRemark');
-            $api->delete('customer-remarks/{customerRemark}', 'CustomerRemarkController@destroy')->middleware('can:delete,customerRemark');
+            $api->delete('customer-remarks/{customerRemark}', 'CustomerRemarkController@destroy')->middleware('can:softDelete,customerRemark');
 
             // 公司信息相关
             $api->get('company/info', 'CompanyInfoController@show');
@@ -67,15 +67,15 @@ $api->version('v1', [
             $api->resource('residences', 'ResidenceController');
             $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
             $api->post('residences/{residence}/remarks', 'ResidenceRemarkController@store');
-            $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update');
-            $api->delete('residence-remark/{residenceRemark}', 'ResidenceRemarkController@destroy');
+            $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update')->middleware('can:update,residenceRemark');
+            $api->delete('residence-remark/{residenceRemark}', 'ResidenceRemarkController@destroy')->middleware('can:softDelete,residenceRemark');
 
             // 租赁房屋
             $api->resource('leases', 'LeaseController');
             $api->get('leases/{lease}/remarks', 'LeaseRemarkController@index');
             $api->post('leases/{lease}/remarks', 'LeaseRemarkController@store');
-            $api->patch('lease-remarks/{leaseRemark}', 'LeaseRemarkController@update');
-            $api->delete('lease-remarks/{leaseRemark}', 'LeaseRemarkController@destroy');
+            $api->patch('lease-remarks/{leaseRemark}', 'LeaseRemarkController@update')->middleware('can:update,leaseRemark');
+            $api->delete('lease-remarks/{leaseRemark}', 'LeaseRemarkController@destroy')->middleware('can:softDelete,leaseRemark');
 
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
