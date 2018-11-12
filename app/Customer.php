@@ -31,4 +31,12 @@ class Customer extends Model
             'member_id')->withTimestamps();
     }
 
+    /**
+     * 客户备注关联关系
+     */
+    public function remarks()
+    {
+        return $this->hasMany(CustomerRemark::class, 'customer_id', 'id');
+    }
+
 }

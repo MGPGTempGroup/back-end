@@ -39,6 +39,7 @@ $api->version('v1', [
 
             // 客户管理相关
             $api->resource('customers', 'CustomerController');
+            $api->post('customers/{customer}/remarks', 'CustomerRemarkController@store');
 
             // 公司信息相关
             $api->get('company/info', 'CompanyInfoController@show');
