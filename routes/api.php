@@ -41,6 +41,7 @@ $api->version('v1', [
             $api->resource('customers', 'CustomerController');
             $api->get('customers/{customer}/remarks', 'CustomerRemarkController@index');
             $api->post('customers/{customer}/remarks', 'CustomerRemarkController@store');
+            $api->patch('customer-remarks/{customerRemark}', 'CustomerRemarkController@update')->middleware('can:update,customerRemark');
 
             // 公司信息相关
             $api->get('company/info', 'CompanyInfoController@show');

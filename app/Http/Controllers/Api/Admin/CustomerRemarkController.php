@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Customer;
 use App\CustomerRemark;
 use App\Http\Requests\Admin\CreateCustomerRemarkRequest;
+use App\Http\Requests\Admin\UpdateCustomerRemarkRequest;
 use App\Http\Response\Transformers\Admin\CustomerRemarkTransformer;
 use App\Http\Controllers\Controller;
 
@@ -32,6 +33,17 @@ class CustomerRemarkController extends Controller
             'admin_user_id' => $this->user()->id
         ]);
         $customer->remarks()->save($customerRemark);
+
+        return $this->response->item($customerRemark, new CustomerRemarkTransformer());
+    }
+
+    /**
+     * 修改客户备注
+     */
+    public function update(UpdateCustomerRemarkRequest $request, CustomerRemark $customerRemark)
+    {
+        $customerRemark->fill($request->all());
+        $customerRemark->save();
 
         return $this->response->item($customerRemark, new CustomerRemarkTransformer());
     }
