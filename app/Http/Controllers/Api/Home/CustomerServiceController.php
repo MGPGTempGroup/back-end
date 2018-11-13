@@ -104,11 +104,11 @@ class CustomerServiceController extends Controller
         krsort($messages);
 
         // 遍历该对话消息列表：如果存在未发送的消息则放入未发送消息列表
-        $unsendMessages = [];
+        $unpushedMessages = [];
         foreach ($messages as $key => &$message) {
             if ($message['publisher'] === $identity && !$message['pushed']) {
                 $message['pushed'] = true;
-                array_unshift($unsendMessages, $message); // 消息列表经过倒序排序，故需要插入到数组头部
+                array_unshift($unpushedMessages, $message); // 消息列表经过倒序排序，故需要插入到数组头部
             }
         }
 
@@ -117,7 +117,7 @@ class CustomerServiceController extends Controller
         $dialogueData['messages'] = $messages;
         $cache->put($cacheKey, $dialogueData, 60 * 15);
 
-        return $unsendMessages;
+        return $unpushedMessages;
     }
 
     /**
