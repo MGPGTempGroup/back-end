@@ -136,8 +136,9 @@ class MediaFileController extends Controller
                 $fileSys->append($mergedFilepath, $fileSys->get($val['path']), null);
             }
 
+            $storageKey = $this->generateMediaFileKey();
             MediaFile::create([
-                'key' => $this->generateMediaFileKey(),
+                'key' => $storageKey,
                 'path' => $mergedFilepath,
                 'mime_type' => $fileSys->mimeType($mergedFilepath),
                 'suffix' => $sliceUploadMetaData['extension'],
@@ -150,7 +151,7 @@ class MediaFileController extends Controller
 
             return $this->response->array([
                 'md5' => md5_file($fileSys->path($mergedFilepath)), // 文件的md5码
-                'key' => $this->generateMediaFileKey(),
+                'key' => $storageKey,
             ])->setStatusCode(201);
 
         }
