@@ -9,25 +9,12 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 trait BuildEloquentBuilderThroughQs
 {
 
-    // Current request instance
-    public $request;
-
     // Conditional list obtained by parsing query string
-    public $conditions = [
+    private $conditions = [
         'orderby' => [],
         'where' => [],
         'pagesize' => 15
     ];
-
-    /**
-     * BuildEloquentBuilderThroughQs constructor.
-     *
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
 
     /**
      * Return the Eloquent Builder after constructing the query condition through the query string
@@ -45,9 +32,9 @@ trait BuildEloquentBuilderThroughQs
      *
      * @return $this
      */
-    protected function parser()
+    private function parser(Request $request)
     {
-        $queryString = array_change_key_case($this->request->query());
+        $queryString = array_change_key_case($$request->query());
 
         foreach ($queryString as $key => $val) {
             if (! $val) continue;
@@ -65,7 +52,7 @@ trait BuildEloquentBuilderThroughQs
      * @param $key
      * @param $val
      */
-    protected function parseOrderClausesThroughQs($key, $val)
+    private function parseOrderClausesThroughQs($key, $val)
     {
         if (strpos($key, 'orderby_') === 0) {
             $column = substr($key, 8);
@@ -79,7 +66,7 @@ trait BuildEloquentBuilderThroughQs
      * @param $key
      * @param $val
      */
-    protected function parseWhereClausesThroughQs($key, $val)
+    private function parseWhereClausesThroughQs($key, $val)
     {
         if (($i = strpos($key, '_like')) !== false) {
             $column = substr($key, 0, $i);
@@ -100,7 +87,7 @@ trait BuildEloquentBuilderThroughQs
      * @param $key
      * @param $val
      */
-    protected function parsePageSizeThroughQs($key, $val)
+    private function parsePageSizeThroughQs($key, $val)
     {
         if (strcmp($key, 'pagesize') === 0) {
             $this->conditions['pagesize'] = (int) $val;
@@ -113,7 +100,7 @@ trait BuildEloquentBuilderThroughQs
      * @param $model
      * @return $this
      */
-    protected function build($model)
+    private function build($model)
     {
 
         // 判断model参数是一个模型还是一个关联关系实例，设置相应模型默认分页大小（perPage）
