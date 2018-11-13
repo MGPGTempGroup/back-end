@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Home;
 
 use Dingo\Api\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

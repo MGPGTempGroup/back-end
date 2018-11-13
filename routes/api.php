@@ -24,7 +24,9 @@ $api->version('v1', [
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
 
             // 服务相关
-            $api->resource('services', 'ServiceController')->only(['show, update']);
+            $api->resource('services', 'ServiceController', [
+                'only' => ['update', 'show']
+            ]);
 
             $api->post('service-areas', 'ServiceController@createServiceArea');
             $api->get('service-areas', 'ServiceController@showServiceAreas');
@@ -82,5 +84,14 @@ $api->version('v1', [
             $api->post('videos/slice-upload', 'MediaFileController@sliceUploadVideo');
             $api->post('videos/slice-upload-key', 'MediaFileController@createUploadVideoKey');
         });
+    });
+
+    // foreground
+    $api->group([
+        'namespace' => 'Home'
+    ], function ($api) {
+        $api->get('customer-service/dialogue/{dialogueId}', 'CustomerServiceController@subscribeDialogue');
+        $api->post('customer-service/dialogue', 'CustomerServiceController@createDialogue');
+        $api->post('customer-service/dialogue/{dialogueId}/messages', 'CustomerServiceController@publishMessage');
     });
 });
