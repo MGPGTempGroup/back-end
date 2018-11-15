@@ -20,7 +20,8 @@ $api->version('v1', [
             'middleware' => ['api.auth']
         ], function ($api) {
 
-            // 账户登出接口
+            // 管理账户相关
+            $api->get('admin-users/current', 'AdminUserController@show');
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
 
             // 服务相关
