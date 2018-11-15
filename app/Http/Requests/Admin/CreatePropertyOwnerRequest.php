@@ -7,10 +7,14 @@ class CreatePropertyOwnerRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|string',
-            'phone' => 'bail|required|string|unique:property_owners,phone',
-            'email' => 'bail|required|string|email|unique:property_owners,email',
-            'address' => 'string'
+            'name' => 'bail|string|unique:property_owners',
+            'surname' => 'required|string',
+            'phone' => 'bail|required_without_all:email,wechat|unique:property_owners',
+            'email' => 'bail|required_without_all:phone,wechat|unique:property_owners',
+            'wechat' =>'bail|required_without_all:phone,email|unique:property_owners',
+            'address' => 'string',
+            'id_card' => 'string|unique:property_owners',
+            'identity_id' => 'bail|required|exists:customer_identities,id'
         ];
     }
 }

@@ -9,5 +9,10 @@ class PropertyOwner extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'email', 'phone'];
+    protected $fillable = ['name', 'surname', 'email', 'phone', 'wechat', 'identity_id', 'address', 'id_card'];
+
+    public function identity()
+    {
+        return $this->belongsTo(CustomerIdentity::class, 'identity_id', 'id');
+    }
 }

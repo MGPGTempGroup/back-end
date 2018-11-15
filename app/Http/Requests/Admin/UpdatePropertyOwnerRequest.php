@@ -7,11 +7,14 @@ class UpdatePropertyOwnerRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'string',
-            'phone' => 'unique:property_owners',
-            'email' => 'unique:property_owners',
-            'status' => 'in:0,1,2,3,4',
-            'address' => 'string'
+            'name' => 'bail|string|unique:property_owners',
+            'surname' => 'string',
+            'phone' => 'bail|string|unique:property_owners',
+            'email' => 'bail|string|unique:property_owners',
+            'wechat' =>'bail|string|unique:property_owners',
+            'address' => 'string',
+            'id_card' => 'bail|string|unique:property_owners',
+            'identity_id' => 'bail|exists:customer_identities,id'
         ];
     }
 }

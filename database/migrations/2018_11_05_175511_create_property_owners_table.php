@@ -15,10 +15,14 @@ class CreatePropertyOwnersTable extends Migration
     {
         Schema::create('property_owners', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('phone')->unique();
-            $table->string('address')->nullable();
-            $table->string('email')->unique();
+            $table->string('name')->default('');
+            $table->string('surname');
+            $table->string('wechat')->unique()->nullable();
+            $table->string('id_card')->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('address')->default('');
+            $table->unsignedInteger('identity_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->unsignedInteger('last_login_ip')->nullable();
