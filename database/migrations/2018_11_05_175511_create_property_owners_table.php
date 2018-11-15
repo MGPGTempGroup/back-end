@@ -15,8 +15,8 @@ class CreatePropertyOwnersTable extends Migration
     {
         Schema::create('property_owners', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default('');
-            $table->string('surname');
+            $table->string('name')->unique()->nullable();
+            $table->string('surname')->default('');
             $table->string('wechat')->unique()->nullable();
             $table->string('id_card')->unique()->nullable();
             $table->string('phone')->unique()->nullable();

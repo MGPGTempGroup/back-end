@@ -21,6 +21,7 @@ class PropertyOwnerTransformer extends TransformerAbstract
             'email' => $propertyOwner->email,
             'phone' => $propertyOwner->phone,
             'wechat' => $propertyOwner->wechat,
+            'id_card' => $propertyOwner->id_card,
             'identity_id' => (int) $propertyOwner->identity_id,
             'address' => $propertyOwner->address,
             'created_at' => $propertyOwner->created_at->toDateTimeString(),

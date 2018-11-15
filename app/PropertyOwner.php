@@ -15,4 +15,14 @@ class PropertyOwner extends Model
     {
         return $this->belongsTo(CustomerIdentity::class, 'identity_id', 'id');
     }
+
+    public function setAddressAttribute($val)
+    {
+        $this->attributes['address'] = json_encode($val);
+    }
+
+    public function getAddressAttribute($val)
+    {
+        return json_decode($val);
+    }
 }
