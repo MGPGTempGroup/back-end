@@ -2,7 +2,6 @@
 
 namespace App\Library;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -22,9 +21,12 @@ trait BuildEloquentBuilderThroughQs
      * @param $model
      * @return $this
      */
-    public function buildEloquentBuilderThroughQs($model)
+    public function buildEloquentBuilderThroughQs($model, $queryString = null)
     {
-        return $this->parser()->build($model);
+        if (is_null($queryString)) {
+            $queryString = app('request')->query();
+        }
+        return $this->parser($queryString)->build($model);
     }
 
     /**
@@ -32,9 +34,9 @@ trait BuildEloquentBuilderThroughQs
      *
      * @return $this
      */
-    private function parser(Request $request)
+    private function parser($queryString)
     {
-        $queryString = array_change_key_case($$request->query());
+        $queryString = array_change_key_case($queryString);
 
         foreach ($queryString as $key => $val) {
             if (! $val) continue;

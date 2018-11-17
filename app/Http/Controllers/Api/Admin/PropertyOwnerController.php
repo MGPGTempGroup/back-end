@@ -17,7 +17,7 @@ class PropertyOwnerController extends Controller
      */
     public function index(PropertyOwner $propertyOwner)
     {
-        $owners = $propertyOwner->paginate(20);
+        $owners = $this->buildEloquentBuilderThroughQs($propertyOwner)->paginate();
         return $this->response->paginator($owners, new PropertyOwnerTransformer());
     }
 
