@@ -15,9 +15,11 @@ class CreateServiceMessagesTable extends Migration
     {
         Schema::create('service_messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name'); // 用户名称
+            $table->string('name')->default(''); // 用户名称
             $table->string('surname'); // 姓
-            $table->string('phone'); // 手机号码
+            $table->string('phone')->default(''); // 手机号码
+            $table->string('email')->default('');
+            $table->string('wechat')->default('');
             $table->text('comments'); // 留言内容
             $table->unsignedSmallInteger('identity_id'); // 用户身份id
             $table->unsignedInteger('service_id'); // 所属服务id

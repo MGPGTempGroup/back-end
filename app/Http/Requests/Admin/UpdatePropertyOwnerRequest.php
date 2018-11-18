@@ -10,12 +10,7 @@ class UpdatePropertyOwnerRequest extends BaseRequest
     {
         $ownerId = $this->property_owner->id;
         return [
-            'name' => [
-                'bail',
-                'nullable',
-                'string',
-                Rule::unique('property_owners', 'name')->ignore($ownerId)
-            ],
+            'name' => 'bail|string',
             'surname' => 'string',
             'phone' => [
                 'bail',

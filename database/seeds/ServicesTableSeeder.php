@@ -13,8 +13,7 @@ class ServicesTableSeeder extends Seeder
     {
         $services = [
             'landlords', 'prospective_tenants', 'current_tenants', 'areas_we_serve',
-            'project_marketing', 'project_leasing', 'commercial', 'sell',
-            'headquarters', 'careers'
+            'project_marketing', 'project_leasing', 'commercial', 'sell', 'careers'
         ];
         foreach ($services as $k => $v) {
             factory(App\Service::class)->create([

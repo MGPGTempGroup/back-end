@@ -17,6 +17,15 @@ use App\ServiceArea;
 
 class ServiceController extends Controller
 {
+
+    /**
+     * 展示服务列表
+     */
+    public function index(Service $service)
+    {
+        return $this->response->collection($service->get(), new ServiceTransformer());
+    }
+
     /**
      * 展示服务相关内容
      */
