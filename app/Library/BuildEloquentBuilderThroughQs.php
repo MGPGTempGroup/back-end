@@ -11,8 +11,10 @@ trait BuildEloquentBuilderThroughQs
     // Conditional list obtained by parsing query string
     private $conditions = [
         'orderby' => [],
-        'where' => [],
-        'pagesize' => 15
+        'like' => [],
+        'daterange' => [],
+        'pagesize' => 15,
+        'contains' => []
     ];
 
     /**
@@ -41,8 +43,10 @@ trait BuildEloquentBuilderThroughQs
         foreach ($queryString as $key => $val) {
             if (! $val) continue;
             $this->parseOrderClausesThroughQs($key, $val);
-            $this->parseWhereClausesThroughQs($key, $val);
+            $this->parseLikeQueryThroughQs($key, $val);
             $this->parsePageSizeThroughQs($key, $val);
+            $this->parseDateRangeThroughQs($key, $val);
+            $this->parseContainsThroughQs($key, $val);
         }
 
         return $this;
@@ -57,7 +61,7 @@ trait BuildEloquentBuilderThroughQs
     private function parseOrderClausesThroughQs($key, $val)
     {
         if (strpos($key, 'orderby_') === 0) {
-            $column = substr($key, 8);
+            $column = explode('orderby_', $key, 2)[1];
             $this->conditions['orderby'][$column] = $val;
         }
     }
@@ -68,18 +72,14 @@ trait BuildEloquentBuilderThroughQs
      * @param $key
      * @param $val
      */
-    private function parseWhereClausesThroughQs($key, $val)
+    private function parseLikeQueryThroughQs($key, $val)
     {
         if (($i = strpos($key, '_like')) !== false) {
             $column = substr($key, 0, $i);
-            if (is_array($val)) {
-                $clauses = array_map(function ($item) use ($column) {
-                    return [$column, 'like', $item];
-                }, $val);
-                array_push($this->conditions['where'], ...$clauses);
-            } else {
-                array_push($this->conditions['where'], [$column, 'like', $val]);
-            }
+            $clauses = array_map(function ($item) use ($column) {
+                return [$column, 'like', '%' . $item . '%'];
+            }, $val);
+            $this->conditions['like'][$column] = $clauses;
         }
     }
 
@@ -93,6 +93,28 @@ trait BuildEloquentBuilderThroughQs
     {
         if (strcmp($key, 'pagesize') === 0) {
             $this->conditions['pagesize'] = (int) $val;
+        }
+    }
+
+    /**
+     * Parse date range through query string
+     */
+    private function parseDateRangeThroughQs($key, $val)
+    {
+        if (strpos($key, 'daterange_') === 0 && count($val) === 2) {
+            $column = explode('_', $key, 2)[1];
+            $this->conditions['daterange'][$column] = [$val[0], $val[1]];
+        }
+    }
+
+    /**
+     * Parse contains through query string
+     */
+    private function parseContainsThroughQs($key, $val)
+    {
+        if (strpos($key, 'contains_') === 0 && is_array($val)) {
+            $column = explode('contains_', $key, 2)[1];
+            $this->conditions['contains'][$column] = $val;
         }
     }
 
@@ -122,8 +144,26 @@ trait BuildEloquentBuilderThroughQs
             $eloquentBuilder = $eloquentBuilder->orderBy($column, $sortRule);
         }
 
-        // 添加where条件
-        $eloquentBuilder = $eloquentBuilder->where($this->conditions['where']);
+        // 添加like条件
+        foreach ($this->conditions['like'] as $column => $clauses) {
+            $eloquentBuilder = $eloquentBuilder->where(function ($query) use ($clauses) {
+                foreach ($clauses as $clause)
+                    $query->orWhere(...$clause);
+            });
+        }
+
+        // 添加in条件
+        foreach ($this->conditions['contains'] as $column => $arr) {
+            $eloquentBuilder = $eloquentBuilder->whereIn($column, $arr);
+        }
+
+        // 添加dateRange条件
+        foreach ($this->conditions['daterange'] as $column => $dataRangeArr) {
+            $eloquentBuilder = $eloquentBuilder->where([
+                [$column, '>', $dataRangeArr[0]],
+                [$column, '<', $dataRangeArr[1]]
+            ]);
+        }
 
         return $eloquentBuilder;
     }

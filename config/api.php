@@ -154,7 +154,7 @@ return [
     */
 
     'middleware' => [
-
+        '\App\Http\Middleware\CORSMiddleware'
     ],
 
     /*
