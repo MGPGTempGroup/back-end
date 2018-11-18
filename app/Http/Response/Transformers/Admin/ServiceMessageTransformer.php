@@ -7,6 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class ServiceMessageTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'service'
+    ];
+
     public function transform(ServiceMessage $serviceMessage)
     {
         return [
@@ -25,4 +29,10 @@ class ServiceMessageTransformer extends TransformerAbstract
             'updated_at' => $serviceMessage->updated_at->toDateTimeString(),
         ];
     }
+
+    public function includeService(ServiceMessage $serviceMessage)
+    {
+        return $this->item($serviceMessage->service, new ServiceTransformer());
+    }
+
 }

@@ -14,4 +14,10 @@ class ServiceMessage extends Model
     {
         return $this->belongsTo(CustomerIdentity::class, 'identity_id', 'id');
     }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id', 'id');
+    }
+
 }
