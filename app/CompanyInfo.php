@@ -13,7 +13,8 @@ class CompanyInfo extends Model
         'company_name',
         'telephone',
         'facsimile',
-        'address' ,
+        'address',
+        'detailed_address',
         'post_code' ,
         'regionalism_code',
         'opening_hours',
@@ -32,6 +33,26 @@ class CompanyInfo extends Model
     public function getLatest()
     {
         return $this->orderBy('id', 'DESC')->limit(1)->first() ?? $this;
+    }
+
+    public function getAddressAttribute()
+    {
+        return json_decode($this->attributes['address']);
+    }
+
+    public function setAddressAttribute($val)
+    {
+        return $this->attributes['address'] = json_encode($val);
+    }
+
+    public function getOpeningHoursAttribute()
+    {
+        return json_decode($this->attributes['opening_hours']);
+    }
+
+    public function setOpeningHoursAttribute($val)
+    {
+        return $this->attributes['opening_hours'] = json_encode($val);
     }
 
 }

@@ -15,6 +15,7 @@ class CreateCompanyMembersTable extends Migration
     {
         Schema::create('company_members', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('surname');
             $table->string('name');
             $table->string('email');
             $table->string('phone');

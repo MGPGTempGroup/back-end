@@ -54,7 +54,9 @@ class MediaFileController extends Controller
 
         return $this->response->array([
             'key' => $key
-        ])->setStatusCode(201);
+        ])->setStatusCode(201)->withHeaders([
+            'location' => Storage::disk($this->disk)->url($path)
+        ]);
     }
 
     /**

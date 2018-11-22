@@ -13,6 +13,7 @@ class CompanyMemberTransformer extends TransformerAbstract
     {
         return [
             'id' => $companyMember->id,
+            'surname' => $companyMember->surname,
             'name' => $companyMember->name,
             'phone' => $companyMember->phone,
             'email' => $companyMember->email,

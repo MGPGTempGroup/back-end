@@ -35,7 +35,7 @@ class CompanyMemberController extends Controller
     {
         $companyMember->fill($request->all());
         $companyMember->save();
-        $companyMember->positions()->attach(explode(',', $request->positions));
+        $companyMember->positions()->attach($request->positions);
         return $this->response->item($companyMember, new CompanyMemberTransformer());
     }
 
@@ -47,7 +47,7 @@ class CompanyMemberController extends Controller
         $companyMember->fill($request->all());
         $companyMember->save();
         if ($request->positions) {
-            $companyMember->positions()->sync(explode(',', $request->positions));
+            $companyMember->positions()->sync($request->positions);
         }
         return $this->response->item($companyMember, new CompanyMemberTransformer());
     }

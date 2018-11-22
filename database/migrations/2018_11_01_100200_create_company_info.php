@@ -19,9 +19,10 @@ class CreateCompanyInfo extends Migration
             $table->string('telephone')->nullable(); // 固话
             $table->string('facsimile')->nullable(); // 传真
             $table->string('address')->nullable(); // 公司地址
+            $table->string('detailed_address')->nullable(); // 详细地址
             $table->string('post_code')->nullable(); // 邮编
             $table->string('regionalism_code')->nullable(); // 行政区划代码
-            $table->string('opening_hours')->nullable(); // 总部开放时间
+            $table->text('opening_hours')->nullable(); // 总部开放时间
             $table->string('service_time')->nullable(); // 服务时间
             // 相关社交主页
             $table->string('google_plus_homepage')->nullable();
