@@ -23,7 +23,7 @@ class CompanyMemberController extends Controller
     public function index(Request $request, CompanyMember $companyMember, MemberPositionPivot $memberPositionPivot)
     {
 
-        $members = $this->buildEloquentQueryThroughQs($companyMember);
+        $eloquentBuilder = $this->buildEloquentQueryThroughQs($companyMember);
 
         if (is_array($positions = $request->query('positions')) && $positions) {
             // 查询出对应职位的所有成员id
@@ -31,9 +31,10 @@ class CompanyMemberController extends Controller
                 ->whereIn('position_id', $positions)
                 ->pluck('member_id')
                 ->toArray();
-        } else {
-            $members->paginate();
+            $eloquentBuilder = $eloquentBuilder->whereIn('id', $members_id);
         }
+
+        $members = $eloquentBuilder->paginate();
 
         return $this->response->paginator($members, new CompanyMemberTransformer());
     }
