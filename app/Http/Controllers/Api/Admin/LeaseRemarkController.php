@@ -19,7 +19,7 @@ class LeaseRemarkController extends Controller
     public function index(Lease $lease)
     {
         $LeaseRemarksRelation = $lease->remarks();
-        $remarks = $this->buildEloquentBuilderThroughQs($LeaseRemarksRelation)->paginate();
+        $remarks = $this->buildEloquentQueryThroughQs($LeaseRemarksRelation)->paginate();
         return $this->response->paginator($remarks, new LeaseRemarkTransformer());
     }
 

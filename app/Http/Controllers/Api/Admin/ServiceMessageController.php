@@ -17,7 +17,7 @@ class ServiceMessageController extends Controller
      */
     public function index(Request $request, ServiceMessage $serviceMessage)
     {
-        $messages = $this->buildEloquentBuilderThroughQs($serviceMessage)->paginate();
+        $messages = $this->buildEloquentQueryThroughQs($serviceMessage)->paginate();
         return $this->response->paginator($messages, new ServiceMessageTransformer());
     }
 
@@ -27,7 +27,7 @@ class ServiceMessageController extends Controller
     public function show(Request $request, Service $service)
     {
         $messagesRelation = $service->messages()->with(['identity']);
-        $messages = $this->buildEloquentBuilderThroughQs($messagesRelation)->paginate();
+        $messages = $this->buildEloquentQueryThroughQs($messagesRelation)->paginate();
         return $this->response->paginator($messages, new ServiceMessageTransformer());
     }
 

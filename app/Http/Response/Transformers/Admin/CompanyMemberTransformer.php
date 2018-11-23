@@ -7,7 +7,7 @@ use App\CompanyMember;
 
 class CompanyMemberTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['positions'];
+    protected $defaultIncludes = ['positions'];
 
     public function transform(CompanyMember $companyMember)
     {

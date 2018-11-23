@@ -18,7 +18,7 @@ class ResidenceRemarkController extends Controller
     public function index(Residence $residence)
     {
         $residenceRemarkRelation = $residence->remarks();
-        $remarks = $this->buildEloquentBuilderThroughQs($residenceRemarkRelation)->paginate();
+        $remarks = $this->buildEloquentQueryThroughQs($residenceRemarkRelation)->paginate();
 
         return $this->response->paginator($remarks, new ResidenceRemarkTransformer());
     }

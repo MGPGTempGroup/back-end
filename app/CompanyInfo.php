@@ -35,24 +35,24 @@ class CompanyInfo extends Model
         return $this->orderBy('id', 'DESC')->limit(1)->first() ?? $this;
     }
 
-    public function getAddressAttribute()
+    public function getAddressAttribute($address)
     {
-        return json_decode($this->attributes['address']);
+        return json_decode($address);
     }
 
-    public function setAddressAttribute($val)
+    public function setAddressAttribute($address)
     {
-        return $this->attributes['address'] = json_encode($val);
+        return $this->attributes['address'] = json_encode($address);
     }
 
-    public function getOpeningHoursAttribute()
+    public function getOpeningHoursAttribute($openingHours)
     {
-        return json_decode($this->attributes['opening_hours']);
+        return json_decode($openingHours);
     }
 
-    public function setOpeningHoursAttribute($val)
+    public function setOpeningHoursAttribute($openingHours)
     {
-        return $this->attributes['opening_hours'] = json_encode($val);
+        return $this->attributes['opening_hours'] = json_encode($openingHours);
     }
 
 }

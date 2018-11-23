@@ -51,7 +51,6 @@ $api->version('v1', [
             $api->patch('company/info', 'CompanyInfoController@update');
 
             $api->resource('company/members', 'CompanyMemberController');
-
             $api->get('company/positions', 'CompanyMemberPositionController@index');
             $api->post('company/positions', 'CompanyMemberPositionController@store');
             $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');

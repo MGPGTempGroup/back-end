@@ -5,7 +5,7 @@ namespace App\Library;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
-trait BuildEloquentBuilderThroughQs
+trait BuildEloquentQueryThroughQs
 {
 
     // Conditional list obtained by parsing query string
@@ -23,7 +23,7 @@ trait BuildEloquentBuilderThroughQs
      * @param $model
      * @return $this
      */
-    public function buildEloquentBuilderThroughQs($model, $queryString = null)
+    public function buildEloquentQueryThroughQs($model, $queryString = null)
     {
         if (is_null($queryString)) {
             $queryString = app('request')->query();

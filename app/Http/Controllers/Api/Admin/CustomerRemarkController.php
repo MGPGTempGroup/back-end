@@ -18,7 +18,7 @@ class CustomerRemarkController extends Controller
     public function index(Customer $customer)
     {
         $customerRemarksRelation = $customer->remarks();
-        $remarks = $this->buildEloquentBuilderThroughQs($customerRemarksRelation)->paginate();
+        $remarks = $this->buildEloquentQueryThroughQs($customerRemarksRelation)->paginate();
 
         return $this->response->paginator($remarks, new CustomerRemarkTransformer());
     }

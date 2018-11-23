@@ -16,7 +16,7 @@ class CustomerController extends Controller
      */
     public function index(Customer $customer)
     {
-        $customers = $this->buildEloquentBuilderThroughQs($customer)->paginate();
+        $customers = $this->buildEloquentQueryThroughQs($customer)->paginate();
         return $this->response->paginator($customers, new CustomerTransformer());
     }
 

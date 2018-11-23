@@ -18,7 +18,7 @@ class CreateCompanyInfo extends Migration
             $table->string('company_name')->nullable(); // 公司名称
             $table->string('telephone')->nullable(); // 固话
             $table->string('facsimile')->nullable(); // 传真
-            $table->string('address')->nullable(); // 公司地址
+            $table->string('address')->default('[]'); // 公司地址
             $table->string('detailed_address')->nullable(); // 详细地址
             $table->string('post_code')->nullable(); // 邮编
             $table->string('regionalism_code')->nullable(); // 行政区划代码
