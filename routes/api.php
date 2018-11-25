@@ -50,7 +50,10 @@ $api->version('v1', [
             $api->get('company/info', 'CompanyInfoController@show');
             $api->patch('company/info', 'CompanyInfoController@update');
 
-            $api->resource('company/members', 'CompanyMemberController');
+            $api->get('company/members', 'CompanyMemberController@index');
+            $api->get('company/members/{companyMember}', 'CompanyMemberController@show');
+            $api->patch('company/members/{companyMember}', 'CompanyMemberController@update');
+            $api->delete('company/members/{companyMember}', 'CompanyMemberController@destroy');
             $api->get('company/positions', 'CompanyMemberPositionController@index');
             $api->post('company/positions', 'CompanyMemberPositionController@store');
             $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');

@@ -17,15 +17,7 @@ class UpdateCompanyMemberRequest extends BaseRequest
             'introduction' => 'string',
             'photo' => 'string', // image key
             'thumbnail' => 'string', // image key
-            'positions' => [
-                'string',
-                function($field, $val, $fail) {
-                    $existedID = CompanyMemberPosition::select('id')->pluck('id')->toArray();
-                    $positionsID = explode(',', $val);
-                    if (array_intersect($positionsID, $existedID) !== $positionsID)
-                        $fail('Member Positions contains ID that does not exist.');
-                }
-            ]
+            'positions' => 'array'
         ];
     }
 }

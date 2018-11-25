@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdatePropertyOwnerRequest;
 use App\Http\Response\Transformers\Admin\PropertyOwnerTransformer;
 use App\PropertyOwner;
+use Illuminate\Http\Request;
 
 class PropertyOwnerController extends Controller
 {
@@ -15,10 +16,28 @@ class PropertyOwnerController extends Controller
     /**
      * 展示物业业主列表
      */
-    public function index(PropertyOwner $propertyOwner)
+    public function index(Request $request, PropertyOwner $propertyOwner)
     {
-        $owners = $this->buildEloquentQueryThroughQs($propertyOwner)->paginate();
+        $eloquentBuilder = $this->buildEloquentQueryThroughQs($propertyOwner);
+
+        // 如果存在searchByFullName参数则根据Full Name模糊查询
+        if ($fullName = $request->query('searchByFullName')) {
+            $owners = $eloquentBuilder
+                ->whereRaw('concat(surname, " ", name) like ?', ['%' . $fullName . '%'])
+                ->get();
+            return $this->response->collection($owners, new PropertyOwnerTransformer());
+        }
+
+        $owners = $eloquentBuilder->paginate();
         return $this->response->paginator($owners, new PropertyOwnerTransformer());
+    }
+
+    /**
+     * 通过名称搜索物业业主
+     */
+    public function searchByFullName(PropertyOwner $propertyOwner, $searchWord)
+    {
+
     }
 
     /**

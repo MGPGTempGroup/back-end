@@ -25,8 +25,8 @@ class CompanyMemberController extends Controller
 
         $eloquentBuilder = $this->buildEloquentQueryThroughQs($companyMember);
 
+        // 判断是否包含positions参数，如果包含则查询出对应职位的公司成员
         if (is_array($positions = $request->query('positions')) && $positions) {
-            // 查询出对应职位的所有成员id
             $members_id = $memberPositionPivot->select('member_id')
                 ->whereIn('position_id', $positions)
                 ->pluck('member_id')
@@ -34,8 +34,15 @@ class CompanyMemberController extends Controller
             $eloquentBuilder = $eloquentBuilder->whereIn('id', $members_id);
         }
 
-        $members = $eloquentBuilder->paginate();
+        // 判断是否包含searchByFullName参数，如果包含则根据添加FullName模糊查询条件
+        if ($fullName = $request->query('searchByFullName')) {
+            $members = $eloquentBuilder
+                ->whereRaw('concat(surname, " ", name) like ?', ['%' . $fullName . '%'])
+                ->get();
+            return $this->response->collection($members, new CompanyMemberTransformer());
+        }
 
+        $members = $eloquentBuilder->paginate();
         return $this->response->paginator($members, new CompanyMemberTransformer());
     }
 
