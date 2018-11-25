@@ -29,12 +29,14 @@ $api->version('v1', [
                 'only' => ['update', 'show', 'index']
             ]);
 
+            // 服务领域相关
             $api->post('service-areas', 'ServiceController@createServiceArea');
             $api->get('service-areas', 'ServiceController@showServiceAreas');
             $api->get('service-areas/{serviceArea}', 'ServiceController@showServiceArea');
             $api->patch('service-areas/{serviceArea}', 'ServiceController@updateServiceArea');
             $api->delete('service-areas/{serviceArea}', 'ServiceController@destroyServiceArea');
 
+            // 客户服务留言相关
             $api->get('services/{service}/messages', 'ServiceMessageController@show');
             $api->get('service-messages', 'ServiceMessageController@index');
             $api->delete('service-messages/{serviceMessage}', 'ServiceMessageController@delete');
@@ -50,10 +52,14 @@ $api->version('v1', [
             $api->get('company/info', 'CompanyInfoController@show');
             $api->patch('company/info', 'CompanyInfoController@update');
 
+            // 公司成员相关
             $api->get('company/members', 'CompanyMemberController@index');
+            $api->post('company/members', 'CompanyMemberController@store');
             $api->get('company/members/{companyMember}', 'CompanyMemberController@show');
             $api->patch('company/members/{companyMember}', 'CompanyMemberController@update');
             $api->delete('company/members/{companyMember}', 'CompanyMemberController@destroy');
+
+            // 公司职位/部门相关
             $api->get('company/positions', 'CompanyMemberPositionController@index');
             $api->post('company/positions', 'CompanyMemberPositionController@store');
             $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');
@@ -67,14 +73,19 @@ $api->version('v1', [
             // 物业业主相关
             $api->resource('property-owners', 'PropertyOwnerController');
 
-            // 出售房屋
+            // 物业类型相关
+            $api->resource('property-types', 'PropertyTypeController', [
+                'only' => ['index']
+            ]);
+
+            // 出售房屋相关
             $api->resource('residences', 'ResidenceController');
             $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
             $api->post('residences/{residence}/remarks', 'ResidenceRemarkController@store');
             $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update')->middleware('can:update,residenceRemark');
             $api->delete('residence-remark/{residenceRemark}', 'ResidenceRemarkController@destroy')->middleware('can:softDelete,residenceRemark');
 
-            // 租赁房屋
+            // 租赁房屋相关
             $api->resource('leases', 'LeaseController');
             $api->get('leases/{lease}/remarks', 'LeaseRemarkController@index');
             $api->post('leases/{lease}/remarks', 'LeaseRemarkController@store');
