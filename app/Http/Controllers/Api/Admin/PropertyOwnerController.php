@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class PropertyOwnerController extends Controller
 {
-
     /**
      * 展示物业业主列表
      */
@@ -23,21 +22,13 @@ class PropertyOwnerController extends Controller
         // 如果存在searchByFullName参数则根据Full Name模糊查询
         if ($fullName = $request->query('searchByFullName')) {
             $owners = $eloquentBuilder
-                ->whereRaw('concat(surname, " ", name) like ?', ['%' . $fullName . '%'])
+                ->whereRaw('concat(surname, name) like ?', ['%' . $fullName . '%'])
                 ->get();
             return $this->response->collection($owners, new PropertyOwnerTransformer());
         }
 
         $owners = $eloquentBuilder->paginate();
         return $this->response->paginator($owners, new PropertyOwnerTransformer());
-    }
-
-    /**
-     * 通过名称搜索物业业主
-     */
-    public function searchByFullName(PropertyOwner $propertyOwner, $searchWord)
-    {
-
     }
 
     /**
