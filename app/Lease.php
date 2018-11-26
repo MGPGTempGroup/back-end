@@ -12,7 +12,7 @@ class Lease extends Model
 
     protected $fillable = [
         'name',
-        'introduction',
+        'brief_introduction',
         'floor_space',
         'details',
         'broadcast_pictures',
@@ -25,12 +25,13 @@ class Lease extends Model
         'street_code',
         'house_number',
         'post_code',
-        'detailed_address',
+//        'detailed_address',
+        'address',
         'address_description',
         'map_coordinates',
         'bathrooms',
         'bedrooms',
-        'car_ports',
+        'car_spaces',
         'lockup_garages',
         'per_month_min_price',
         'per_month_max_price',
@@ -53,7 +54,7 @@ class Lease extends Model
     protected $casts = [
         'bathrooms' => 'int',
         'bedrooms' => 'int',
-        'car_ports' => 'int',
+        'car_spaces' => 'int',
         'lockup_garages' => 'int',
         'show' => 'int',
         'sort_number' => 'int',
@@ -69,7 +70,7 @@ class Lease extends Model
     protected $attributes = [
         'bathrooms' => 0,
         'bedrooms' => 0,
-        'car_ports' => 0,
+        'car_spaces' => 0,
         'lockup_garages' => 0,
         'pv' => 0,
         'uv' => 0,
@@ -85,6 +86,16 @@ class Lease extends Model
     public function getBroadcastPicturesAttribute($val)
     {
         return json_decode($val);
+    }
+
+    public function setAddressAttribute($address)
+    {
+        $this->attributes['address'] = json_encode($address);
+    }
+
+    public function getAddressAttribute($address)
+    {
+        return json_decode($address);
     }
 
     public function owner()

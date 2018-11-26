@@ -17,8 +17,7 @@ class LeaseController extends Controller
      */
     public function index(Request $request, Lease $lease)
     {
-        $pageSize = (int)$request->pagesize ?: 20;
-        $leases = $lease->paginate($pageSize);
+        $leases = $this->buildEloquentQueryThroughQs($lease)->paginate();
         return $this->response->paginator($leases, new LeaseTransformer());
     }
 
@@ -36,8 +35,12 @@ class LeaseController extends Controller
     public function store(CreateLeaseRequest $request, Lease $lease)
     {
         $lease->fill($request->all());
+        if(($address = $request->input('address')) && count($address) === 3) {
+            $lease->state_code = $address[1]['code'];
+            $lease->city_code = $address[2]['code'];
+        }
         $lease->save();
-        $lease->propertyType()->attach($request->property_type_id);
+        $lease->propertyType()->attach($request->property_type);
         return $this->response->item($lease, new LeaseTransformer());
     }
 

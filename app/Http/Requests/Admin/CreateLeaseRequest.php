@@ -10,7 +10,7 @@ class CreateLeaseRequest extends BaseRequest
     {
         return [
             'name' => 'bail|required|string',
-            'property_type_id' => [
+            'property_type' => [
                 'required',
                 'array',
                 function ($k, $v, $fail) {
@@ -25,14 +25,11 @@ class CreateLeaseRequest extends BaseRequest
                     ]);
                 }
             ],
-            'introduction' => 'string',
+            'brief_introduction' => 'string',
             'floor_space' => 'numeric',
             'details' => 'bail|required|string',
-            'broadcast_pictures' => ['bail', 'required', 'array'],
-            'country_code' => 'bail|required|string',
-            'state_code' => 'bail|required|string',
-            'city_code' => 'bail|required|string',
-            'area_name' => 'string',
+            'broadcast_pictures' => 'array',
+            'address' => 'bail|required|array',
             'suburb_name' => 'string',
             'street_name' => 'string',
             'street_code' => 'string',
@@ -43,7 +40,7 @@ class CreateLeaseRequest extends BaseRequest
             'map_coordinates' => 'string',
             'bedrooms' => 'numeric',
             'bathrooms' => 'numeric',
-            'car_ports' => 'numeric',
+            'car_spaces' => 'numeric',
             'lockup_garages' => 'numeric',
             'per_month_min_price' => 'numeric',
             'per_month_max_price' => 'numeric',
