@@ -14,7 +14,16 @@ trait BuildEloquentQueryThroughQs
         'like' => [],
         'daterange' => [],
         'pagesize' => 15,
-        'contains' => []
+        'contains' => [],
+        'between' => [],
+        'basic_operators' => [
+            'eq' => [], // 等于
+            'neq' => [], // 不等于
+            'lt' => [], // 小于
+            'elt' => [], // 小于等于
+            'gt' => [], // 大于
+            'egt' => [] // 大于等于
+        ]
     ];
 
     /**
@@ -47,6 +56,8 @@ trait BuildEloquentQueryThroughQs
             $this->parsePageSizeThroughQs($key, $val);
             $this->parseDateRangeThroughQs($key, $val);
             $this->parseContainsThroughQs($key, $val);
+            $this->parseBetweenThroughQs($key, $val);
+            $this->parseBasicsOperatorThroughQs($key, $val);
         }
 
         return $this;
@@ -119,6 +130,33 @@ trait BuildEloquentQueryThroughQs
     }
 
     /**
+     * Parse between through query string
+     */
+    private function parseBetweenThroughQs($key, $val)
+    {
+        if (($i = strpos($key, '_between')) !== false &&
+            is_array($val) &&
+            count($val) === 2) {
+            $column = substr($key, 0, $i);
+            $this->conditions['between'][$column] = $val;
+        }
+    }
+
+    /**
+     * Parse basic operator through query string
+     */
+    private function parseBasicsOperatorThroughQs($key, $val)
+    {
+        $keyNameArr = explode('_', $key);
+        $operator = array_pop($keyNameArr);
+        $availableOperators = array_keys($this->conditions['basic_operators']);
+        if(in_array($operator, $availableOperators)) {
+            $column = implode('_', $keyNameArr);
+            $this->conditions['basic_operators'][$operator][$column] = $val;
+        }
+    }
+
+    /**
      * Building queryBuilder through conditions
      *
      * @param $model
@@ -139,12 +177,10 @@ trait BuildEloquentQueryThroughQs
 
         }
 
-        // 依次添加排序条件
         foreach ($this->conditions['orderby'] as $column => $sortRule) {
             $eloquentBuilder = $eloquentBuilder->orderBy($column, $sortRule);
         }
 
-        // 添加like条件
         foreach ($this->conditions['like'] as $column => $clauses) {
             $eloquentBuilder = $eloquentBuilder->where(function ($query) use ($clauses) {
                 foreach ($clauses as $clause)
@@ -152,18 +188,32 @@ trait BuildEloquentQueryThroughQs
             });
         }
 
-        // 添加in条件
         foreach ($this->conditions['contains'] as $column => $arr) {
             $eloquentBuilder = $eloquentBuilder->whereIn($column, $arr);
         }
 
-        // 添加dateRange条件
         foreach ($this->conditions['daterange'] as $column => $dataRangeArr) {
             $eloquentBuilder = $eloquentBuilder->where([
                 [$column, '>', $dataRangeArr[0]],
                 [$column, '<', $dataRangeArr[1]]
             ]);
         }
+
+        foreach ($this->conditions['between'] as $column => $valueArr) {
+            $eloquentBuilder = $eloquentBuilder->whereBetween($column, $valueArr);
+        }
+
+        $operatorMappingTable = [ 'eq' => '=', 'neq' => '<>', 'lt' => '<', 'elt' => '<=', 'gt' => '>', 'egt' => '>=' ];
+        $whereClausesArr =  [];
+        foreach ($this->conditions['basic_operators'] as $operator => $conditionalArr) {
+            $dbRealOperator = $operatorMappingTable[$operator];
+            foreach ($conditionalArr as $column => $val) {
+                array_push($whereClausesArr, [
+                    $column, $dbRealOperator, $val
+                ]);
+            }
+        }
+        $eloquentBuilder = $eloquentBuilder->where($whereClausesArr);
 
         return $eloquentBuilder;
     }
