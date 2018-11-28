@@ -103,6 +103,11 @@ class Lease extends Model
         return $this->belongsTo(PropertyOwner::class, 'owner_id', 'id');
     }
 
+    public function agents()
+    {
+        return $this->belongsToMany(CompanyMember::class, 'lease_agent', 'lease_id', 'member_id');
+    }
+
     public function propertyType()
     {
         return $this->belongsToMany(PropertyType::class, 'lease_property_type', 'lease_id', 'property_type_id');

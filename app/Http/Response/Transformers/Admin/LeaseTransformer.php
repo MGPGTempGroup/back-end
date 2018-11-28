@@ -7,24 +7,26 @@ use App\Lease;
 
 class LeaseTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'owner', 'agents'
+    ];
+
     public function transform(Lease $lease)
     {
         return [
             'id' => $lease->id,
             'name' => $lease->name,
             'property_type' => $lease->propertyType,
-            'introduction' => $lease->introduction,
+            'brief_introduction' => $lease->brief_introduction,
             'floor_space' => $lease->floor_space,
             'details' => $lease->details,
             'broadcast_pictures' => $lease->broadcast_pictures,
-            'area_name' => $lease->area_name,
+            'address' => $lease->address,
             'suburb_name' => $lease->suburb_name,
             'street_name' => $lease->street_name,
             'street_code' => $lease->street_code,
             'house_number' => $lease->house_number,
             'post_code' => $lease->post_code,
-            'address' => $lease->address,
-            'detailed_address' => $lease->detailed_address,
             'address_description' => $lease->address_description,
             'map_coordinates' => $lease->map_coordinates,
             'bedrooms' => $lease->bedrooms,
@@ -45,11 +47,21 @@ class LeaseTransformer extends TransformerAbstract
             'show' => $lease->show,
             'state' => $lease->state,
             'owner_id' => $lease->owner_id,
-            'owner' => $lease->owner,
             'pv' => $lease->pv,
             'uv' => $lease->uv,
             'created_at' => $lease->created_at->toDateTimeString(),
             'updated_at' => $lease->updated_at->toDateTimeString()
         ];
     }
+
+    public function includeOwner(Lease $lease)
+    {
+        return $this->item($lease->owner, new PropertyOwnerTransformer());
+    }
+
+    public function includeAgents(Lease $lease)
+    {
+        return $this->collection($lease->agents, new CompanyMemberTransformer());
+    }
+
 }
