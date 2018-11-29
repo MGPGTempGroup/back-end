@@ -8,7 +8,7 @@ use App\Lease;
 class LeaseTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
-        'owner', 'agents'
+        'owner', 'agents', 'creator'
     ];
 
     public function transform(Lease $lease)
@@ -31,7 +31,7 @@ class LeaseTransformer extends TransformerAbstract
             'map_coordinates' => $lease->map_coordinates,
             'bedrooms' => $lease->bedrooms,
             'bathrooms' => $lease->bathrooms,
-            'car_ports' => $lease->car_ports,
+            'car_spaces' => $lease->car_spaces,
             'lockup_garages' => $lease->lockup_garages,
             'per_month_min_price' => $lease->per_month_min_price,
             'per_month_max_price' => $lease->per_month_max_price,
@@ -62,6 +62,11 @@ class LeaseTransformer extends TransformerAbstract
     public function includeAgents(Lease $lease)
     {
         return $this->collection($lease->agents, new CompanyMemberTransformer());
+    }
+
+    public function includeCreator(Lease $lease)
+    {
+        return $this->item($lease->creator, new AdminUserTransformer());
     }
 
 }

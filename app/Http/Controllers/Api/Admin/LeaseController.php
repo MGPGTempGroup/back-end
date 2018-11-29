@@ -25,8 +25,6 @@ class LeaseController extends Controller
     {
         $eloquentBuilder = $this->buildEloquentQueryThroughQs($lease);
 
-
-
         // 判断是否包含公司成员（销售代理）id 条件查询参数
         if (is_array(($membersId = $request->query('members'))) && count($membersId)) {
             $leasesId = $leaseAgentPivot
@@ -46,8 +44,6 @@ class LeaseController extends Controller
                 ->toArray();
             $eloquentBuilder = $eloquentBuilder->whereIn('id', $leasesId);
         }
-
-
 
         $leases = $eloquentBuilder->paginate();
         return $this->response->paginator($leases, new LeaseTransformer());
@@ -71,6 +67,7 @@ class LeaseController extends Controller
             $lease->state_code = $address[1]['code'];
             $lease->city_code = $address[2]['code'];
         }
+        $lease->creator_id = $this->user()->id;
         $lease->save();
         $lease->propertyType()->attach($request->input('property_type'));
         $lease->agents()->attach($request->input('members'));

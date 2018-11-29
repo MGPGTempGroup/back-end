@@ -68,6 +68,7 @@ class CreateLeasesTable extends Migration
             $table->unsignedInteger('uv')->nullable();
 
             $table->unsignedInteger('owner_id'); // 物主id
+            $table->unsignedInteger('creator_id'); // 数据创建者id
 
             $table->softDeletes(); // deleted_at
 
