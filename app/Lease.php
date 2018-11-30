@@ -25,7 +25,6 @@ class Lease extends Model
         'street_code',
         'house_number',
         'post_code',
-//        'detailed_address',
         'address',
         'address_description',
         'map_coordinates',

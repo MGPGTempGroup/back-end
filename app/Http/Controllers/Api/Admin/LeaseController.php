@@ -63,14 +63,10 @@ class LeaseController extends Controller
     public function store(CreateLeaseRequest $request, Lease $lease)
     {
         $lease->fill($request->all());
-        if(($address = $request->input('address')) && count($address) === 3) {
-            $lease->state_code = $address[1]['code'];
-            $lease->city_code = $address[2]['code'];
-        }
         $lease->creator_id = $this->user()->id;
         $lease->save();
         $lease->propertyType()->attach($request->input('property_type'));
-        $lease->agents()->attach($request->input('members'));
+        $lease->agents()->attach($request->input('agents'));
         return $this->response->item($lease, new LeaseTransformer());
     }
 
@@ -81,8 +77,11 @@ class LeaseController extends Controller
     {
         $lease->fill($request->all());
         $lease->save();
-        if ($request->property_type_id) {
-            $lease->propertyType()->sync($request->property_type_id);
+        if ($request->has('property_type')) {
+            $lease->propertyType()->sync($request->input('property_type'));
+        }
+        if ($request->has('agents')) {
+            $lease->agents()->sync($request->input('agents'));
         }
         return $this->response->item($lease, new LeaseTransformer());
     }

@@ -10,8 +10,7 @@ class UpdateLeaseRequest extends BaseRequest
     {
         return [
             'name' => 'string',
-            'property_type_id' => [
-                'required',
+            'property_type' => [
                 'array',
                 function ($k, $v, $fail) {
                     $idList = array_map(function ($item) {

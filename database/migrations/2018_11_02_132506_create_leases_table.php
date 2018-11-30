@@ -24,8 +24,8 @@ class CreateLeasesTable extends Migration
 
             $table->string('address'); // 地址
             $table->string('country_code')->default('AUS'); // 国家代码，默认为澳大利亚
-            $table->string('state_code'); // 州代码
-            $table->string('city_code'); // 市代码
+            $table->string('state_code')->default(''); // 州代码
+            $table->string('city_code')->default(''); // 市代码
             $table->string('suburb_name')->nullable(); // 郊区名称
             $table->string('street_name')->nullable(); // 街道名称
             $table->string('street_code')->nullable(); // 街道号码
