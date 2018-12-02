@@ -9,7 +9,7 @@ class CreateResidenceRequest extends BaseRequest
     {
         return [
             'name' => 'bail|required|string',
-            'property_type_id' => [
+            'property_type' => [
                 'required',
                 'array',
                 function ($k, $v, $fail) {
@@ -24,25 +24,20 @@ class CreateResidenceRequest extends BaseRequest
                     ]);
                 }
             ],
-            'introduction' => 'string',
+            'brief_introduction' => 'string',
             'floor_space' => 'numeric',
             'details' => 'bail|required|string',
             'broadcast_pictures' => ['bail', 'required', 'array'],
-            'country_code' => 'bail|required|string',
-            'state_code' => 'bail|required|string',
-            'city_code' => 'bail|required|string',
-            'area_name' => 'string',
             'suburb_name' => 'string',
             'street_name' => 'string',
             'street_code' => 'string',
             'house_number' => 'string',
             'post_code' => 'required|string',
-            'detailed_address' => 'string',
             'address_description' => 'string',
             'map_coordinates' => 'string',
             'bedrooms' => 'numeric',
             'bathrooms' => 'numeric',
-            'car_ports' => 'numeric',
+            'car_spaces' => 'numeric',
             'lockup_garages' => 'numeric',
             'min_price' => 'bail|required|numeric',
             'max_price' => 'bail|required|numeric',

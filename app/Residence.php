@@ -13,25 +13,24 @@ class residence extends Model
 
     protected $fillable = [
         'name',
-        'introduction',
+        'brief_introduction',
         'floor_space',
         'details',
         'broadcast_pictures',
         'country_code',
         'state_code',
         'city_code',
-        'area_name',
         'suburb_name',
         'street_name',
         'street_code',
         'house_number',
         'post_code',
-        'detailed_address',
+        'address',
         'address_description',
         'map_coordinates',
         'bathrooms',
         'bedrooms',
-        'car_ports',
+        'car_spaces',
         'lockup_garages',
         'min_price',
         'max_price',
@@ -53,7 +52,7 @@ class residence extends Model
     protected $casts = [
         'bathrooms' => 'int',
         'bedrooms' => 'int',
-        'car_ports' => 'int',
+        'car_spaces' => 'int',
         'lockup_garages' => 'int',
         'show' => 'int',
         'sort_number' => 'int',
@@ -65,7 +64,7 @@ class residence extends Model
     protected $attributes = [
         'bathrooms' => 0,
         'bedrooms' => 0,
-        'car_ports' => 0,
+        'car_spaces' => 0,
         'lockup_garages' => 0,
         'pv' => 0,
         'uv' => 0,
@@ -83,14 +82,42 @@ class residence extends Model
         return json_decode($val);
     }
 
+    public function getAddressAttribute($address)
+    {
+        return json_decode($address);
+    }
+
+    public function setAddressAttribute($address)
+    {
+        $this->attributes['address'] = json_encode($address);
+    }
+
     public function owner()
     {
         return $this->belongsTo(PropertyOwner::class, 'owner_id', 'id');
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
+    }
+
+    public function agents()
+    {
+        return $this->belongsToMany(
+            CompanyMember::class ,
+            'residence_agent',
+            'residence_id',
+            'member_id')->withTimestamps();
+    }
+
     public function propertyType()
     {
-        return $this->belongsToMany(PropertyType::class, 'residence_property_type', 'residence_id', 'property_type_id');
+        return $this->belongsToMany(
+            PropertyType::class,
+            'residence_property_type',
+            'residence_id',
+            'property_type_id')->withTimestamps();
     }
 
     public function remarks()

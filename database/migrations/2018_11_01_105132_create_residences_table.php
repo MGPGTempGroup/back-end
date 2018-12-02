@@ -17,28 +17,28 @@ class CreateResidencesTable extends Migration
             $table->increments('id');
 
             $table->string('name'); // 房屋名称
-            $table->text('introduction')->nullable(); // 房屋简短介绍
+            $table->text('brief_introduction')->nullable(); // 房屋简短介绍
             $table->unsignedInteger('floor_space')->nullable(); // 房屋面积
             $table->mediumText('details'); // 房屋详情
             $table->text('broadcast_pictures'); // 房屋环境图片
 
-            $table->string('country_code'); // 国家代码
-            $table->string('state_code'); // 州代码
-            $table->string('city_code'); // 市代码
-            $table->string('area_name')->nullable(); // 地区名称
+            $table->string('address')->default('[]'); // 地址
+            $table->string('country_code')->default('AUS'); // 国家代码，默认为澳大利亚
+            $table->string('state_code')->default(''); // 州代码
+            $table->string('city_code')->default(''); // 市代码
             $table->string('suburb_name')->nullable(); // 郊区名称
             $table->string('street_name')->nullable(); // 街道名称
             $table->string('street_code')->nullable(); // 街道号码
             $table->string('house_number')->nullable(); // 门牌号
             $table->string('post_code'); // 邮政编码
-            $table->string('detailed_address')->nullable(); // 详细地址
+//            $table->string('detailed_address')->nullable(); // 详细地址
             $table->string('address_description')->nullable(); // 地址额外描述
 
             $table->string('map_coordinates'); // 详细地图坐标
 
             $table->unsignedTinyInteger('bedrooms')->default(0); // 卧室数量
             $table->unsignedtinyInteger('bathrooms')->default(0); // 淋浴数量
-            $table->unsignedTinyInteger('car_ports')->default(0); // 车位数量
+            $table->unsignedTinyInteger('car_spaces')->default(0); // 车位数量
             $table->unsignedTinyInteger('lockup_garages')->default(0); // 车库数量
 
             $table->unsignedInteger('min_price'); // 最小价格
@@ -62,6 +62,7 @@ class CreateResidencesTable extends Migration
             $table->unsignedInteger('uv')->default(0);
 
             $table->unsignedInteger('owner_id'); // 物主id
+            $table->unsignedInteger('creator_id'); // 数据创建者id
 
             $table->softDeletes(); // deleted_at
 

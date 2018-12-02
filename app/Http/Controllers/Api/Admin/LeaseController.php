@@ -67,7 +67,7 @@ class LeaseController extends Controller
         $lease->save();
         $lease->propertyType()->attach($request->input('property_type'));
         $lease->agents()->attach($request->input('agents'));
-        return $this->response->item($lease, new LeaseTransformer());
+        return $this->response->item($lease, new LeaseTransformer())->setStatusCode(201);
     }
 
     /**
