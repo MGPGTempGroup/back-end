@@ -18,7 +18,7 @@ class ResidenceTransformer extends TransformerAbstract
             'id' => $residence->id,
             'name' => $residence->name,
             'property_type' => $residence->propertyType,
-            'brief_introduction' => $residence->introduction,
+            'brief_introduction' => $residence->brief_introduction,
             'floor_space' => $residence->floor_space,
             'details' => $residence->details,
             'broadcast_pictures' => $residence->broadcast_pictures,
