@@ -23,7 +23,11 @@ class CreateProjectsTable extends Migration
             $table->string('description')->default(''); // 项目描述
             $table->date('year_built'); // 制造年份
             $table->text('broadcast_pictures'); // 轮播图片
+            $table->unsignedInteger('min_price');
+            $table->unsignedInteger('max_price');
             $table->unsignedInteger('creator_id'); // 数据创建者
+            $table->unsignedTinyInteger('is_new_development'); // 是否是最新开发房产
+            $table->unsignedTinyInteger('is_past_success'); // 是否为已成功项目（是否展示在过去的成功）
             $table->softDeletes();
             $table->timestamps();
         });

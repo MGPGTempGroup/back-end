@@ -10,7 +10,20 @@ class Project extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['name', 'location', 'address', 'status', 'introduction', 'description', 'year_built', 'broadcast_pictures'];
+    protected $fillable = [
+        'name',
+        'location',
+        'address',
+        'status',
+        'introduction',
+        'description',
+        'year_built',
+        'is_new_development',
+        'is_past_success',
+        'min_price',
+        'max_price',
+        'broadcast_pictures'
+    ];
 
     /**
      * 项目产品类型关联关系

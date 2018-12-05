@@ -23,6 +23,10 @@ class ProjectTransformer extends TransformerAbstract
             'description' => $project->description,
             'year_built' => $project->year_built,
             'broadcast_pictures' => $project->broadcast_pictures,
+            'min_price' => $project->min_price,
+            'max_price' => $project->max_price,
+            'is_new_development' => (int) $project->is_new_development,
+            'is_past_success' => (int) $project->is_past_success,
             'created_at' => $project->created_at->toDateTimeString(),
             'updated_at' => $project->updated_at->toDateTimeString()
         ];

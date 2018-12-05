@@ -34,6 +34,7 @@ class ProjectController extends Controller
                 return $query->whereIn('id', $projectsId);
             })
             ->paginate();
+
         return $this->response->paginator($projects, new ProjectTransformer());
     }
 
