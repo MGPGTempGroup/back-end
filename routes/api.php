@@ -64,11 +64,13 @@ $api->version('v1', [
             $api->post('company/positions', 'CompanyMemberPositionController@store');
             $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');
             $api->delete('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@destroy');
-
             $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');
             $api->post('company/departments', 'CompanyMemberPositionController@createDepartment');
             $api->patch('company/departments/{companyDepartment}', 'CompanyMemberPositionController@updateDepartment');
             $api->delete('company/departments/{companyDepartment}', 'CompanyMemberPositionController@destroyDepartment');
+
+            // 项目管理
+            $api->resource('projects', 'ProjectController');
 
             // 物业业主相关
             $api->resource('property-owners', 'PropertyOwnerController');

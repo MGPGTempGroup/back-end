@@ -23,6 +23,8 @@ class CreateProjectsTable extends Migration
             $table->string('description')->default(''); // 项目描述
             $table->date('year_built'); // 制造年份
             $table->text('broadcast_pictures'); // 轮播图片
+            $table->unsignedInteger('creator_id'); // 数据创建者
+            $table->softDeletes();
             $table->timestamps();
         });
     }

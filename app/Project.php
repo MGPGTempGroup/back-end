@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
+
+    use SoftDeletes;
 
     protected $fillable = ['name', 'location', 'address', 'status', 'introduction', 'description', 'year_built', 'broadcast_pictures'];
 
@@ -32,6 +35,14 @@ class Project extends Model
             'member_id')->withTimestamps();
     }
 
+    /**
+     * 数据创建者关联关系
+     */
+    public function creator()
+    {
+        return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
+    }
+
     public function getAddressAttribute($address)
     {
         return json_decode($address);
@@ -40,6 +51,16 @@ class Project extends Model
     public function setAddressAttribute($address)
     {
         $this->attributes['address'] = json_encode($address);
+    }
+
+    public function getBroadcastPicturesAttribute($broadcastPictures)
+    {
+        return json_decode($broadcastPictures);
+    }
+
+    public function setBroadcastPicturesAttribute($broadcastPictures)
+    {
+        $this->attributes['broadcast_pictures'] = json_encode($broadcastPictures);
     }
 
 }
