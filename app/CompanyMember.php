@@ -42,4 +42,16 @@ class CompanyMember extends Model
             'customer_id')->withTimestamps();
     }
 
+    /**
+     * 负责的项目关联关系
+     */
+    public function projects()
+    {
+        return $this->belongsToMany(
+            Project::class,
+            'project_agent',
+            'member_id',
+            'project_id')->withTimestamps();
+    }
+
 }

@@ -9,7 +9,7 @@ class ProjectTransformer extends TransformerAbstract
 {
 
     protected $defaultIncludes = [
-        'agents', 'creator', 'productType'
+        'agents', 'creator', 'productTypes'
     ];
 
     public function transform(Project $project)
@@ -38,7 +38,7 @@ class ProjectTransformer extends TransformerAbstract
         return $this->item($project->creator, new AdminUserTransformer());
     }
 
-    public function includeProductType(Project $project)
+    public function includeProductTypes(Project $project)
     {
         return $this->collection($project->productTypes, new ProductTypeTransformer());
     }
