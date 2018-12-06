@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProjectRequest;
+use App\Http\Requests\Admin\UpdateProjectRequest;
 use App\Http\Response\Transformers\Admin\ProjectTransformer;
 use App\Project;
 use DB;
@@ -11,7 +12,6 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-
     /**
      * 展示项目列表
      */
@@ -58,5 +58,26 @@ class ProjectController extends Controller
         }
 
         return $this->response->item($project, new ProjectTransformer())->setStatusCode(201);
+    }
+
+    /**
+     * 修改项目
+     */
+    public function update(UpdateProjectRequest $request, Project $project)
+    {
+        $project->fill($request->all());
+        $project->save();
+
+        // 同步该项目公司代理成员关联表数据
+        if ($request->has('agents')) {
+            $project->agents()->sync($request->input('agents'));
+        }
+
+        // 同步该项目产品类型关联数据
+        if ($request->has('product_type')) {
+            $project->productTypes()->sync($request->input('product_type'));
+        }
+
+        return $this->response->item($project, new ProjectTransformer());
     }
 }

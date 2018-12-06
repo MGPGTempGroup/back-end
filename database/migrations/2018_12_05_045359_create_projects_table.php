@@ -26,8 +26,8 @@ class CreateProjectsTable extends Migration
             $table->unsignedInteger('min_price');
             $table->unsignedInteger('max_price');
             $table->unsignedInteger('creator_id'); // 数据创建者
-            $table->unsignedTinyInteger('is_new_development'); // 是否是最新开发房产
-            $table->unsignedTinyInteger('is_past_success'); // 是否为已成功项目（是否展示在过去的成功）
+            $table->unsignedTinyInteger('is_new_development')->default(0); // 是否是最新开发房产
+            $table->unsignedTinyInteger('is_past_success')->default(0); // 是否为已成功项目（是否展示在过去的成功）
             $table->softDeletes();
             $table->timestamps();
         });
