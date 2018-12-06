@@ -22,7 +22,8 @@ class Project extends Model
         'is_past_success',
         'min_price',
         'max_price',
-        'broadcast_pictures'
+        'broadcast_pictures',
+        'owner_id'
     ];
 
     /**
@@ -54,6 +55,14 @@ class Project extends Model
     public function creator()
     {
         return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
+    }
+
+    /**
+     * 物业业主
+     */
+    public function owner()
+    {
+        return $this->belongsTo(PropertyOwner::class, 'owner_id', 'id');
     }
 
     public function getAddressAttribute($address)

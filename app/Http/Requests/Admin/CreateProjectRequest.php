@@ -20,7 +20,8 @@ class CreateProjectRequest extends BaseRequest
             'max_price' => 'required|numeric',
             'broadcast_pictures' => 'array',
             'product_type' => 'array',
-            'agents' => 'array'
+            'agents' => 'array',
+            'owner_id' => 'exists:property_owners,id'
         ];
     }
 }

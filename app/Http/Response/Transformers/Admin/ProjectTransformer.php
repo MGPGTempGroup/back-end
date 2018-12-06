@@ -9,7 +9,7 @@ class ProjectTransformer extends TransformerAbstract
 {
 
     protected $defaultIncludes = [
-        'agents', 'creator', 'productTypes'
+        'agents', 'creator', 'productTypes', 'owner'
     ];
 
     public function transform(Project $project)
@@ -27,6 +27,7 @@ class ProjectTransformer extends TransformerAbstract
             'max_price' => $project->max_price,
             'is_new_development' => (int) $project->is_new_development,
             'is_past_success' => (int) $project->is_past_success,
+            'owner_id' => $project->owner_id,
             'created_at' => $project->created_at->toDateTimeString(),
             'updated_at' => $project->updated_at->toDateTimeString()
         ];
@@ -45,6 +46,11 @@ class ProjectTransformer extends TransformerAbstract
     public function includeProductTypes(Project $project)
     {
         return $this->collection($project->productTypes, new ProductTypeTransformer());
+    }
+
+    public function includeOwner(Project $project)
+    {
+        return $this->item($project->owner, new PropertyOwnerTransformer());
     }
 
 }

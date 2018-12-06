@@ -22,7 +22,7 @@ class PropertyOwnerController extends Controller
         // 如果存在searchByFullName参数则根据Full Name模糊查询
         if ($fullName = $request->query('searchByFullName')) {
             $owners = $eloquentBuilder
-                ->whereRaw('concat(surname, name) like ?', ['%' . $fullName . '%'])
+                ->whereRaw('concat(name, surname) like ?', ['%' . $fullName . '%'])
                 ->get();
             return $this->response->collection($owners, new PropertyOwnerTransformer());
         }

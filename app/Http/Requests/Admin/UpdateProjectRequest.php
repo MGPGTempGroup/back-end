@@ -20,7 +20,8 @@ class UpdateProjectRequest extends BaseRequest
             'max_price' => 'numeric',
             'broadcast_pictures' => 'array',
             'product_type' => 'array',
-            'agents' => 'array'
+            'agents' => 'array',
+            'owner_id' => 'exists:property_owners,id'
         ];
     }
 }
