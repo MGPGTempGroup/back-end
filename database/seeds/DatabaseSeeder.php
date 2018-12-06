@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PropertyTypeTableSeeder::class);
         $this->call(AdminUserTableSeeder::class);
         $this->call(ProductTypeTableSeeder::class);
+        $this->call(PropertyOwnerTableSeeder::class);
     }
 }

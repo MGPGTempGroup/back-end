@@ -28,6 +28,7 @@ class CreateProjectsTable extends Migration
             $table->unsignedInteger('creator_id'); // 数据创建者
             $table->unsignedTinyInteger('is_new_development')->default(0); // 是否是最新开发房产
             $table->unsignedTinyInteger('is_past_success')->default(0); // 是否为已成功项目（是否展示在过去的成功）
+            $table->unsignedInteger('owner_id');
             $table->softDeletes();
             $table->timestamps();
         });
