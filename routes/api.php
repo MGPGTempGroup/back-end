@@ -99,6 +99,7 @@ $api->version('v1', [
             $api->get('images/{key}', 'MediaFileController@showImage');
             $api->post('videos/slice-upload', 'MediaFileController@sliceUploadVideo');
             $api->post('videos/slice-upload-key', 'MediaFileController@createUploadVideoKey');
+            $api->post('pdfs', 'MediaFileController@uploadPDF');
         });
     });
 

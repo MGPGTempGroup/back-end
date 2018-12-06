@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateSliceUploadVideoKeyRequest;
+use App\Http\Requests\Admin\UploadPDFRequest;
 use App\Http\Requests\Admin\UploadSliceVideoFileRequest;
 use App\MediaFile;
 use Illuminate\Http\Request;
@@ -42,6 +43,31 @@ class MediaFileController extends Controller
         if (! $file->isValid()) $this->response->errorInternal('Upload failed.');
 
         $path = $file->store('/images', $this->disk);
+        $key = $this->generateMediaFileKey();
+
+        $mediaFile->fill([
+            'path' => $path,
+            'key' => $key,
+            'mime_type' => $file->getMimeType(),
+            'suffix' => $file->extension()
+        ]);
+        $mediaFile->save();
+
+        return $this->response->array([
+            'key' => $key
+        ])->setStatusCode(201)->withHeaders([
+            'location' => Storage::disk($this->disk)->url($path)
+        ]);
+    }
+
+    /**
+     * 上传pdf文件
+     */
+    public function uploadPDF(UploadPDFRequest $request, MediaFile $mediaFile)
+    {
+        $file = $request->file('pdf');
+
+        $path = $file->store('/pdf', $this->disk);
         $key = $this->generateMediaFileKey();
 
         $mediaFile->fill([
