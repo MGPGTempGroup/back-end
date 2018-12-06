@@ -80,4 +80,13 @@ class ProjectController extends Controller
 
         return $this->response->item($project, new ProjectTransformer());
     }
+
+    /**
+     * 软删除某项目数据
+     */
+    public function destroy(Project $project)
+    {
+        $project->delete();
+        return $this->response->noContent();
+    }
 }
