@@ -80,6 +80,11 @@ $api->version('v1', [
                 'only' => ['index']
             ]);
 
+            // 产品类型相关
+            $api->resource('product-types', 'ProductTypeController', [
+                'only' => ['index']
+            ]);
+
             // 出售房屋相关
             $api->resource('residences', 'ResidenceController');
             $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
