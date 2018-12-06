@@ -74,14 +74,15 @@ class MediaFileController extends Controller
             'path' => $path,
             'key' => $key,
             'mime_type' => $file->getMimeType(),
-            'suffix' => $file->extension()
+            'suffix' => $file->extension(),
+            'url' => Storage::disk($this->disk)->url($path)
         ]);
         $mediaFile->save();
 
         return $this->response->array([
             'key' => $key
         ])->setStatusCode(201)->withHeaders([
-            'location' => Storage::disk($this->disk)->url($path)
+            'location' => $mediaFile->url
         ]);
     }
 

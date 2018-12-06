@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaFile extends Model
 {
-    protected $fillable = ['key', 'path', 'mime_type', 'suffix'];
+    protected $fillable = ['key', 'path', 'mime_type', 'suffix', 'url'];
 
     public function scopeImages($query, $key)
     {
