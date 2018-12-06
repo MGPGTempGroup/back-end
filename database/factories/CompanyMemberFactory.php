@@ -4,9 +4,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\CompanyMember::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'surname' => $faker->lastName,
+        'name' => $faker->firstName,
+        'phone' => $faker->phoneNumber,
         'email' => $faker->email,
-        'phone' => $faker->phone,
         'google_plus_homepage' => $faker->url,
         'linkin_homepage' => $faker->url,
         'introduction' => $faker->text,
