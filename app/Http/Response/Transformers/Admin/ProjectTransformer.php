@@ -29,7 +29,8 @@ class ProjectTransformer extends TransformerAbstract
             'is_past_success' => (int) $project->is_past_success,
             'owner_id' => $project->owner_id,
             'created_at' => $project->created_at->toDateTimeString(),
-            'updated_at' => $project->updated_at->toDateTimeString()
+            'updated_at' => $project->updated_at->toDateTimeString(),
+            'status' => $project->status
         ];
     }
 
