@@ -33,6 +33,7 @@ class residence extends Model
         'car_spaces',
         'lockup_garages',
         'min_price',
+        'pv',
         'max_price',
         'upcoming_inspections_start_time',
         'upcoming_inspections_end_time',
@@ -45,8 +46,8 @@ class residence extends Model
         'is_new_development',
         'state',
         'owner_id',
-        'pv',
-        'uv'
+        'uv',
+        'information_statement'
     ];
 
     protected $casts = [

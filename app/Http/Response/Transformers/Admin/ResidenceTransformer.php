@@ -50,7 +50,8 @@ class ResidenceTransformer extends TransformerAbstract
             'pv' => $residence->pv,
             'uv' => $residence->uv,
             'created_at' => $residence->created_at->toDateTimeString(),
-            'updated_at' => $residence->updated_at->toDateTimeString()
+            'updated_at' => $residence->updated_at->toDateTimeString(),
+            'information_statement' => $residence->information_statement
         ];
     }
 
