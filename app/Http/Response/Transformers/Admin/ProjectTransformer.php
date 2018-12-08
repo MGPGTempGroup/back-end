@@ -51,7 +51,10 @@ class ProjectTransformer extends TransformerAbstract
 
     public function includeOwner(Project $project)
     {
-        return $this->item($project->owner, new PropertyOwnerTransformer());
+        if ($owner = $project->owner) {
+            return $this->item($owner, new PropertyOwnerTransformer());
+        }
+        return $this->null();
     }
 
 }
