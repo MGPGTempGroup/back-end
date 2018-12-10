@@ -56,7 +56,10 @@ class UpdateResidenceRequest extends BaseRequest
             'is_new_development' => 'in:0,1',
             'state' => 'in:0,1,2',
             'owner_id' => 'exists:property_owners,id',
-            'information_statement' => 'url'
+            'information_statement' => 'url',
+            'video_embedded_code' => [
+                'regex:/^<iframe.*?src=".*?".*?/'
+            ]
         ];
     }
 }

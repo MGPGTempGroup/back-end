@@ -57,6 +57,8 @@ class CreateResidencesTable extends Migration
             $table->unsignedTinyInteger('is_new_development')->default(0); // 是否是最新开发房产
             $table->unsignedTinyInteger('state')->default(1); // 房屋状态
 
+            $table->text('video_embedded_code')->nullable(); // 视频嵌入代码
+
             $table->text('information_statement')->nullable(); // 信息陈述文件（pdf）
 
             // 统计相关

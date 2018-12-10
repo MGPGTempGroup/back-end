@@ -51,7 +51,10 @@ class CreateResidenceRequest extends BaseRequest
             'is_new_development' => 'in:0,1',
             'state' => 'in:0,1,2',
             'owner_id' => 'bail|required|exists:property_owners,id',
-            'information_statement' => 'url'
+            'information_statement' => 'url',
+            'video_embedded_code' => [
+                'regex:/^<iframe.*?src=".*?".*?/'
+            ]
         ];
     }
 }

@@ -47,7 +47,8 @@ class residence extends Model
         'state',
         'owner_id',
         'uv',
-        'information_statement'
+        'information_statement',
+        'video_embedded_code'
     ];
 
     protected $casts = [

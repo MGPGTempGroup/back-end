@@ -47,6 +47,7 @@ class ResidenceTransformer extends TransformerAbstract
             'is_new_development' => $residence->is_new_development,
             'state' => $residence->state,
             'owner_id' => $residence->owner_id,
+            'video_embedded_code' => $residence->video_embedded_code,
             'pv' => $residence->pv,
             'uv' => $residence->uv,
             'created_at' => $residence->created_at->toDateTimeString(),
