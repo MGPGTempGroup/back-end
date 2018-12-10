@@ -10,7 +10,7 @@ $factory->define(App\CompanyMember::class, function (Faker $faker) {
         'email' => $faker->email,
         'google_plus_homepage' => $faker->url,
         'linkin_homepage' => $faker->url,
-        'introduction' => $faker->text,
+        'introduction' => $faker->text(191),
         'photo' => $faker->imageUrl(461, 450),
         'thumbnail' => $faker->imageUrl(218, 160)
     ];
