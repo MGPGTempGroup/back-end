@@ -46,6 +46,7 @@ class Lease extends Model
         'show',
         'state',
         'owner_id',
+        'video_embedded_code',
         'pv',
         'uv'
     ];

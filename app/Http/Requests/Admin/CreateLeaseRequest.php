@@ -55,6 +55,9 @@ class CreateLeaseRequest extends BaseRequest
             'sort_number' => 'numeric',
             'state' => 'in:0,1,2',
             'owner_id' => 'bail|required|exists:property_owners,id',
+            'video_embedded_code' => [
+                'regex:/^<iframe.*?src=".*?".*?/'
+            ]
         ];
     }
 }

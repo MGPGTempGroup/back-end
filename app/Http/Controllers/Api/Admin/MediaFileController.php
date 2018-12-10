@@ -80,7 +80,8 @@ class MediaFileController extends Controller
         $mediaFile->save();
 
         return $this->response->array([
-            'key' => $key
+            'key' => $key,
+            'url' => $mediaFile->url
         ])->setStatusCode(201)->withHeaders([
             'location' => $mediaFile->url
         ]);

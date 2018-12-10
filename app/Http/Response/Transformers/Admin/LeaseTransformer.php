@@ -47,6 +47,7 @@ class LeaseTransformer extends TransformerAbstract
             'show' => $lease->show,
             'state' => $lease->state,
             'owner_id' => $lease->owner_id,
+            'video_embedded_code' => $lease->video_embedded_code,
             'pv' => $lease->pv,
             'uv' => $lease->uv,
             'created_at' => $lease->created_at->toDateTimeString(),

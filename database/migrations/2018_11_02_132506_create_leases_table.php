@@ -63,6 +63,8 @@ class CreateLeasesTable extends Migration
             $table->unsignedTinyInteger('show')->default(1); // 当前状态：展示与隐藏
             $table->unsignedTinyInteger('state')->default(1); // 房屋状态
 
+            $table->text('video_embedded_code')->nullable(); // 视频嵌入代码
+
             // 统计相关
             $table->unsignedInteger('pv')->nullable();
             $table->unsignedInteger('uv')->nullable();
