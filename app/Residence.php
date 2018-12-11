@@ -94,16 +94,25 @@ class residence extends Model
         $this->attributes['address'] = json_encode($address);
     }
 
+    /**
+     * 物业拥有者关联关系
+     */
     public function owner()
     {
         return $this->belongsTo(PropertyOwner::class, 'owner_id', 'id');
     }
 
+    /**
+     * 数据创建者关联关系
+     */
     public function creator()
     {
         return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
     }
 
+    /**
+     * 公司成员代理关联关系
+     */
     public function agents()
     {
         return $this->belongsToMany(
@@ -113,6 +122,9 @@ class residence extends Model
             'member_id')->withTimestamps();
     }
 
+    /**
+     * 物业类型关联关系
+     */
     public function propertyType()
     {
         return $this->belongsToMany(
@@ -122,9 +134,20 @@ class residence extends Model
             'property_type_id')->withTimestamps();
     }
 
+    /**
+     * 房屋备注关联关系
+     */
     public function remarks()
     {
         return $this->hasMany(ResidenceRemark::class, 'residence_id', 'id');
+    }
+
+    /**
+     * 预约相关关联关系
+     */
+    public function inspections()
+    {
+        return $this->morphMany(HouseInspection::class, 'house');
     }
 
 }

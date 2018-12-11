@@ -98,28 +98,51 @@ class Lease extends Model
         return json_decode($address);
     }
 
+    /**
+     * 物业业主关联关系
+     */
     public function owner()
     {
         return $this->belongsTo(PropertyOwner::class, 'owner_id', 'id');
     }
 
+    /**
+     * 公司成员代理关联关系
+     */
     public function agents()
     {
         return $this->belongsToMany(CompanyMember::class, 'lease_agent', 'lease_id', 'member_id');
     }
 
+    /**
+     * 数据创建者关联关系
+     */
     public function creator()
     {
         return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
     }
 
+    /**
+     * 物业类型关联关系
+     */
     public function propertyType()
     {
         return $this->belongsToMany(PropertyType::class, 'lease_property_type', 'lease_id', 'property_type_id');
     }
 
+    /**
+     * 房屋备注关联关系
+     */
     public function remarks()
     {
         return $this->hasMany(LeaseRemark::class, 'lease_id', 'id');
+    }
+
+    /**
+     * 预约相关关联关系
+     */
+    public function inspections()
+    {
+        return $this->morphMany(HouseInspection::class, 'house');
     }
 }
