@@ -117,6 +117,11 @@ $api->version('v1', [
     $api->group([
         'namespace' => 'Home'
     ], function ($api) {
+
+        // 房屋预约
+        $api->post('residences/{residence}/inspections', 'HouseInspectionController@storeResidenceInspection');
+        $api->post('leases/{lease}/inspections', 'HouseInspectionController@storeLeaseInspection');
+
         $api->get('customer-service/dialogue/{dialogueId}', 'CustomerServiceController@subscribeDialogue');
         $api->post('customer-service/dialogue', 'CustomerServiceController@createDialogue');
         $api->post('customer-service/dialogue/{dialogueId}/messages', 'CustomerServiceController@publishMessage');
