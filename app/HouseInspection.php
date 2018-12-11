@@ -13,8 +13,8 @@ class HouseInspection extends Model
         'first_name',
         'mobile',
         'comment',
-        'house_type',
-        'house_id',
+//        'house_type',
+//        'house_id',
         'inspection_date',
         'inspection_time'
     ];
