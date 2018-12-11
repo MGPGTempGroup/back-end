@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateLeaseRequest;
 use App\Http\Requests\Admin\UpdateLeaseRequest;
+use App\Http\Response\Transformers\Admin\HouseInspectionTransformer;
 use App\Http\Response\Transformers\Admin\LeaseTransformer;
 use App\LeaseAgentPivot;
 use App\LeasePropertyTypePivot;
@@ -84,6 +85,15 @@ class LeaseController extends Controller
             $lease->agents()->sync($request->input('agents'));
         }
         return $this->response->item($lease, new LeaseTransformer());
+    }
+
+    /*
+     * 获取该房屋的预约列表
+     */
+    public function inspections(Lease $lease)
+    {
+        $inspections = $this->buildEloquentQueryThroughQs($lease->inspections())->paginate();
+        return $this->response->paginator($inspections, new HouseInspectionTransformer());
     }
 
     /**

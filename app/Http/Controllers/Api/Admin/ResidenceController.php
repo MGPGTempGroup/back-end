@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateResidenceRequest;
 use App\Http\Requests\Admin\UpdateResidenceRequest;
+use App\Http\Response\Transformers\Admin\HouseInspectionTransformer;
 use App\Http\Response\Transformers\Admin\ResidenceTransformer;
 use App\ResidenceAgentPivot;
 use App\ResidencePropertyTypePivot;
@@ -82,6 +83,15 @@ class ResidenceController extends Controller
             $residence->propertyType()->sync($request->property_type_id);
         }
         return $this->response->item($residence, new ResidenceTransformer());
+    }
+
+    /*
+     * 获取该房屋的预约列表
+     */
+    public function inspections(Residence $residence)
+    {
+        $inspections = $this->buildEloquentQueryThroughQs($residence->inspections())->paginate();
+        return $this->response->paginator($inspections, new HouseInspectionTransformer());
     }
 
     /**
