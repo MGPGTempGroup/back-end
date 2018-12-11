@@ -15,8 +15,8 @@ class HouseInspectionTransformer extends TransformerAbstract
     public function transform(HouseInspection $houseInspection)
     {
         $houseType = [
-            'App\Residence' => 'sale',
-            'App\Lease' => 'lease'
+            'App\residence' => 'sale',
+            'App\lease' => 'lease'
         ][$houseInspection->house_type];
         return [
             'id' => $houseInspection->id,
@@ -36,8 +36,8 @@ class HouseInspectionTransformer extends TransformerAbstract
     public function includeHouse(HouseInspection $houseInspection)
     {
         $transformer = [
-            'App\Residence' => ResidenceTransformer::class,
-            'App\Lease' => LeaseTransformer::class
+            'App\residence' => ResidenceTransformer::class,
+            'App\lease' => LeaseTransformer::class
         ][$houseInspection->house_type];
         return $this->item($houseInspection->house, new $transformer);
     }
