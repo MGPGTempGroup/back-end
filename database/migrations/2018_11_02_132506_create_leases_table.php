@@ -53,8 +53,7 @@ class CreateLeasesTable extends Migration
             $table->unsignedInteger('per_day_min_price')->nullable();
             $table->unsignedInteger('per_day_max_price')->nullable();
 
-            $table->dateTime('upcoming_inspections_start_time')->nullable(); // 即将到来的检查开始时间
-            $table->dateTime('upcoming_inspections_end_time')->nullable(); // 即将到来的检查结束时间
+            $table->text('upcoming_inspection_datetime')->nullable(); // 可用检查时间
             $table->dateTime('available_start_date')->nullable(); // 可用日期
             $table->dateTime('available_end_date')->nullable(); // 可用日期
 

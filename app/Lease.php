@@ -38,8 +38,7 @@ class Lease extends Model
         'per_week_max_price',
         'per_day_min_price',
         'per_day_max_price',
-        'upcoming_inspections_start_time',
-        'upcoming_inspections_end_time',
+        'upcoming_inspection_datetime',
         'available_start_date',
         'available_end_date',
         'sort_number',
@@ -96,6 +95,16 @@ class Lease extends Model
     public function getAddressAttribute($address)
     {
         return json_decode($address);
+    }
+
+    public function getUpcomingInspectionDatetime($jsonStr)
+    {
+        return json_decode($jsonStr);
+    }
+
+    public function setUpcomingInspectionDatetime($jsonStr)
+    {
+        $this->attributes['upcoming_inspection_datetime'] = json_encode($jsonStr);
     }
 
     /**
