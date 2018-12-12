@@ -24,4 +24,23 @@ class HouseInspection extends Model
         return $this->morphTo('house', 'house_type', 'house_id');
     }
 
+    /**
+     * 出售房屋查询作用域
+     */
+    public function scopeHouseType($query, $type = null)
+    {
+        $type = strtolower($type);
+        switch ($type) {
+            case 'sale':
+                return $query->where('house_type', Residence::class);
+                break;
+            case 'lease':
+                return $query->where('house_type', Lease::class);
+                break;
+            default:
+                return $query;
+                break;
+        }
+    }
+
 }

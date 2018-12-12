@@ -9,10 +9,14 @@ use App\Http\Controllers\Controller;
 
 class HouseInspectionController extends Controller
 {
-    public function index(HouseInspection $houseInspection)
+    public function index(Request $request, HouseInspection $houseInspection)
     {
         $inspectionsQueryBuilder = $this->buildEloquentQueryThroughQs($houseInspection);
-        $inspections = $inspectionsQueryBuilder->paginate();
+        $inspections = $inspectionsQueryBuilder
+            ->when($request->query('type'), function ($query, $type) {
+                return $query->houseType($type);
+            })
+            ->paginate();
         return $this->response->paginator($inspections, new HouseInspectionTransformer());
     }
 }
