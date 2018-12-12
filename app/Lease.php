@@ -97,12 +97,12 @@ class Lease extends Model
         return json_decode($address);
     }
 
-    public function getUpcomingInspectionDatetime($jsonStr)
+    public function getUpcomingInspectionDatetimeAttribute($jsonStr)
     {
         return json_decode($jsonStr);
     }
 
-    public function setUpcomingInspectionDatetime($jsonStr)
+    public function setUpcomingInspectionDatetimeAttribute($jsonStr)
     {
         $this->attributes['upcoming_inspection_datetime'] = json_encode($jsonStr);
     }
