@@ -35,8 +35,7 @@ class residence extends Model
         'min_price',
         'pv',
         'max_price',
-        'upcoming_inspections_start_time',
-        'upcoming_inspections_end_time',
+        'upcoming_inspection_datetime',
         'available_start_date',
         'available_end_date',
         'constructed_in',
@@ -72,6 +71,7 @@ class residence extends Model
         'uv' => 0,
         'show' => 1,
         'sort_number' => 0,
+        'upcoming_inspection_datetime' => '[]'
     ];
 
     public function setBroadcastPicturesAttribute($val)
@@ -92,6 +92,16 @@ class residence extends Model
     public function setAddressAttribute($address)
     {
         $this->attributes['address'] = json_encode($address);
+    }
+
+    public function getUpcomingInspectionDatetimeAttribute($jsonStr)
+    {
+        return json_decode($jsonStr);
+    }
+
+    public function setUpcomingInspectionDatetimeAttribute($jsonStr)
+    {
+        $this->attributes['upcoming_inspection_datetime'] = json_encode($jsonStr);
     }
 
     /**

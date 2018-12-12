@@ -75,6 +75,7 @@ class Lease extends Model
         'uv' => 0,
         'show' => 1,
         'sort_number' => 0,
+        'upcoming_inspection_datetime' => '[]'
     ];
 
     public function setBroadcastPicturesAttribute($val)
