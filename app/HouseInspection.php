@@ -43,4 +43,12 @@ class HouseInspection extends Model
         }
     }
 
+    /**
+     * 跟进人关联关系
+     */
+    public function followUp()
+    {
+        return $this->belongsTo(AdminUser::class, 'follow_up', 'id');
+    }
+
 }

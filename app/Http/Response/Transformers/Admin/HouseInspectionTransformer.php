@@ -9,7 +9,7 @@ class HouseInspectionTransformer extends TransformerAbstract
 {
 
     protected $availableIncludes = [
-        'house'
+        'house', 'followUp'
     ];
 
     public function transform(HouseInspection $houseInspection)
@@ -30,6 +30,7 @@ class HouseInspectionTransformer extends TransformerAbstract
             'first_name' => $houseInspection->first_name,
             'name' => $houseInspection->first_name,
             'type' => $houseType,
+            'is_follow_up' => (boolean) $houseInspection->follow_up,
             'created_at' => $houseInspection->created_at->toDateTimeString(),
             'updated_at' => $houseInspection->updated_at->toDateTimeString()
         ];
@@ -42,6 +43,14 @@ class HouseInspectionTransformer extends TransformerAbstract
             'App\lease' => LeaseTransformer::class
         ][$houseInspection->house_type];
         return $this->item($houseInspection->house, new $transformer);
+    }
+
+    public function includeFollowUp(HouseInspection $houseInspection)
+    {
+        if ($followUp = $houseInspection->followUp) {
+            return $this->item($followUp, new AdminUserTransformer());
+        }
+        return $this->null();
     }
 
 }

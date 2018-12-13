@@ -25,6 +25,7 @@ class CreateHouseInspectionsTable extends Migration
             $table->string('mobile'); // 手机号码
             $table->string('mobile_from_country')->default(''); // 手机号码所属国家
             $table->string('email')->default('');
+            $table->unsignedInteger('follow_up')->default(0); // 跟进状态，如果已经跟进则填写跟进人id
             $table->timestamps();
         });
     }
