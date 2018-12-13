@@ -17,12 +17,14 @@ class CreateHouseInspectionsTable extends Migration
             $table->increments('id');
             $table->string('house_type'); // 所属房屋类别：residence or lease 出售与租赁
             $table->unsignedInteger('house_id'); // 所属房屋id
-            $table->date('inspection_date')->nullable(); // 预约的日期
-            $table->time('inspection_time')->nullable(); // 预约的时间
+            $table->dateTime('preferred_inspection_datetime')->nullable(); // 预约的日期
+            $table->date('preferred_move_in_date')->nullable(); // 期待搬入日期
             $table->string('surname'); // 姓
             $table->string('first_name')->default(''); // 名
             $table->text('comment'); // 留言
             $table->string('mobile'); // 手机号码
+            $table->string('mobile_from_country')->default(''); // 手机号码所属国家
+            $table->string('email')->default('');
             $table->timestamps();
         });
     }

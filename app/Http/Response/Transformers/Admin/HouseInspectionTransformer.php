@@ -21,9 +21,11 @@ class HouseInspectionTransformer extends TransformerAbstract
         return [
             'id' => $houseInspection->id,
             'mobile' => $houseInspection->mobile,
+            'mobile_from_country' => $houseInspection->mobile_from_country,
+            'email' => $houseInspection->email,
             'comment' => $houseInspection->comment,
-            'inspection_date' => $houseInspection->inspection_date,
-            'inspection_time' => $houseInspection->inspection_time,
+            'preferred_inspection_datetime' => $houseInspection->preferred_inspection_datetime,
+            'preferred_move_in_date' => $houseInspection->preferred_move_in_date,
             'surname' => $houseInspection->surname,
             'first_name' => $houseInspection->first_name,
             'name' => $houseInspection->first_name,

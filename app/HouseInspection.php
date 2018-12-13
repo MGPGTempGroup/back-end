@@ -12,11 +12,11 @@ class HouseInspection extends Model
         'surname',
         'first_name',
         'mobile',
+        'email',
         'comment',
-//        'house_type',
-//        'house_id',
-        'inspection_date',
-        'inspection_time'
+        'mobile_from_country',
+        'preferred_inspection_datetime',
+        'preferred_move_in_date'
     ];
 
     public function house()
