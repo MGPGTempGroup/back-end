@@ -35,4 +35,13 @@ class HouseInspectionController extends Controller
         }
         return $this->response->errorForbidden();
     }
+
+    /**
+     * 软删除
+     */
+    public function destroy(HouseInspection $houseInspection)
+    {
+        $houseInspection->delete();
+        return $this->response->noContent();
+    }
 }

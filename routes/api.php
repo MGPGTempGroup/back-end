@@ -104,6 +104,7 @@ $api->version('v1', [
             // 房屋预约相关
             $api->get('inspections', 'HouseInspectionController@index');
             $api->patch('inspections/{houseInspection}/follow', 'HouseInspectionController@followUp');
+            $api->delete('inspections/{houseInspection}', 'HouseInspectionController@destroy');
 
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
