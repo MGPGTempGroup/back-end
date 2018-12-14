@@ -38,11 +38,14 @@ class HouseInspectionTransformer extends TransformerAbstract
 
     public function includeHouse(HouseInspection $houseInspection)
     {
-        $transformer = [
-            'App\Residence' => ResidenceTransformer::class,
-            'App\Lease' => LeaseTransformer::class
-        ][$houseInspection->house_type];
-        return $this->item($houseInspection->house, new $transformer);
+        if ($leaseHouse = $houseInspection->house) {
+            $transformer = [
+                'App\Residence' => ResidenceTransformer::class,
+                'App\Lease' => LeaseTransformer::class
+            ][$houseInspection->house_type];
+            return $this->item($leaseHouse, new $transformer);
+        }
+        return $this->null();
     }
 
     public function includeFollowUp(HouseInspection $houseInspection)
