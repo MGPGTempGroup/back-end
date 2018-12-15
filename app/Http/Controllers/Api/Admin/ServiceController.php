@@ -55,7 +55,7 @@ class ServiceController extends Controller
         $serviceContent->modifier_id = $this->user()->id;
         $service->content()->save($serviceContent);
 
-        return $this->response->item($serviceContent, new ServiceContentTransformer());
+        return $this->response->item($serviceContent, new ServiceContentTransformer())->setStatusCode(201);
     }
 
     /**
