@@ -16,8 +16,6 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name'); // 服务名称
-            $table->mediumText('content')->nullable(); // 服务内容
-            $table->text('broadcast_pictures')->nullable(); // 轮播图json数据
             $table->timestamps();
         });
     }
