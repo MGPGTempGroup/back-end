@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Requests\Admin\CreateServiceContentRequest;
+use App\Http\Response\Transformers\Admin\ServiceContentTransformer;
+use App\ServiceContent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,6 +36,26 @@ class ServiceController extends Controller
     public function show(Request $request, Service $service)
     {
         return $this->response->item($service, new ServiceTransformer());
+    }
+
+    /**
+     * 更新服务内容
+     */
+    public function storeContent(
+        CreateServiceContentRequest $request,
+        Service $service,
+        ServiceContent $serviceContent)
+    {
+        if ($latestContent = $service->content)
+            $serviceContent->creator_id = $latestContent->creator_id;
+        else
+            $serviceContent->creator_id = $this->user()->id;
+
+        $serviceContent->fill($request->all());
+        $serviceContent->modifier_id = $this->user()->id;
+        $service->content()->save($serviceContent);
+
+        return $this->response->item($serviceContent, new ServiceContentTransformer());
     }
 
     /**

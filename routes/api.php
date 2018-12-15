@@ -28,6 +28,7 @@ $api->version('v1', [
             $api->resource('services', 'ServiceController', [
                 'only' => ['update', 'show', 'index']
             ]);
+            $api->post('services/{service}/contents', 'ServiceController@storeContent');
 
             // 服务领域相关
             $api->post('service-areas', 'ServiceController@createServiceArea');

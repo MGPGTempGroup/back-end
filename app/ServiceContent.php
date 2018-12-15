@@ -17,7 +17,7 @@ class ServiceContent extends Model
 
     public function setBroadcastPicturesAttribute($value)
     {
-        return $this->setAttribute('broadcast_pictures', json_encode($value));
+        return $this->attributes['broadcast_pictures'] = json_encode($value);
     }
 
     public function getBroadcastPicturesAttribute($value)

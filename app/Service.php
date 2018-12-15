@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
 
-    protected $fillable = ['content', 'broadcast_pictures'];
+//    protected $fillable = ['content', 'broadcast_pictures'];
 
     /**
      * 服务留言关联关系
