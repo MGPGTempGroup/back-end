@@ -17,8 +17,8 @@ class CreateServiceContentsTable extends Migration
             $table->increments('id');
             $table->mediumText('content');
             $table->text('broadcast_pictures')->nullable(); // 轮播图json数据
-            $table->unsignedInteger('creator'); // 创建者
-            $table->unsignedInteger('modifier')->nullable(); // 修改者
+            $table->unsignedInteger('creator_id'); // 创建者
+            $table->unsignedInteger('modifier_id')->nullable(); // 修改者
             $table->unsignedInteger('service_id');
             $table->timestamps();
         });

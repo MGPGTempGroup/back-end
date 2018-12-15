@@ -8,8 +8,12 @@ use App\Service;
 class ServiceTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = [
+        'historicalContents'
+    ];
+
     protected $defaultIncludes = [
-        'members'
+        'members', 'content'
     ];
 
     public function transform(Service $service)
@@ -17,8 +21,6 @@ class ServiceTransformer extends TransformerAbstract
         return [
             'id' => $service->id,
             'name' => $service->name,
-            'broadcast_pictures' => $service->broadcast_pictures,
-            'content' => $service->content,
             'created_at' => $service->created_at->toDateTimeString(),
             'updated_at' => $service->updated_at->toDateTimeString()
         ];
@@ -26,6 +28,26 @@ class ServiceTransformer extends TransformerAbstract
 
     public function includeMembers(Service $service)
     {
-        return $this->collection($service->members, new CompanyMemberTransformer());
+        if ($members = $service->members) {
+            return $this->collection($members, new CompanyMemberTransformer());
+        }
+        return $this->null();
+    }
+
+    public function includeContent(Service $service)
+    {
+        if(! $content = $service->content) return $this->null();
+        return $this->item($content, new ServiceContentTransformer());
+    }
+
+    public function includeHistoricalContents(Service $service)
+    {
+        $contents = $service
+            ->historicalContents()
+            ->orderBy('id', 'DESC')
+            ->limit(20)
+            ->get();
+        if (! $contents) return $this->null();
+        return $this->collection($contents, new ServiceContentTransformer());
     }
 }

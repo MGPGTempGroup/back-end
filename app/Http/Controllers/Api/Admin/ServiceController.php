@@ -23,7 +23,8 @@ class ServiceController extends Controller
      */
     public function index(Service $service)
     {
-        return $this->response->collection($service->get(), new ServiceTransformer());
+        $services = $service->get();
+        return $this->response->collection($services, new ServiceTransformer());
     }
 
     /**
@@ -91,7 +92,6 @@ class ServiceController extends Controller
     public function destroyServiceArea(ServiceArea $serviceArea)
     {
         $serviceArea->delete();
-
         return $this->response->noContent();
     }
 }

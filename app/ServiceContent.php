@@ -21,4 +21,14 @@ class ServiceContent extends Model
         return json_decode($value);
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
+    }
+
+    public function modifier()
+    {
+        return $this->belongsTo(AdminUser::class, 'modifier_id', 'id');
+    }
+
 }

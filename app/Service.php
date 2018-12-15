@@ -10,17 +10,28 @@ class Service extends Model
 
     protected $fillable = ['content', 'broadcast_pictures'];
 
-    public function scopeByName($query, $serviceName)
-    {
-        return $query->where('name', strtolower($serviceName));
-    }
-
     /**
      * 服务留言关联关系
      */
     public function messages()
     {
         return $this->hasMany(ServiceMessage::class, 'service_id', 'id');
+    }
+
+    /**
+     * 服务内容关联关系
+     */
+    public function content()
+    {
+        return $this->hasOne(ServiceContent::class, 'service_id', 'id')->latest();
+    }
+
+    /**
+     * 历史服务内容关联关系
+     */
+    public function historicalContents()
+    {
+        return $this->hasMany(ServiceContent::class, 'service_id', 'id');
     }
 
     /**
