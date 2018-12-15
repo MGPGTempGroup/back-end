@@ -11,6 +11,10 @@ class ServiceContent extends Model
         'broadcast_pictures'
     ];
 
+    protected $attributes = [
+        'broadcast_pictures' => '[]'
+    ];
+
     public function setBroadcastPicturesAttribute($value)
     {
         return $this->setAttribute('broadcast_pictures', json_encode($value));
