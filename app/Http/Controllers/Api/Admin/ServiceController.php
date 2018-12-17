@@ -63,11 +63,7 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        $service->fill($request->all());
-        $service->save();
-        if ($request->members) {
-            $service->members()->sync($request->members);
-        }
+        $service->members()->sync($request->input('members'));
         return $this->response->item($service, new ServiceTransformer());
     }
 
