@@ -12,7 +12,8 @@ class ServiceAreaTransformer extends TransformerAbstract
         return [
             'id' => $serviceArea->id,
             'name' => $serviceArea->name,
-            'broadcast_pictures' => $serviceArea->broadcast_pictures,
+            'picture' => $serviceArea->picture,
+            'top_picture' => $serviceArea->top_picture,
             'introduction' => $serviceArea->introduction,
             'created_at' => $serviceArea->created_at->toDateTimeString(),
             'updated_at' => $serviceArea->updated_at->toDateTimeString()
