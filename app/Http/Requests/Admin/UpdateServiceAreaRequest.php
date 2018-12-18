@@ -8,8 +8,8 @@ class UpdateServiceAreaRequest extends BaseRequest
     {
         return [
             'name' => 'string',
-            'top_picture' => 'url',
-            'picture' => 'url',
+            'top_picture' => 'nullable|url',
+            'picture' => 'nullable|url',
             'introduction' => 'string'
         ];
     }
