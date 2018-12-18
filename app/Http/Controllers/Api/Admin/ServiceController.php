@@ -90,7 +90,6 @@ class ServiceController extends Controller
     {
         $serviceArea->fill($request->all());
         $serviceArea->save();
-
         return $this->response->item($serviceArea, new ServiceAreaTransformer());
     }
 
@@ -101,7 +100,6 @@ class ServiceController extends Controller
     {
         $serviceArea->fill($request->all());
         $serviceArea->save();
-
         return $this->response->item($serviceArea, new ServiceAreaTransformer());
     }
 

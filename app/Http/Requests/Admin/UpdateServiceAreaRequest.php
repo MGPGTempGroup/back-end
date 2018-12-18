@@ -7,9 +7,10 @@ class UpdateServiceAreaRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'bail|string',
-            'broadcast_pictures' => 'bail|json',
-            'introduction' => 'bail|string'
+            'name' => 'string',
+            'top_picture' => 'url',
+            'picture' => 'url',
+            'introduction' => 'string'
         ];
     }
 }

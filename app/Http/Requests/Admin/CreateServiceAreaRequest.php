@@ -8,7 +8,8 @@ class CreateServiceAreaRequest extends BaseRequest
     {
         return [
             'name' => 'bail|required|string',
-            'broadcast_pictures' => 'bail|required|json',
+            'top_picture' => 'url',
+            'picture' => 'url',
             'introduction' => 'bail|required|string'
         ];
     }
