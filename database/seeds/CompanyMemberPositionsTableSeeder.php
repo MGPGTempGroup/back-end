@@ -23,10 +23,11 @@ class CompanyMemberPositionsTableSeeder extends Seeder
         $id = 1;
         foreach ($departments as $positions) {
             foreach ($positions as $position) {
-                factory(App\CompanyMemberPosition::class)->create([
+                $position = factory(App\CompanyMemberPosition::class)->create([
                     'department_id' => $id,
                     'name' => $position
                 ]);
+                $position->department->increment('positions_count');
             }
             $id++;
         }

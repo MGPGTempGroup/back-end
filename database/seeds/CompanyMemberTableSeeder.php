@@ -15,7 +15,10 @@ class CompanyMemberTableSeeder extends Seeder
         factory(App\CompanyMember::class, 10)
             ->create()
             ->each(function ($member) use ($availablePositionsId) {
-                $member->positions()->sync(array_rand($availablePositionsId, mt_rand(1,3)));
+                $member->positions()->sync(array_rand($availablePositionsId, $count = mt_rand(1,3)));
+                $member->positions->each(function ($position) {
+                    $position->increment('members_count');
+                });
             });
     }
 }
