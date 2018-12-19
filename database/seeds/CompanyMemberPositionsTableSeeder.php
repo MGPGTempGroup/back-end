@@ -27,7 +27,6 @@ class CompanyMemberPositionsTableSeeder extends Seeder
                     'department_id' => $id,
                     'name' => $position
                 ]);
-                $position->department->increment('positions_count');
             }
             $id++;
         }

@@ -56,12 +56,16 @@ class CompanyMemberController extends Controller
 
     /**
      * 创建公司成员
-     */
+            */
     public function store(CreateCompanyMemberRequest $request, CompanyMember $companyMember)
     {
         $companyMember->fill($request->all());
         $companyMember->save();
-        $companyMember->positions()->attach($request->positions);
+
+        $syncResult = $companyMember->positions()->sync($request->positions);
+        DB::table('company_member_positions')
+            ->whereIn('id', $syncResult['attached'])
+            ->increment('members_count');
         return $this->response->item($companyMember, new CompanyMemberTransformer());
     }
 
@@ -73,7 +77,14 @@ class CompanyMemberController extends Controller
         $companyMember->fill($request->all());
         $companyMember->save();
         if ($request->positions) {
-            $companyMember->positions()->sync($request->positions);
+            $syncResult = $companyMember->positions()->sync($request->positions);
+            $countField = 'members_count';
+            DB::table('company_member_positions')
+                ->whereIn('id', $syncResult['attached'])
+                ->increment($countField);
+            DB::table('company_member_positions')
+                ->whereIn('id', $syncResult['detached'])
+                ->decrement($countField);
         }
         return $this->response->item($companyMember, new CompanyMemberTransformer());
     }
@@ -83,7 +94,10 @@ class CompanyMemberController extends Controller
      */
     public function destroy(CompanyMember $companyMember)
     {
-        $companyMember->delete();
+        $syncResult = $companyMember->positions()->sync([]);
+        DB::table('company_member_positions')
+            ->whereIn('id', $syncResult['detached'])
+            ->decrement('members_count');
         return $this->response->noContent();
     }
 }
