@@ -53,6 +53,8 @@ class CompanyMemberPositionController extends Controller
      */
     public function destroy(CompanyMemberPosition $companyMemberPosition)
     {
+        $syncResult = $companyMemberPosition->members()->sync([]);
+        $companyMemberPosition->decrement('members_count', count($syncResult['detached']));
         $companyMemberPosition->delete();
         return $this->response->noContent();
     }

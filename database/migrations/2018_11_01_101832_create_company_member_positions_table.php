@@ -18,6 +18,7 @@ class CreateCompanyMemberPositionsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('members_count')->default(0); // 成员数量
+            $table->softDeletes();
             $table->timestamps();
         });
     }
