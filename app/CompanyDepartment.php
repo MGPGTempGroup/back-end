@@ -15,5 +15,4 @@ class CompanyDepartment extends Model
     {
         return $this->hasMany(CompanyMemberPosition::class, 'department_id', 'id');
     }
-
 }

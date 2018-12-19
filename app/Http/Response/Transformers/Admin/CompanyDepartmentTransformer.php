@@ -26,4 +26,5 @@ class CompanyDepartmentTransformer extends TransformerAbstract
     {
         return $this->collection($companyDepartment->positions, new CompanyMemberPositionTransformer());
     }
+
 }
