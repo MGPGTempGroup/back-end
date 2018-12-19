@@ -62,7 +62,7 @@ $api->version('v1', [
 
             // 公司职位/部门相关
             $api->get('company/positions', 'CompanyMemberPositionController@index');
-            $api->post('company/positions', 'CompanyMemberPositionController@store');
+            $api->post('company/departments/{companyDepartment}/positions', 'CompanyMemberPositionController@batchStore');
             $api->patch('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@update');
             $api->delete('company/positions/{companyMemberPosition}', 'CompanyMemberPositionController@destroy');
             $api->get('company/departments', 'CompanyMemberPositionController@showDepartments');

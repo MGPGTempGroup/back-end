@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CompanyDepartment extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'department_id'];
 
     /**
      * 部门 - 职位关联关系

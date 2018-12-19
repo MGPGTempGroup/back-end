@@ -13,6 +13,7 @@ class CompanyMemberPositionTransformer extends TransformerAbstract
             'id' => $companyMemberPosition->id,
             'name' => $companyMemberPosition->name,
             'department' => $companyMemberPosition->department,
+            'members_count' => (int) $companyMemberPosition->members_count,
             'created_at' => $companyMemberPosition->created_at->toDateTimeString(),
             'updated_at' => $companyMemberPosition->updated_at->toDateTimeString()
         ];

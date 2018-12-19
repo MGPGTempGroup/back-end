@@ -28,14 +28,36 @@ class CompanyMemberPositionController extends Controller
             new CompanyMemberPositionTransformer());
     }
 
+//    /**
+//     * 创建公司职位
+//     */
+//    public function store(CreateCompanyMemberPositionRequest $request, CompanyMemberPosition $companyMemberPosition)
+//    {
+//        $companyMemberPosition->fill($request->all());
+//        $companyMemberPosition->save();
+//        return $this->response->item($companyMemberPosition, new CompanyMemberPositionTransformer());
+//    }
+
     /**
-     * 创建公司职位
+     * 批量创建公司职位
      */
-    public function store(CreateCompanyMemberPositionRequest $request, CompanyMemberPosition $companyMemberPosition)
+    public function batchStore(
+        CreateCompanyMemberPositionRequest $request,
+        CompanyDepartment $companyDepartment
+    )
     {
-        $companyMemberPosition->fill($request->all());
-        $companyMemberPosition->save();
-        return $this->response->item($companyMemberPosition, new CompanyMemberPositionTransformer());
+        $positionNames = collect($request->input('positions'));
+        $positions = $positionNames->map(function ($name) use ($companyDepartment) {
+            $companyMemberPosition = new CompanyMemberPosition();
+            $companyMemberPosition->fill([
+                'name' => $name,
+                'department_id' => $companyDepartment->id
+            ]);
+            // 这里迭代每一次的save走了队列，没有问题
+            $companyMemberPosition->save();
+            return $companyMemberPosition;
+        });
+        return $this->response->collection($positions, new CompanyMemberPositionTransformer());
     }
 
     /**
