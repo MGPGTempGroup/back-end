@@ -43,8 +43,7 @@ class CompanyMemberPositionController extends Controller
      */
     public function batchStore(
         CreateCompanyMemberPositionRequest $request,
-        CompanyDepartment $companyDepartment
-    )
+        CompanyDepartment $companyDepartment)
     {
         $positionNames = collect($request->input('positions'));
         $positions = $positionNames->map(function ($name) use ($companyDepartment) {
