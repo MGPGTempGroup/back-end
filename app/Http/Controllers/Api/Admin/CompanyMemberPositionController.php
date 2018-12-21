@@ -118,6 +118,8 @@ class CompanyMemberPositionController extends Controller
         DB::transaction(function () use ($companyDepartment) {
             // 查找出关联职位
             $companyDepartment->positions->each(function ($position) {
+                $position->members_count = 0;
+                $position->save();
                 $position->members()->sync([]);
                 $position->delete();
             });
