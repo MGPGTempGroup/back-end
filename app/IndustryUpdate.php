@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class IndustryUpdate extends Model
 {
+
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'content',
@@ -20,4 +24,5 @@ class IndustryUpdate extends Model
     {
         return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
     }
+    
 }
