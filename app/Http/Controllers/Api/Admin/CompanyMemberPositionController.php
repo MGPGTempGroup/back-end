@@ -56,7 +56,7 @@ class CompanyMemberPositionController extends Controller
             $companyMemberPosition->save();
             return $companyMemberPosition;
         });
-        return $this->response->collection($positions, new CompanyMemberPositionTransformer());
+        return $this->response->collection($positions, new CompanyMemberPositionTransformer())->setStatusCode(201);
     }
 
     /**
