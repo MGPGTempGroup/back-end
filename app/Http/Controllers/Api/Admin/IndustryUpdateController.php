@@ -26,6 +26,7 @@ class IndustryUpdateController extends Controller
     public function store(CreateIndustryUpdateRequest $request, IndustryUpdate $industryUpdate)
     {
         $industryUpdate->fill($request->all());
+        $industryUpdate->creator_id = $this->user()->id;
         $industryUpdate->save();
         return $this->response->item($industryUpdate, new IndustryUpdateTransformer());
     }

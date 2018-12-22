@@ -24,5 +24,5 @@ class IndustryUpdate extends Model
     {
         return $this->belongsTo(AdminUser::class, 'creator_id', 'id');
     }
-    
+
 }

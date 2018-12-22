@@ -107,6 +107,9 @@ $api->version('v1', [
             $api->patch('inspections/{houseInspection}/follow', 'HouseInspectionController@followUp');
             $api->delete('inspections/{houseInspection}', 'HouseInspectionController@destroy');
 
+            // Industry Update 文章相关
+            $api->resource('industry-updates', 'IndustryUpdateController');
+
             // 媒体文件上传
             $api->post('images', 'MediaFileController@uploadImage');
             $api->get('images/{key}', 'MediaFileController@showImage');
