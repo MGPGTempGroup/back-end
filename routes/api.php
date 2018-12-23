@@ -116,6 +116,9 @@ $api->version('v1', [
             $api->post('videos/slice-upload', 'MediaFileController@sliceUploadVideo');
             $api->post('videos/slice-upload-key', 'MediaFileController@createUploadVideoKey');
             $api->post('pdfs', 'MediaFileController@uploadPDF');
+
+            // 应用统计相关
+            $api->get('statistics/customer-comments', 'ApplicationStatisticsController@getCustomerCommnentsCount');
         });
     });
 
