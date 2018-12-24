@@ -118,7 +118,7 @@ $api->version('v1', [
             $api->post('pdfs', 'MediaFileController@uploadPDF');
 
             // 应用统计相关
-            $api->get('statistics/customer-comments', 'ApplicationStatisticsController@getCustomerCommnentsCount');
+            $api->get('statistics', 'ApplicationStatisticsController@getAllStatistics');
         });
     });
 
