@@ -43,15 +43,9 @@ class ApplicationStatisticsController extends Controller
             ];
 
             // 查询出数据总计数： total
-            $totalCount = $statistic
-                ->selectRaw('
-                    count(house_inspections) as house_inspections,
-                    count(service_messages) as service_messages
-                ')
-                ->first()
-                ->toArray();
-            $statisticsData['service_messages']['total'] = $totalCount['service_messages'];
-            $statisticsData['house_inspections']['total'] = $totalCount['house_inspections'];
+            $totalCount = $statistic->selectRaw('sum(house_inspections) as hi_total, sum(service_messages) as ss_total')->first();
+            $statisticsData['service_messages']['total'] = (int) $totalCount->ss_total;
+            $statisticsData['house_inspections']['total'] = (int) $totalCount->hi_total;
 
             // 查询最近7日数据计数：last 7 days
             $last7DaysCount = $statistic
@@ -66,7 +60,7 @@ class ApplicationStatisticsController extends Controller
                     ]];
                 })
                 ->toArray();
-            for ($i = 1; $i <= 7; $i++) {
+            for ($i = 7; $i >= 1; $i--) {
                 $subDate = now()->subDays($i)->format('Y-m-d');
                 $statisticsData['house_inspections']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['house_inspections'] ?? 0;
                 $statisticsData['service_messages']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['service_messages'] ?? 0;
