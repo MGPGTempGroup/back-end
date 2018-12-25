@@ -6,6 +6,7 @@ use App\HouseInspection;
 use App\ServiceMessage;
 use App\Residence;
 use App\Lease;
+use App\Statistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,47 +21,65 @@ class ApplicationStatisticsController extends Controller
      * @return mixed
      * @throws \Exception
      */
-    public function getAllStatistics() {
+    public function getAllStatistics(Statistic $statistic) {
 
         $cache = cache()->store('database');
 
-        define('CACHE_EXPIRED', 30); // 缓存过期时间
-        $statisticsData = $cache->remember('app_all_statistics', CACHE_EXPIRED, function () {
-            // 客户留言统计
-            $customerCommentsCount = ServiceMessage::count();
-            $currentWeekCustomerCommentsCount = $this->fetchCurrentWeekCount('service_messages');
+        define('CACHE_EXPIRED', 60); // 缓存过期时间 min
+        $statisticsData = $cache->remember('app_statistics', CACHE_EXPIRED, function () use ($statistic) {
 
-            // 查询租赁房屋与出售房屋的预约统计
-            $houseInspectionsCount = HouseInspection::count();
-            $currentWeekHouseInspectionsCount = $this->fetchCurrentWeekCount('house_inspections');
-
-            // stdClass实例代表一个无任何属性方法的对象
-            // 目的是为了在响应JSON数据时如果碰到空数组将不会被json_encode成"[]"而是一个"{}"
-            // 解决的错误： json_encode(['a' => 1]) -> { "a": 1 } 而 json_encode([]) -> [] 应为 {}
-            // 如果碰到空数组则响应空对象
-            $emptyObject = new \stdClass;
-            return [
-                'customer_comments_count' => $customerCommentsCount,
-                'current_week_customer_comments_count' => $currentWeekCustomerCommentsCount ?: $emptyObject,
-                'house_inspections_count' => $houseInspectionsCount,
-                'current_week_house_inspections_count' => $currentWeekHouseInspectionsCount ?: $emptyObject
+            // 要缓存的统计数据的结构
+            $statisticsData = [
+                'service_messages' => [
+                    'total' => 0,
+                    'last_7_days' => [],
+                    'today' => 0
+                ],
+                'house_inspections' => [
+                    'total' => 0,
+                    'last_7_days' => [],
+                    'today' => 0
+                ]
             ];
+
+            // 查询出数据总计数： total
+            $totalCount = $statistic
+                ->selectRaw('
+                    count(house_inspections) as house_inspections,
+                    count(service_messages) as service_messages
+                ')
+                ->first()
+                ->toArray();
+            $statisticsData['service_messages']['total'] = $totalCount['service_messages'];
+            $statisticsData['house_inspections']['total'] = $totalCount['house_inspections'];
+
+            // 查询最近7日数据计数：last 7 days
+            $last7DaysCount = $statistic
+                ->select(['house_inspections', 'service_messages', 'date_created'])
+                ->where('date_created', '>=', now()->subDays(7)->format('Y-m-d'))
+                ->where('date_created', '<=', now()->format('Y-m-d'))
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [$item->date_created => [
+                        'house_inspections' => $item->house_inspections,
+                        'service_messages' => $item->service_messages
+                    ]];
+                })
+                ->toArray();
+            for ($i = 1; $i <= 7; $i++) {
+                $subDate = now()->subDays($i)->format('Y-m-d');
+                $statisticsData['house_inspections']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['house_inspections'] ?? 0;
+                $statisticsData['service_messages']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['service_messages'] ?? 0;
+            }
+
+            // 今日数据：today
+            $todayStatistic = $statistic->todayStatistic();
+            $statisticsData['house_inspections']['today'] = $todayStatistic->getAttribute('house_inspections');
+            $statisticsData['service_messages']['today'] = $todayStatistic->getAttribute('service_messages');
+
+            return $statisticsData;
         });
         return $this->response->array($statisticsData);
     }
 
-    /**
-     * 取得当前周每日数据量
-     */
-    protected function fetchCurrentWeekCount($table) {
-        return DB::table($table)
-            ->selectRaw('DATE_FORMAT(created_at, \'%Y-%m-%d\') as day, count(*) as total')
-            ->where('created_at', '>=', Carbon::now()->subDays(7)->format('Y-m-d'))
-            ->groupBy('day')
-            ->get()
-            ->mapWithKeys(function ($item) {
-                return [$item->day => $item->total];
-            })
-            ->toArray();
-    }
 }
