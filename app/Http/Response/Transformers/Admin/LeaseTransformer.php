@@ -56,7 +56,8 @@ class LeaseTransformer extends TransformerAbstract
 
     public function includeOwner(Lease $lease)
     {
-        return $this->item($lease->owner, new PropertyOwnerTransformer());
+        if (! $owner = $lease->owner) return $this->null();
+        return $this->item($owner, new PropertyOwnerTransformer());
     }
 
     public function includeAgents(Lease $lease)

@@ -57,7 +57,8 @@ class ResidenceTransformer extends TransformerAbstract
 
     public function includeOwner(Residence $residence)
     {
-        return $this->item($residence->owner, new PropertyOwnerTransformer());
+        if (! $owner = $residence->owner) return $this->null();
+        return $this->item($owner, new PropertyOwnerTransformer());
     }
 
     public function includeCreator(Residence $residence)
