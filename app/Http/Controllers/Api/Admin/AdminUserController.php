@@ -17,4 +17,11 @@ class AdminUserController extends Controller
         return $this->response->item($this->user, new AdminUserTransformer());
     }
 
+    /**
+     * 获取当前管理员通知
+     */
+    public function notifications()
+    {
+
+    }
 }

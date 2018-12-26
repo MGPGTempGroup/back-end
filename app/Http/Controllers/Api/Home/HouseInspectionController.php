@@ -25,7 +25,11 @@ class HouseInspectionController extends Controller
         $residence->inspections()->save(
             $houseInspection
         );
-        $this->notifyAllAdminUsers($houseInspection);
+        // 通知所有管理员
+        $this->notifyAllAdminUsers($houseInspection, [
+            'id' => $residence->getAttribute('id'),
+            'name' => $residence->getAttribute('name')
+        ]);
         return $this->response->created();
     }
 
@@ -41,20 +45,24 @@ class HouseInspectionController extends Controller
         $lease->inspections()->save(
             $houseInspection
         );
-        $this->notifyAllAdminUsers($houseInspection);
+        // 通知所有管理员
+        $this->notifyAllAdminUsers($houseInspection, [
+            'id' => $lease->getAttribute('id'),
+            'name' => $lease->getAttribute('name')
+        ]);
         return $this->response->created();
     }
 
     /**
      * 给所有AdminUsers发送房屋预约检查通知
      */
-    protected function notifyAllAdminUsers(HouseInspection $houseInspection)
+    protected function notifyAllAdminUsers(HouseInspection $houseInspection, array $houseInfo)
     {
         try {
             $users = AdminUser::get();
             Notification::send(
                 $users,
-                new HouseInspectionNotifycation($houseInspection)
+                new HouseInspectionNotifycation($houseInspection, $houseInfo)
             );
         } catch (\Exception $e) {
             // ...

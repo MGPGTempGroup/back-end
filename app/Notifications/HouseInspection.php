@@ -2,10 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Http\Response\Transformers\Admin\HouseInspectionTransformer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 use App\HouseInspection as HouseInspectionModel;
@@ -17,15 +15,30 @@ class HouseInspection extends Notification
 {
     use Queueable;
 
-    protected $houseInspectionInstance;
+    /**
+     * HouseInspection模型实例
+     *
+     * @var object
+     */
+    protected $houseInspection;
+
+    /**
+     * 房屋基本信息：ID、Name等字段
+     *
+     * @var array
+     */
+    protected $houseInfo;
 
     /**
      * HouseInspection constructor.
-     * @param HouseInspectionModel $houseInspection
+     *
+     * @param HouseInspectionModel $houseInspection 房屋预约检查模型实例
+     * @param array $houseInfo 房屋基本信息：ID、Name等字段
      */
-    public function __construct(HouseInspectionModel $houseInspection)
+    public function __construct(HouseInspectionModel $houseInspection, array $houseInfo)
     {
-        $this->houseInspectionInstance = $houseInspection;
+        $this->houseInspection = $houseInspection;
+        $this->houseInfo = $houseInfo;
     }
 
     /**
@@ -68,7 +81,11 @@ class HouseInspection extends Notification
 
     public function toDatabase($notifiable)
     {
-        return resolve(HouseInspectionTransformer::class)
-            ->transform($this->houseInspectionInstance);
+        return [
+            'house_name' => $this->houseInfo['name'],
+            'house_id' => $this->houseInfo['id'],
+            'applicant_name' => $this->houseInspection->first_name . $this->houseInspection->surname,
+            'comment' => $this->houseInspection->comment
+        ];
     }
 }
