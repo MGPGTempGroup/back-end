@@ -23,6 +23,7 @@ $api->version('v1', [
             // 管理账户相关
             $api->get('admin-users/current', 'AdminUserController@show');
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
+            $api->get('admin-users/current/notifications', 'AdminUserController@notifications');
 
             // 服务相关
             $api->resource('services', 'ServiceController', [

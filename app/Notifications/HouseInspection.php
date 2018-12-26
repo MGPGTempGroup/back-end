@@ -84,7 +84,10 @@ class HouseInspection extends Notification
         return [
             'house_name' => $this->houseInfo['name'],
             'house_id' => $this->houseInfo['id'],
-            'applicant_name' => $this->houseInspection->first_name . $this->houseInspection->surname,
+            'applicant_name' => implode([
+                $this->houseInspection->first_name,
+                $this->houseInspection->surname
+            ], ' '),
             'comment' => $this->houseInspection->comment
         ];
     }

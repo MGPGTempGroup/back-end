@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Response\Transformers\Admin\AdminUserNotificationTransformer;
 use App\Http\Response\Transformers\Admin\AdminUserTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,8 +21,10 @@ class AdminUserController extends Controller
     /**
      * 获取当前管理员通知
      */
-    public function notifications()
+    public function notifications(Request $request)
     {
-
+        $pageSize = $request->query('pagesize') ?: 20;
+        $notifications = $this->user()->notifications()->paginate($pageSize);
+        return $this->response->paginator($notifications, new AdminUserNotificationTransformer());
     }
 }
