@@ -30,6 +30,8 @@ $api->version('v1', [
                 'only' => ['update', 'show', 'index']
             ]);
             $api->post('services/{service}/contents', 'ServiceController@storeContent');
+            $api->get('service/testimonials', 'ServiceTestimonialController@index');
+            $api->patch('service/testimonials/{serviceTestimonial}', 'ServiceTestimonialController@update');
 
             // 服务领域相关
             $api->post('service-areas', 'ServiceController@createServiceArea');
