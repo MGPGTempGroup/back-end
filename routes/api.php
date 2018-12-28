@@ -32,6 +32,7 @@ $api->version('v1', [
             $api->post('services/{service}/contents', 'ServiceController@storeContent');
             $api->get('service/testimonials', 'ServiceTestimonialController@index');
             $api->patch('service/testimonials/{serviceTestimonial}', 'ServiceTestimonialController@update');
+            $api->delete('service/testimonials/{serviceTestimonial}', 'ServiceTestimonialController@destroy');
 
             // 服务领域相关
             $api->post('service-areas', 'ServiceController@createServiceArea');
