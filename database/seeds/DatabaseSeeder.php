@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductTypeTableSeeder::class);
         $this->call(PropertyOwnerTableSeeder::class);
         $this->call(CompanyMemberTableSeeder::class);
+        $this->call(CompanyInfoTableSeeder::class);
     }
 }
