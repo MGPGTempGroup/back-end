@@ -91,4 +91,44 @@ class ApplicationStatisticsController extends Controller
         return $this->response->array($statisticsData);
     }
 
+    /**
+     * 获取最近12个月的统计数据
+     *
+     * @param Statistic $statistic
+     * @return mixed
+     */
+    public function getMonthlyStatistics(Statistic $statistic)
+    {
+        $selectSQL = implode([
+            'sum(house_inspections) as house_inspections',
+            'sum(service_messages) as service_messages',
+            'sum(page_view) as page_views',
+            'sum(unique_visitor) as unique_visitors',
+            'DATE_FORMAT(date_created, \'%Y-%m\') as month_date_created'
+        ], ', ');
+        $subMonth = now()->subMonthsNoOverflow(11)->format('Y-m');
+        $monthlyStatistic = DB::table('statistics')
+            ->selectRaw($selectSQL)
+            ->whereRaw('DATE_FORMAT(date_created, \'%Y-%m\') >= ?', [$subMonth])
+            ->groupBy('month_date_created')
+            ->get()
+            ->mapWithKeys(function ($item) {
+                $date = $item->month_date_created;
+                unset($item->month_date_created);
+                $value = array_map('intval', (array) $item);
+                return [$date => (array) $value];
+            })
+            ->toArray();
+        $monthlyStatisticResData = [];
+        for ($i = 11; $i >= 0; $i--) {
+            $month = now()->subMonthsNoOverflow($i)->format('Y-m');
+            echo $month . PHP_EOL;
+            $monthlyStatisticResData[$month]['house_inspections'] = $monthlyStatistic[$month]['house_inspections'] ?? 0;
+            $monthlyStatisticResData[$month]['service_messages'] = $monthlyStatistic[$month]['service_messages'] ?? 0;
+            $monthlyStatisticResData[$month]['page_views'] = $monthlyStatistic[$month]['page_views'] ?? 0;
+            $monthlyStatisticResData[$month]['unique_visitors'] = $monthlyStatistic[$month]['unique_visitors'] ?? 0;
+        }
+
+        return $this->response->array($monthlyStatisticResData);
+    }
 }
