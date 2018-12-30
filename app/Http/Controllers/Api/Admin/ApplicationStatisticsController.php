@@ -42,14 +42,14 @@ class ApplicationStatisticsController extends Controller
             ];
 
             // 查询出数据总计数： total
-            $totalCountSelectSQL = [
+            $totalCountSelectSQL = implode([
                 'sum(house_inspections) as hi_total',
                 'sum(service_messages) as ss_total',
                 'sum(page_view) as pv_total',
                 'sum(unique_visitor) as uv_total'
-            ];
+            ], ',');
             $totalCount = $statistic
-                ->selectRaw(implode($totalCountSelectSQL, ','))
+                ->selectRaw($totalCountSelectSQL)
                 ->first();
             $statisticsData['service_messages']['total'] = (int) $totalCount->ss_total;
             $statisticsData['house_inspections']['total'] = (int) $totalCount->hi_total;
@@ -63,12 +63,9 @@ class ApplicationStatisticsController extends Controller
                 ->where('date_created', '<=', now()->format('Y-m-d'))
                 ->get()
                 ->mapWithKeys(function ($item) {
-                    return [$item->date_created => [
-                        'house_inspections' => $item->house_inspections,
-                        'service_messages' => $item->service_messages,
-                        'page_view' => $item->page_view,
-                        'unique_visitor' => $item->unique_visitor
-                    ]];
+                    $k = $item->date_created;
+                    unset($item->date_created);
+                    return [$k => (array) $item];
                 })
                 ->toArray();
             for ($i = 7; $i >= 1; $i--) {
@@ -88,6 +85,7 @@ class ApplicationStatisticsController extends Controller
 
             return $statisticsData;
         });
+
         return $this->response->array($statisticsData);
     }
 
