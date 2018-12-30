@@ -90,7 +90,7 @@ class ApplicationStatisticsController extends Controller
      * @throws \Exception
      * @return mixed
      */
-    public function getMonthlyStatistics(Statistic $statistic)
+    public function getPast12MonthsStatistics(Statistic $statistic)
     {
         $cache = cache()->store('database');
         define('CACHE_EXPIRED', 60); // min
@@ -121,11 +121,10 @@ class ApplicationStatisticsController extends Controller
             $monthlyStatisticResData = [];
             for ($i = 11; $i >= 0; $i--) {
                 $month = now()->subMonthsNoOverflow($i)->format('Y-m');
-                echo $month . PHP_EOL;
-                $monthlyStatisticResData[$month]['house_inspections'] = $monthlyStatistic[$month]['house_inspections'] ?? 0;
-                $monthlyStatisticResData[$month]['service_messages'] = $monthlyStatistic[$month]['service_messages'] ?? 0;
-                $monthlyStatisticResData[$month]['page_views'] = $monthlyStatistic[$month]['page_views'] ?? 0;
-                $monthlyStatisticResData[$month]['unique_visitors'] = $monthlyStatistic[$month]['unique_visitors'] ?? 0;
+                $monthlyStatisticResData['house_inspections'][$month] = $monthlyStatistic[$month]['house_inspections'] ?? 0;
+                $monthlyStatisticResData['service_messages'][$month] = $monthlyStatistic[$month]['service_messages'] ?? 0;
+                $monthlyStatisticResData['page_view'][$month] = $monthlyStatistic[$month]['page_views'] ?? 0;
+                $monthlyStatisticResData['unique_visitor'][$month] = $monthlyStatistic[$month]['unique_visitors'] ?? 0;
             }
 
             return $monthlyStatisticResData;
