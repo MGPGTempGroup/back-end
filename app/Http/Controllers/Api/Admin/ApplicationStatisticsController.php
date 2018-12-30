@@ -2,13 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\HouseInspection;
-use App\ServiceMessage;
-use App\Residence;
-use App\Lease;
 use App\Statistic;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 
