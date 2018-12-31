@@ -35,6 +35,7 @@ class ApplicationStatisticsController extends Controller
         // 缓存相关常量
         define('CACHE_KEY', 'app_all_statistics'); // 缓存的key
         define('CACHE_EXPIRED', 60); // 缓存过期时间 min
+
         $statisticsData = $cache->remember(CACHE_KEY, CACHE_EXPIRED, function () use ($statistic) {
 
             $statisticDataItemVal = [
@@ -99,6 +100,60 @@ class ApplicationStatisticsController extends Controller
     }
 
     /**
+     * 获取最近30天的统计数据
+     *
+     * @param Statistic $statistic
+     * @throws \Exception
+     * @return mixed
+     */
+    public function getPast30DaysStatistics(Statistic $statistic)
+    {
+        $cache = $this->cache;
+
+        // 定义缓存相关常量
+        define('CACHE_KEY', 'app_past_30_days_statistics');
+        define('CACHE_EXPIRED', 60);
+
+        $statisticsData = $cache->remember(CACHE_KEY, CACHE_EXPIRED, function () use ($statistic) {
+
+            // 查询
+            $last30DaysCount = $statistic
+                ->select([
+                    'house_inspections',
+                    'service_messages',
+                    'page_view',
+                    'unique_visitor',
+                    'date_created'
+                ])
+                ->where('date_created', '>=', now()->subDays(30)->format('Y-m-d'))
+                ->where('date_created', '<=', now()->format('Y-m-d'))
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    $k = $item->date_created;
+                    unset($item->date_created);
+                    return [
+                      $k => $item
+                    ];
+                })
+                ->toArray();
+
+            // Format
+            $statisticsData = [];
+            for ($i = 30; $i >= 1; $i--) {
+                $date = now()->subDays($i)->format('Y-m-d');
+                $statisticsData['house_inspections'][$date] = $last30DaysCount[$date]['house_inspections'] ?? 0;
+                $statisticsData['service_messages'][$date] = $last30DaysCount[$date]['service_messages'] ?? 0;
+                $statisticsData['page_view'][$date] = $last30DaysCount[$date]['page_view'] ?? 0;
+                $statisticsData['unique_visitor'][$date] = $last30DaysCount[$date]['unique_visitor'] ?? 0;
+            }
+
+            return $statisticsData;
+        });
+
+        return $this->response->array($statisticsData);
+    }
+
+    /**
      * 获取最近12个月的统计数据
      *
      * @params Statistic $statistics
@@ -110,8 +165,9 @@ class ApplicationStatisticsController extends Controller
         $cache = $this->cache;
 
         // 缓存相关常量
-        define('CACHE_KEY', 'app_month_statistics'); // 缓存的key
+        define('CACHE_KEY', 'app_past_12_month_statistics'); // 缓存的key
         define('CACHE_EXPIRED', 60); // 缓存过期时间 min
+
         $statisticsData = $cache->remember(CACHE_KEY, CACHE_EXPIRED, function () use ($statistic) {
 
             $selectSQL = implode([

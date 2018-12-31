@@ -123,6 +123,7 @@ $api->version('v1', [
 
             // 应用统计相关
             $api->get('statistics', 'ApplicationStatisticsController@getAllStatistics');
+            $api->get('statistics/past-30-days', 'ApplicationStatisticsController@getPast30DaysStatistics');
             $api->get('statistics/past-12-months', 'ApplicationStatisticsController@getPast12MonthsStatistics');
         });
     });
