@@ -10,6 +10,19 @@ class ApplicationStatisticsController extends Controller
 {
 
     /**
+     * Cache repository instance
+     *
+     * @var object
+     */
+    protected $cache;
+
+    public function __construct()
+    {
+        $cacheRepo = cache()->store('database');
+        $this->cache = $cacheRepo;
+    }
+
+    /**
      * 获取全部应用统计数据
      *
      * @return mixed
@@ -17,10 +30,12 @@ class ApplicationStatisticsController extends Controller
      */
     public function getAllStatistics(Statistic $statistic) {
 
-        $cache = cache()->store('database');
+        $cache = $this->cache;
 
+        // 缓存相关常量
+        define('CACHE_KEY', 'app_all_statistics'); // 缓存的key
         define('CACHE_EXPIRED', 60); // 缓存过期时间 min
-        $statisticsData = $cache->remember('app_statistics', CACHE_EXPIRED, function () use ($statistic) {
+        $statisticsData = $cache->remember(CACHE_KEY, CACHE_EXPIRED, function () use ($statistic) {
 
             $statisticDataItemVal = [
                 'total' => 0,
@@ -92,10 +107,12 @@ class ApplicationStatisticsController extends Controller
      */
     public function getPast12MonthsStatistics(Statistic $statistic)
     {
-        $cache = cache()->store('database');
-        define('CACHE_EXPIRED', 60); // min
+        $cache = $this->cache;
 
-        $statisticsData = $cache->remember('app_monthly_statistics', CACHE_EXPIRED, function () use ($statistic) {
+        // 缓存相关常量
+        define('CACHE_KEY', 'app_month_statistics'); // 缓存的key
+        define('CACHE_EXPIRED', 60); // 缓存过期时间 min
+        $statisticsData = $cache->remember(CACHE_KEY, CACHE_EXPIRED, function () use ($statistic) {
 
             $selectSQL = implode([
                 'sum(house_inspections) as house_inspections',
