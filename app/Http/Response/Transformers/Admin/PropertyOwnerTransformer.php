@@ -8,9 +8,9 @@ use App\PropertyOwner;
 class PropertyOwnerTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
-        'identity'
-    ];
+    protected $availableIncludes = ['remarks'];
+
+    protected $defaultIncludes = ['identity'];
 
     public function transform(PropertyOwner $propertyOwner)
     {
@@ -32,6 +32,15 @@ class PropertyOwnerTransformer extends TransformerAbstract
     public function includeIdentity(PropertyOwner $propertyOwner)
     {
         return $this->item($propertyOwner->identity, new CustomerIdentityTransformer());
+    }
+
+    public function includeRemarks(PropertyOwner $propertyOwner)
+    {
+        $remarks = $propertyOwner->remarks;
+        if ($remarks) {
+            return $this->collection($remarksm, new RemarkTransformer());
+        }
+        return $this->null();
     }
 
 }

@@ -7,6 +7,8 @@ use App\Lease;
 
 class LeaseTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = ['remarks'];
+
     protected $defaultIncludes = [
         'owner', 'agents', 'creator'
     ];
@@ -68,6 +70,15 @@ class LeaseTransformer extends TransformerAbstract
     public function includeCreator(Lease $lease)
     {
         return $this->item($lease->creator, new AdminUserTransformer());
+    }
+
+    public function includeRemarks(Lease $lease)
+    {
+        $remarks = $lease->remarks;
+        if ($remarks) {
+            return $this->collection($remarks, new RemarkTransformer());
+        }
+        return $this->null();
     }
 
 }

@@ -7,9 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class ServiceMessageTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = [
-        'service'
-    ];
+
+    protected $availableIncludes = ['remarks'];
+
+    protected $defaultIncludes = ['service'];
 
     public function transform(ServiceMessage $serviceMessage)
     {
@@ -33,6 +34,15 @@ class ServiceMessageTransformer extends TransformerAbstract
     public function includeService(ServiceMessage $serviceMessage)
     {
         return $this->item($serviceMessage->service, new ServiceTransformer());
+    }
+
+    public function includeRemarks(ServiceMessage $serviceMessage)
+    {
+        $remarks = $serviceMessage->remarks;
+        if ($remarks) {
+            return $this->collection($remarks, new RemarkTransformer());
+        }
+        return $this->null();
     }
 
 }

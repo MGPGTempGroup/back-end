@@ -8,6 +8,8 @@ use League\Fractal\TransformerAbstract;
 class ProjectTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = ['remarks'];
+
     protected $defaultIncludes = [
         'agents', 'creator', 'productTypes', 'owner'
     ];
@@ -53,6 +55,15 @@ class ProjectTransformer extends TransformerAbstract
     {
         if ($owner = $project->owner) {
             return $this->item($owner, new PropertyOwnerTransformer());
+        }
+        return $this->null();
+    }
+
+    public function includeRemarks(Project $project)
+    {
+        $remarks = $project->remarks;
+        if ($remarks) {
+            return $this->collection($remarks, new RemarkTransformer());
         }
         return $this->null();
     }

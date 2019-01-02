@@ -8,6 +8,8 @@ use App\Residence;
 class ResidenceTransformer extends TransformerAbstract
 {
 
+    protected $availableIncludes = ['remarks'];
+
     protected $defaultIncludes = [
         'owner', 'creator', 'agents'
     ];
@@ -71,5 +73,13 @@ class ResidenceTransformer extends TransformerAbstract
         return $this->collection($residence->agents, new CompanyMemberTransformer());
     }
 
+    public function includeRemarks(Residence $residence)
+    {
+        $remarks = $residence->remarks;
+        if ($remarks) {
+            return $this->collection($remarks, new RemarkTransformer());
+        }
+        return $this->null();
+    }
 
 }

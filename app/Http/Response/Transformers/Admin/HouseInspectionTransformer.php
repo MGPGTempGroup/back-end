@@ -9,15 +9,11 @@ class HouseInspectionTransformer extends TransformerAbstract
 {
 
     protected $availableIncludes = [
-        'house', 'followUp'
+        'house', 'followUp', 'remarks'
     ];
 
     public function transform(HouseInspection $houseInspection)
     {
-        $houseType = [
-            'App\Residence' => 'sale',
-            'App\Lease' => 'lease'
-        ][$houseInspection->house_type];
         return [
             'id' => $houseInspection->id,
             'mobile' => $houseInspection->mobile,
@@ -29,7 +25,7 @@ class HouseInspectionTransformer extends TransformerAbstract
             'surname' => $houseInspection->surname,
             'first_name' => $houseInspection->first_name,
             'name' => $houseInspection->first_name,
-            'type' => $houseType,
+            'type' => $houseInspection->house_type,
             'is_follow_up' => (boolean) $houseInspection->follow_up,
             'created_at' => $houseInspection->created_at->toDateTimeString(),
             'updated_at' => $houseInspection->updated_at->toDateTimeString()
@@ -40,8 +36,8 @@ class HouseInspectionTransformer extends TransformerAbstract
     {
         if ($leaseHouse = $houseInspection->house) {
             $transformer = [
-                'App\Residence' => ResidenceTransformer::class,
-                'App\Lease' => LeaseTransformer::class
+                'residences' => ResidenceTransformer::class,
+                'leases' => LeaseTransformer::class
             ][$houseInspection->house_type];
             return $this->item($leaseHouse, new $transformer);
         }
@@ -52,6 +48,15 @@ class HouseInspectionTransformer extends TransformerAbstract
     {
         if ($followUp = $houseInspection->followUp) {
             return $this->item($followUp, new AdminUserTransformer());
+        }
+        return $this->null();
+    }
+
+    public function includeRemarks(HouseInspection $houseInspection)
+    {
+        $remarks = $houseInspection->remarks;
+        if ($remarks) {
+            return $this->collection($remarks, new RemarkTransformer());
         }
         return $this->null();
     }

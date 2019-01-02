@@ -7,6 +7,9 @@ use App\CompanyMember;
 
 class CompanyMemberTransformer extends TransformerAbstract
 {
+
+    protected $availableIncludes = ['remarks'];
+
     protected $defaultIncludes = ['positions'];
 
     public function transform(CompanyMember $companyMember)
@@ -30,6 +33,15 @@ class CompanyMemberTransformer extends TransformerAbstract
     public function includePositions(CompanyMember $companyMember)
     {
         return $this->collection($companyMember->positions, new CompanyMemberPositionTransformer());
+    }
+
+    public function includeRemarks(CompanyMember $companyMember)
+    {
+        $remarks = $companyMember->remarks;
+        if ($remarks) {
+            return $this->collection($remarks, new RemarkTransformer());
+        }
+        return $this->null();
     }
 
 }
