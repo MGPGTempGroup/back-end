@@ -54,4 +54,12 @@ class HouseInspection extends Model
         return $this->belongsTo(AdminUser::class, 'follow_up', 'id');
     }
 
+    /**
+     * 备注关联关系
+     */
+    public function remarks()
+    {
+        return $this->morphMany('App\Remark', 'come_from');
+    }
+
 }

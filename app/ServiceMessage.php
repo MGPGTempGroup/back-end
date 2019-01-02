@@ -20,4 +20,12 @@ class ServiceMessage extends Model
         return $this->belongsTo(Service::class, 'service_id', 'id');
     }
 
+    /**
+     * 备注关联关系
+     */
+    public function remarks()
+    {
+        return $this->morphMany('App\Remark', 'come_from');
+    }
+
 }

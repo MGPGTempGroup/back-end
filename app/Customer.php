@@ -32,11 +32,11 @@ class Customer extends Model
     }
 
     /**
-     * 客户备注关联关系
+     * 备注关联关系
      */
     public function remarks()
     {
-        return $this->hasMany(CustomerRemark::class, 'customer_id', 'id');
+        return $this->morphMany('App\Remark', 'come_from');
     }
 
 }

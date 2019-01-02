@@ -54,4 +54,12 @@ class CompanyMember extends Model
             'project_id')->withTimestamps();
     }
 
+    /**
+     * 备注关联关系
+     */
+    public function remarks()
+    {
+        return $this->morphMany('App\Remark', 'come_from');
+    }
+
 }

@@ -145,11 +145,11 @@ class Residence extends Model
     }
 
     /**
-     * 房屋备注关联关系
+     * 备注关联关系
      */
     public function remarks()
     {
-        return $this->hasMany(ResidenceRemark::class, 'residence_id', 'id');
+        return $this->morphMany(Remark::class, 'come_from');
     }
 
     /**

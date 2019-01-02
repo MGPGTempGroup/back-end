@@ -25,4 +25,13 @@ class PropertyOwner extends Model
     {
         return json_decode($val);
     }
+
+    /**
+     * 备注关联关系
+     */
+    public function remarks()
+    {
+        return $this->morphMany(Remark::class, 'come_from');
+    }
+
 }
