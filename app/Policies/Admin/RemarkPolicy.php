@@ -31,7 +31,7 @@ class RemarkPolicy
      */
     public function delete(AdminUser $user, Remark $remark)
     {
-        //
+        return $remark->creator_id === $user->id;
     }
 
 }

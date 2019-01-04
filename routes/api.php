@@ -130,6 +130,7 @@ $api->version('v1', [
             $api->get('remarks', 'RemarkController@index');
             $api->post('remarks', 'RemarkController@store');
             $api->patch('remarks/{remark}', 'RemarkController@update')->middleware('can:update,remark');
+            $api->delete('remarks/{remark}', 'RemarkController@destroy')->middleware('can:delete,remark');
 //            $api->post()
         });
     });

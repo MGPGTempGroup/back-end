@@ -32,4 +32,10 @@ class RemarkController extends Controller
         $remark->save();
         return $this->response->item($remark, new RemarkTransformer());
     }
+
+    public function destroy(Remark $remark)
+    {
+        $remark->delete();
+        return $this->response->noContent();
+    }
 }
