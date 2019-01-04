@@ -95,16 +95,16 @@ $api->version('v1', [
             $api->get('residences/{residence}/remarks', 'ResidenceRemarkController@index');
             $api->get('residences/{residence}/inspections', 'ResidenceController@inspections');
             $api->post('residences/{residence}/remarks', 'ResidenceRemarkController@store');
-            $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update')->middleware('can:update,residenceRemark');
-            $api->delete('residence-remark/{residenceRemark}', 'ResidenceRemarkController@destroy')->middleware('can:softDelete,residenceRemark');
+//            $api->patch('residence-remark/{residenceRemark}', 'ResidenceRemarkController@update')->middleware('can:update,residenceRemark');
+//            $api->delete('residence-remark/{residenceRemark}', 'ResidenceRemarkController@destroy')->middleware('can:softDelete,residenceRemark');
 
             // 租赁房屋相关
             $api->resource('leases', 'LeaseController');
             $api->get('leases/{lease}/remarks', 'LeaseRemarkController@index');
             $api->get('leases/{lease}/inspections', 'LeaseController@inspections');
             $api->post('leases/{lease}/remarks', 'LeaseRemarkController@store');
-            $api->patch('lease-remarks/{leaseRemark}', 'LeaseRemarkController@update')->middleware('can:update,leaseRemark');
-            $api->delete('lease-remarks/{leaseRemark}', 'LeaseRemarkController@destroy')->middleware('can:softDelete,leaseRemark');
+//            $api->patch('lease-remarks/{leaseRemark}', 'LeaseRemarkController@update')->middleware('can:update,leaseRemark');
+//            $api->delete('lease-remarks/{leaseRemark}', 'LeaseRemarkController@destroy')->middleware('can:softDelete,leaseRemark');
 
             // 房屋预约相关
             $api->get('inspections', 'HouseInspectionController@index');
@@ -125,6 +125,11 @@ $api->version('v1', [
             $api->get('statistics', 'ApplicationStatisticsController@getAllStatistics');
             $api->get('statistics/past-30-days', 'ApplicationStatisticsController@getPast30DaysStatistics');
             $api->get('statistics/past-12-months', 'ApplicationStatisticsController@getPast12MonthsStatistics');
+
+            // 备注数据
+            $api->get('remarks', 'RemarkController@index');
+            $api->post('remarks', 'RemarkController@store');
+//            $api->post()
         });
     });
 

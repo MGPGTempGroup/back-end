@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Remark extends Model
 {
 
-    protected $fillable = ['content'];
+    protected $fillable = [
+        'content',
+        'come_from_type',
+        'come_from_id'
+    ];
 
     /**
      * 多态关联
