@@ -129,6 +129,7 @@ $api->version('v1', [
             // 备注数据
             $api->get('remarks', 'RemarkController@index');
             $api->post('remarks', 'RemarkController@store');
+            $api->patch('remarks/{remark}', 'RemarkController@update')->middleware('can:update,remark');
 //            $api->post()
         });
     });

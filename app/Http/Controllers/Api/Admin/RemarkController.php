@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Requests\Admin\CreateRemarkRequest;
+use App\Http\Requests\Admin\UpdateRemarkRequest;
 use App\Http\Response\Transformers\Admin\RemarkTransformer;
 use App\Remark;
 use Illuminate\Http\Request;
@@ -21,6 +22,13 @@ class RemarkController extends Controller
     {
         $remark->fill($request->all());
         $remark->creator_id = $this->user()->id;
+        $remark->save();
+        return $this->response->item($remark, new RemarkTransformer());
+    }
+
+    public function update(UpdateRemarkRequest $request, Remark $remark)
+    {
+        $remark->content = $request->input('content');
         $remark->save();
         return $this->response->item($remark, new RemarkTransformer());
     }

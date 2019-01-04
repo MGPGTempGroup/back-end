@@ -6,8 +6,10 @@ use App\CustomerRemark;
 use App\LeaseRemark;
 use App\Policies\Admin\CustomerRemarkPolicy;
 use App\Policies\Admin\LeaseRemarkPolicy;
+use App\Policies\Admin\RemarkPolicy;
 use App\Policies\Admin\ResidenceRemarkPolicy;
 use App\ResidenceRemark;
+use App\Remark;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         CustomerRemark::class => CustomerRemarkPolicy::class,
         ResidenceRemark::class => ResidenceRemarkPolicy::class,
         LeaseRemark::class => LeaseRemarkPolicy::class,
+        Remark::class => RemarkPolicy::class
     ];
 
     /**
