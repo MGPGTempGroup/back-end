@@ -14,7 +14,7 @@ class RemarkController extends Controller
     public function index(Remark $remark)
     {
         $eloquentBuilder = $this->buildEloquentQueryThroughQs($remark);
-        $remarks = $eloquentBuilder->paginate(20);
+        $remarks = $eloquentBuilder->paginate();
         return $this->response->paginator($remarks, new RemarkTransformer());
     }
 
