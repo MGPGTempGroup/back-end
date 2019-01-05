@@ -11,9 +11,13 @@ use App\Http\Controllers\Controller;
 
 class RemarkController extends Controller
 {
-    public function index(Remark $remark)
+    public function index(Request $request, Remark $remark)
     {
         $eloquentBuilder = $this->buildEloquentQueryThroughQs($remark);
+        $eloquentBuilder = $eloquentBuilder
+            ->where('come_from_type', $request->query('come_from_type'))
+            ->where('come_from_id', $request->query('come_from_id'))
+            ->orderBy('created_at', 'DESC');
         $remarks = $eloquentBuilder->paginate();
         return $this->response->paginator($remarks, new RemarkTransformer());
     }
