@@ -17,7 +17,7 @@ class HouseInspectionController extends Controller
         $inspectionsQueryBuilder = $this->buildEloquentQueryThroughQs($houseInspection);
         $inspections = $inspectionsQueryBuilder
             ->when($request->query('type'), function ($query, $type) {
-                return $query->houseType($type);
+                return $query->where('house_type', $type);
             })
             ->paginate();
         return $this->response->paginator($inspections, new HouseInspectionTransformer());
