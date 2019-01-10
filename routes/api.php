@@ -24,6 +24,7 @@ $api->version('v1', [
             $api->get('admin-users/current', 'AdminUserController@show');
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
             $api->get('admin-users/current/notifications', 'AdminUserController@notifications');
+            $api->patch('admin-users/current/password', 'AuthorizationsController@changePassword');
 
             // 服务相关
             $api->resource('services', 'ServiceController', [
@@ -131,7 +132,6 @@ $api->version('v1', [
             $api->post('remarks', 'RemarkController@store');
             $api->patch('remarks/{remark}', 'RemarkController@update')->middleware('can:update,remark');
             $api->delete('remarks/{remark}', 'RemarkController@destroy')->middleware('can:delete,remark');
-//            $api->post()
         });
     });
 
