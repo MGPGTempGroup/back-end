@@ -34,7 +34,7 @@ class CreateResidencesTable extends Migration
 //            $table->string('detailed_address')->nullable(); // 详细地址
             $table->string('address_description')->nullable(); // 地址额外描述
 
-            $table->string('map_coordinates'); // 详细地图坐标
+            $table->string('map_coordinates')->nullable(); // 详细地图坐标
 
             $table->unsignedTinyInteger('bedrooms')->default(0); // 卧室数量
             $table->unsignedtinyInteger('bathrooms')->default(0); // 淋浴数量
