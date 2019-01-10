@@ -21,7 +21,8 @@ class CreateProjectsTable extends Migration
             $table->unsignedTinyInteger('status'); // 项目状态
             $table->text('introduction'); // 项目介绍
             $table->string('description')->default(''); // 项目描述
-            $table->date('year_built'); // 制造年份
+            $table->date('year_built')->nullable(); // 建造年份
+            $table->date('estimated_completion_date')->nullable(); // 预计完工日期
             $table->text('broadcast_pictures'); // 轮播图片
             $table->unsignedInteger('min_price');
             $table->unsignedInteger('max_price');

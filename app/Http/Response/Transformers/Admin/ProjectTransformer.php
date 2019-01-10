@@ -24,6 +24,7 @@ class ProjectTransformer extends TransformerAbstract
             'introduction' => $project->introduction,
             'description' => $project->description,
             'year_built' => $project->year_built,
+            'estimated_completion_date' => $project->estimated_completion_date,
             'broadcast_pictures' => $project->broadcast_pictures,
             'min_price' => $project->min_price,
             'max_price' => $project->max_price,

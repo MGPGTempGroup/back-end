@@ -14,6 +14,7 @@ class CreateProjectRequest extends BaseRequest
             'introduction' => 'string',
             'description' => 'string',
             'year_built' => 'date',
+            'estimated_completion_date' => 'date', // 预计建成年份
             'is_new_development' => 'in:0,1',
             'is_past_success' => 'in:0,1',
             'min_price' => 'required|numeric',

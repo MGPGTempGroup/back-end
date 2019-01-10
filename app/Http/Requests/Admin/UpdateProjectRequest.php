@@ -14,6 +14,7 @@ class UpdateProjectRequest extends BaseRequest
             'introduction' => 'string',
             'description' => 'string',
             'year_built' => 'date',
+            'estimated_completion_date' => 'date',
             'is_new_development' => 'in:0,1',
             'is_past_success' => 'in:0,1',
             'min_price' => 'numeric',

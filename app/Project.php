@@ -18,6 +18,7 @@ class Project extends Model
         'introduction',
         'description',
         'year_built',
+        'estimated_completion_date',
         'is_new_development',
         'is_past_success',
         'min_price',
