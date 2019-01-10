@@ -194,8 +194,8 @@ trait BuildEloquentQueryThroughQs
 
         foreach ($this->conditions['daterange'] as $column => $dataRangeArr) {
             $eloquentBuilder = $eloquentBuilder->where([
-                [$column, '>', $dataRangeArr[0]],
-                [$column, '<', $dataRangeArr[1]]
+                [$column, '>=', $dataRangeArr[0]],
+                [$column, '<=', $dataRangeArr[1]]
             ]);
         }
 
