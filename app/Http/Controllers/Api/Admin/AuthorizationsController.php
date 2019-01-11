@@ -41,7 +41,7 @@ class AuthorizationsController extends Controller
         // 验证用户输入的旧密码是否正确
         $oldPwd = $request->input('old_pwd');
         if (! Hash::check($oldPwd, $this->user()->password)) {
-            return $this->response->errorForbidden();
+            return $this->response->errorForbidden('Incorrect password');
         }
 
         // 修改密码

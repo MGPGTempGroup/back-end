@@ -40,5 +40,13 @@ class AppServiceProvider extends ServiceProvider
         API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
             abort(403, 'Forbidden action.');
         });
+        API::error(function (\Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException $exception) {
+            if ($exception->getPrevious() instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                return response()->json([
+                    'login_again' => true, // 代表需要重新登录
+                    'message' => 'Token has expired.'
+                ])->setStatusCode(401);
+            }
+        });
     }
 }
