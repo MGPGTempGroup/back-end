@@ -54,6 +54,7 @@ $api->version('v1', [
             $api->patch('customer-remarks/{customerRemark}', 'CustomerRemarkController@update')->middleware('can:update,customerRemark');
             $api->delete('customer-remarks/{customerRemark}', 'CustomerRemarkController@destroy')->middleware('can:softDelete,customerRemark');
             $api->get('customer-leave-messages', 'CustomerLeaveMessageController@index');
+            $api->delete('customer-leave-messages/{customerLeaveMessage}', 'CustomerLeaveMessageController@destroy');
 
             // 公司信息相关
             $api->get('company/info', 'CompanyInfoController@show');
