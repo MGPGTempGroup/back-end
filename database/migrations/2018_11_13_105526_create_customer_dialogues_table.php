@@ -15,7 +15,7 @@ class CreateCustomerDialoguesTable extends Migration
     {
         Schema::create('customer_dialogues', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('guid'); // 客户与管理员每次完整对话的guid
+            $table->string('uuid'); // 客户与管理员每次完整对话的uuid
             $table->string('name'); // 客户名称
             $table->string('email'); // 客户邮箱
             $table->string('nickname');

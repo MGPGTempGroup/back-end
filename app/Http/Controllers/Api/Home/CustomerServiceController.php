@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Cache;
+use Illuminate\Support\Str;
 
 /**
  * 消息通信
- * 注：dialogue_id 等同于 为对话生成的guid
+ * 注：dialogue_id 等同于 为对话生成的uuid
  * 当前虚拟主机不支持Swoole拓展或workman的相关依赖并且只分配80端口...
  * 故使用h5 sse实现
  */
@@ -24,24 +25,24 @@ class CustomerServiceController extends Controller
      */
     public function createDialogue(CreateDialogueRequest $request)
     {
-        // 生成guid作为本次对话唯一标识
-        $guid = $this->generateGUID();
+        // 生成uuid作为本次对话唯一标识
+        $uuid = $this->generateUUID();
 
         // 将此次对话相关数据存储到缓存
         $cache = $this->getCache();
-        $cache->put($this->getDialogueCacheKey($guid), [
+        $cache->put($this->getDialogueCacheKey($uuid), [
             'customer_info' => [
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
             ],
             'messages' => [], // 消息列表
-            'guid' => $guid,
+            'uuid' => $uuid,
             'created_at' => now()->toDateTimeString(),
         ], 60 * 15);
 
         // 响应客户端对话id
         return $this->response->array([
-            'dialogue_id' => $guid
+            'dialogue_id' => $uuid
         ])->setStatusCode(201)->header('Access-Control-Allow-Origin', '*');
     }
 
@@ -133,18 +134,11 @@ class CustomerServiceController extends Controller
     }
 
     /**
-     * 生成guid作为每个对话的唯一标识
+     * 生成uuid作为每个对话的唯一标识
      */
-    public function generateGUID()
+    public function generateUUID(): string
     {
-        $charid = strtoupper(md5(uniqid(mt_rand(), true)));
-        $hyphen = chr(45);
-        $uuid = substr($charid, 0, 8) . $hyphen
-            .substr($charid, 8, 4) . $hyphen
-            .substr($charid,12, 4) . $hyphen
-            .substr($charid,16, 4) . $hyphen
-            .substr($charid,20,12);
-        return $uuid;
+        return (string) Str::uuid();
     }
 
     public function getCache()
@@ -152,8 +146,9 @@ class CustomerServiceController extends Controller
         return Cache::store('database');
     }
 
-    public function getDialogueCacheKey($guid)
+    public function getDialogueCacheKey($uuid)
     {
-        return 'customer_dialogue_' . $guid;
+        define('CACHE_KEY_PREFIX', 'customer_dialogue_');
+        return CACHE_KEY_PREFIX . $uuid;
     }
 }
