@@ -21,7 +21,8 @@ class EloquentServiceProvider extends ServiceProvider
             'service_messages' => 'App\ServiceMessage',
             'house_inspections' => 'App\HouseInspection',
             'company_members' => 'App\CompanyMember',
-            'projects' => 'App\Project'
+            'projects' => 'App\Project',
+            'leave_messages' => 'App\CustomerLeaveMessage'
         ]);
     }
 

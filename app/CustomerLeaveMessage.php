@@ -13,4 +13,9 @@ class CustomerLeaveMessage extends Model
         'messages' => 'array'
     ];
 
+    public function remarks()
+    {
+        return $this->morphMany(Remark::class, 'come_from');
+    }
+
 }
