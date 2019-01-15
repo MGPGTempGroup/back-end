@@ -26,7 +26,7 @@ class ServiceMessageObserver
      */
     public function created(ServiceMessage $serviceMessage)
     {
-        $this->statistic->todayStatistic()->increment('service_messages');
+        $this->statistic->todayStatistic()->increment('messages');
     }
 
     /**
@@ -48,7 +48,7 @@ class ServiceMessageObserver
      */
     public function deleted(ServiceMessage $serviceMessage)
     {
-        $this->statistic->todayStatistic()->decrement('service_messages');
+        $this->statistic->todayStatistic()->decrement('messages');
     }
 
     /**
@@ -59,7 +59,7 @@ class ServiceMessageObserver
      */
     public function restored(ServiceMessage $serviceMessage)
     {
-        $this->statistic->todayStatistic()->increment('service_messages');
+        $this->statistic->todayStatistic()->increment('messages');
     }
 
     /**

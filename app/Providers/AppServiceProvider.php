@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use API;
+use App\CustomerLeaveMessage;
 use App\HouseInspection;
+use App\Observers\CustomerLeaveMessageObserver;
 use App\Observers\HouseInspectionObserver;
 use App\Observers\ServiceMessageObserver;
 use App\ServiceMessage;
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         // 模型观察者
         HouseInspection::observe(HouseInspectionObserver::class);
         ServiceMessage::observe(ServiceMessageObserver::class);
+        CustomerLeaveMessage::observe(CustomerLeaveMessageObserver::class);
     }
 
     /**
