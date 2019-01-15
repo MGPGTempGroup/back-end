@@ -45,7 +45,7 @@ class ApplicationStatisticsController extends Controller
             ];
             // 要缓存的统计数据的结构
             $statisticsData = [
-                'service_messages' => $statisticDataItemVal,
+                'messages' => $statisticDataItemVal,
                 'house_inspections' => $statisticDataItemVal,
                 'page_view' => $statisticDataItemVal,
                 'unique_visitor' => $statisticDataItemVal,
@@ -54,21 +54,21 @@ class ApplicationStatisticsController extends Controller
             // 查询出数据总计数： total
             $totalCountSelectSQL = implode([
                 'sum(house_inspections) as hi_total',
-                'sum(service_messages) as ss_total',
+                'sum(messages) as mes_total',
                 'sum(page_view) as pv_total',
                 'sum(unique_visitor) as uv_total'
             ], ',');
             $totalCount = $statistic
                 ->selectRaw($totalCountSelectSQL)
                 ->first();
-            $statisticsData['service_messages']['total'] = (int) $totalCount->ss_total;
+            $statisticsData['messages']['total'] = (int) $totalCount->mes_total;
             $statisticsData['house_inspections']['total'] = (int) $totalCount->hi_total;
             $statisticsData['page_view']['total'] = (int) $totalCount->pv_total;
             $statisticsData['unique_visitor']['total'] = (int) $totalCount->uv_total;
 
             // 查询最近7日数据计数：last 7 days
             $last7DaysCount = $statistic
-                ->select(['house_inspections', 'service_messages', 'page_view', 'unique_visitor', 'date_created'])
+                ->select(['house_inspections', 'messages', 'page_view', 'unique_visitor', 'date_created'])
                 ->where('date_created', '>=', now()->subDays(7)->format('Y-m-d'))
                 ->where('date_created', '<=', now()->format('Y-m-d'))
                 ->get()
@@ -81,7 +81,7 @@ class ApplicationStatisticsController extends Controller
             for ($i = 7; $i >= 1; $i--) {
                 $subDate = now()->subDays($i)->format('Y-m-d');
                 $statisticsData['house_inspections']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['house_inspections'] ?? 0;
-                $statisticsData['service_messages']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['service_messages'] ?? 0;
+                $statisticsData['messages']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['messages'] ?? 0;
                 $statisticsData['page_view']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['page_view'] ?? 0;
                 $statisticsData['unique_visitor']['last_7_days'][$subDate] = $last7DaysCount[$subDate]['unique_visitor'] ?? 0;
             }
@@ -89,7 +89,7 @@ class ApplicationStatisticsController extends Controller
             // 今日数据：today
             $todayStatistic = $statistic->todayStatistic();
             $statisticsData['house_inspections']['today'] = $todayStatistic->getAttribute('house_inspections');
-            $statisticsData['service_messages']['today'] = $todayStatistic->getAttribute('service_messages');
+            $statisticsData['messages']['today'] = $todayStatistic->getAttribute('messages');
             $statisticsData['page_view']['today'] = $todayStatistic->getAttribute('page_view');
             $statisticsData['unique_visitor']['today'] = $todayStatistic->getAttribute('unique_visitor');
 
@@ -120,7 +120,7 @@ class ApplicationStatisticsController extends Controller
             $last30DaysCount = $statistic
                 ->select([
                     'house_inspections',
-                    'service_messages',
+                    'messages',
                     'page_view',
                     'unique_visitor',
                     'date_created'
@@ -142,7 +142,7 @@ class ApplicationStatisticsController extends Controller
             for ($i = 30; $i >= 1; $i--) {
                 $date = now()->subDays($i)->format('Y-m-d');
                 $statisticsData['house_inspections'][$date] = $last30DaysCount[$date]['house_inspections'] ?? 0;
-                $statisticsData['service_messages'][$date] = $last30DaysCount[$date]['service_messages'] ?? 0;
+                $statisticsData['messages'][$date] = $last30DaysCount[$date]['messages'] ?? 0;
                 $statisticsData['page_view'][$date] = $last30DaysCount[$date]['page_view'] ?? 0;
                 $statisticsData['unique_visitor'][$date] = $last30DaysCount[$date]['unique_visitor'] ?? 0;
             }
@@ -172,7 +172,7 @@ class ApplicationStatisticsController extends Controller
 
             $selectSQL = implode([
                 'sum(house_inspections) as house_inspections',
-                'sum(service_messages) as service_messages',
+                'sum(messages) as messages',
                 'sum(page_view) as page_views',
                 'sum(unique_visitor) as unique_visitors',
                 'DATE_FORMAT(date_created, \'%Y-%m\') as month_date_created'
@@ -195,7 +195,7 @@ class ApplicationStatisticsController extends Controller
             for ($i = 11; $i >= 0; $i--) {
                 $month = now()->subMonthsNoOverflow($i)->format('Y-m');
                 $monthlyStatisticResData['house_inspections'][$month] = $monthlyStatistic[$month]['house_inspections'] ?? 0;
-                $monthlyStatisticResData['service_messages'][$month] = $monthlyStatistic[$month]['service_messages'] ?? 0;
+                $monthlyStatisticResData['messages'][$month] = $monthlyStatistic[$month]['messages'] ?? 0;
                 $monthlyStatisticResData['page_view'][$month] = $monthlyStatistic[$month]['page_views'] ?? 0;
                 $monthlyStatisticResData['unique_visitor'][$month] = $monthlyStatistic[$month]['unique_visitors'] ?? 0;
             }

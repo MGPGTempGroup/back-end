@@ -16,7 +16,7 @@ class CreateStatisticsTable extends Migration
         Schema::create('statistics', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('house_inspections')->default(0);
-            $table->unsignedInteger('service_messages')->default(0);
+            $table->unsignedInteger('messages')->default(0);
             $table->unsignedInteger('page_view')->default(0);
             $table->unsignedInteger('unique_visitor')->default(0);
             $table->date('date_created');
