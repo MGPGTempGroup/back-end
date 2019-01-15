@@ -11,7 +11,7 @@ class ProductTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        $productTypes = ['House', 'Unit', 'Apartment', 'Studio', 'Townhouse', 'Terrace', 'Villa', 'Semi', 'Duplex', 'Penthouse'];
+        $productTypes = ['house', 'unit', 'apartment', 'studio', 'townHouse', 'terrace', 'villa', 'semi', 'duplex', 'penthouse'];
         foreach ($productTypes as $productType) {
             factory(App\ProductType::class)->create([
                 'name' => $productType

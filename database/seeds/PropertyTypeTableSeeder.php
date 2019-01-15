@@ -11,7 +11,7 @@ class PropertyTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        $propertyTypes = ['House', 'Unit', 'Apartment', 'Studio', 'Townhouse', 'Terrace', 'Villa', 'Semi', 'Duplex', 'Penthouse'];
+        $propertyTypes = ['house', 'unit', 'apartment', 'studio', 'townHouse', 'terrace', 'villa', 'semi', 'duplex', 'penthouse'];
         foreach ($propertyTypes as $propertyType) {
             factory(App\PropertyType::class)->create([
                 'name' => $propertyType
