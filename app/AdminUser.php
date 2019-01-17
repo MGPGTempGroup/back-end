@@ -11,7 +11,7 @@ class AdminUser extends Authenticatable implements JWTSubject
 
     use Notifiable;
 
-    protected $fillable = ['name', 'email'];
+    protected $fillable = ['name', 'email', 'avatar'];
 
     public function getJWTIdentifier()
     {

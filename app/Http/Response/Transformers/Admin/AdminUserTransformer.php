@@ -13,6 +13,7 @@ class AdminUserTransformer extends TransformerAbstract
             'id' => $adminUser->id,
             'name' => $adminUser->name,
             'email' => $adminUser->email,
+            'avatar' => $adminUser->avatar,
             'email_verified_at' => $adminUser->email_verified_at,
             'created_at' => $adminUser->created_at->toDateTimeString(),
             'updated_at' => $adminUser->updated_at->toDateTimeString()

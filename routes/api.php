@@ -25,6 +25,7 @@ $api->version('v1', [
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
             $api->get('admin-users/current/notifications', 'AdminUserController@notifications');
             $api->patch('admin-users/current/password', 'AuthorizationsController@changePassword');
+            $api->patch('admin-users/current/info', 'AdminUserController@updateInfo');
 
             // 服务相关
             $api->resource('services', 'ServiceController', [

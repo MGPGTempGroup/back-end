@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Requests\Admin\UpdateAdminUserInfoRequest;
 use App\Http\Response\Transformers\Admin\AdminUserNotificationTransformer;
 use App\Http\Response\Transformers\Admin\AdminUserTransformer;
 use Illuminate\Http\Request;
@@ -16,6 +17,14 @@ class AdminUserController extends Controller
     public function show()
     {
         return $this->response->item($this->user, new AdminUserTransformer());
+    }
+
+    public function updateInfo(UpdateAdminUserInfoRequest $request)
+    {
+        $user = $this->user();
+        $user->fill($request->all());
+        $user->save();
+        return $this->response->item($user, new AdminUserTransformer());
     }
 
     /**
