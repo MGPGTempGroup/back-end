@@ -152,7 +152,7 @@ $api->version('v1', [
         $api->post('customer-service/dialogue', 'CustomerServiceController@createDialogue');
         $api->post('customer-service/dialogue/{dialogueId}/messages', 'CustomerServiceController@publishMessage');
 
-        // 获取服务详情
-//        $api->get();
+        // 获取服务内容
+        $api->get('services/{service}/content', 'ServiceController@show');
     });
 });

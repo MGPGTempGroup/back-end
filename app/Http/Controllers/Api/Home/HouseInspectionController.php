@@ -19,7 +19,8 @@ class HouseInspectionController extends Controller
     public function storeResidenceInspection(
         CreateHouseInspectionRequest $request,
         HouseInspection $houseInspection,
-        Residence $residence)
+        Residence $residence
+    )
     {
         $houseInspection->fill($request->all());
         $residence->inspections()->save(
@@ -39,7 +40,8 @@ class HouseInspectionController extends Controller
     public function storeLeaseInspection(
         CreateHouseInspectionRequest $request,
         HouseInspection $houseInspection,
-        Lease $lease)
+        Lease $lease
+    )
     {
         $houseInspection->fill($request->all());
         $lease->inspections()->save(
@@ -58,8 +60,9 @@ class HouseInspectionController extends Controller
      */
     protected function notifyAllAdminUsers(HouseInspection $houseInspection, array $houseInfo)
     {
+        // TODO: TEST
+        $users = AdminUser::get();
         try {
-            $users = AdminUser::get();
             Notification::send(
                 $users,
                 new HouseInspectionNotifycation($houseInspection, $houseInfo)

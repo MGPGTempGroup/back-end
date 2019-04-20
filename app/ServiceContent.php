@@ -35,4 +35,18 @@ class ServiceContent extends Model
         return $this->belongsTo(AdminUser::class, 'modifier_id', 'id');
     }
 
+    /**
+     * 服务联系成员关联关系
+     */
+    public function members()
+    {
+        return $this->belongsToMany(
+            CompanyMember::class,
+            'service_member',
+            'service_id',
+            'member_id',
+            'service_id'
+        )->withTimestamps();
+    }
+
 }
