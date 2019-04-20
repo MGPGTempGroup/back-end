@@ -25,6 +25,7 @@ $api->version('v1', [
             $api->delete('authorizations/current', 'AuthorizationsController@logout');
             $api->get('admin-users/current/notifications', 'AdminUserController@notifications');
             $api->patch('admin-users/current/password', 'AuthorizationsController@changePassword');
+            $api->patch('/admin-users/current/info', 'AdminUserController@update');
 
             // 服务相关
             $api->resource('services', 'ServiceController', [
@@ -146,8 +147,12 @@ $api->version('v1', [
         $api->post('residences/{residence}/inspections', 'HouseInspectionController@storeResidenceInspection');
         $api->post('leases/{lease}/inspections', 'HouseInspectionController@storeLeaseInspection');
 
+        // 实时对话
         $api->get('customer-service/dialogue/{dialogueId}', 'CustomerServiceController@subscribeDialogue');
         $api->post('customer-service/dialogue', 'CustomerServiceController@createDialogue');
         $api->post('customer-service/dialogue/{dialogueId}/messages', 'CustomerServiceController@publishMessage');
+
+        // 获取服务详情
+//        $api->get();
     });
 });
